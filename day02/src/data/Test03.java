@@ -1,5 +1,7 @@
 package data;
+
 import java.lang.*;
+
 public class Test03 {
 	public static void main(String[] args) {
 		//변수(variable)를 사용해서 Test02를 개선
