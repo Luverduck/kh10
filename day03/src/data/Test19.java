@@ -25,7 +25,7 @@ public class Test19 {
 		int time = outTime - inTime;
 		//System.out.println(time);
 		
-		boolean priceTF = time - freeTime >= 0; //검산은 경계값 위주로 할 것 (경계값 TEST)
+		boolean priceTF = time - freeTime > 0; //검산은 경계값 위주로 할 것 (경계값 TEST)
 		System.out.println("추가요금 여부:" + priceTF);
 		
 		int netTime = time - freeTime; 
