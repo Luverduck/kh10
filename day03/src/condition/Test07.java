@@ -22,18 +22,19 @@ public class Test07 {
 		int discount = 25;
 		
 		boolean discountTF =  6 <= travelMonth && travelMonth <= 8;
+		//if(month / 3 == 2) {} : 몫이 2인 집합을 나타낼 수 있다 (6, 7, 8)
 		
 		int price;
 		if(discountTF) {
 			price = (pricePerCountSpan * travelCount * travelSpan) * (100 - discount) / 100;
-			//((100 - discount) / 100); 로 할 때 왜 0이 나왔는가?
+			//할인율을 적용할 때 ((100 - discount) / 100); 로 하면 왜 0이 나왔는가?
 		}
 		else {
 			price = pricePerCountSpan * travelCount * travelSpan;
 		}
 		
 		System.out.println(price);
-		
+
 	}
 
 }
