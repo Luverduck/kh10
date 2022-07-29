@@ -31,6 +31,8 @@ public class Test04 {
 		
 		//boolean leap = true or false;
 		boolean leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;;
+		//and와 or의 진위표를 보면 이렇게 쓴 이유를 알 수 있음
+		
 		if(year % 4 != 0) {//year가 4의 배수가 아니면
 			leap = false;
 		}
