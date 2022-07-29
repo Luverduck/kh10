@@ -20,72 +20,58 @@ import java.util.Scanner;
 public class Test04 {
 	public static void main(String[] args) {
 		
-		Scanner sc = new Scanner(System.in);
+		//준비
+		int year = 2022;
+		int month = 3;
 		
-		System.out.println("년도를 입력하세요");
-		int year = sc.nextInt();
+		//계산
+		//System.out.println("4로 나눈 나머지 = " + year % 4);
+		//System.out.println("100으로 나눈 나머지 = " + year % 4);
+		//System.out.println("400으로 나눈 나머지 = " + year % 4);
 		
-		System.out.println("월을 입력하세요");
-		int month = sc.nextInt();
-		
-		sc.close();
-		
-		//int year = 2000;
-		
-		int logic1 = year % 4;
-		
-		
-		int logic3TF;
-		switch(logic1) {
-		case 0:
-			int logic2 = year % 100;
-			switch(logic2) {
-			case 0:
-				if(year % 400 == 0) {
-					System.out.println(year + "년은 윤년이 맞습니다");
-					logic3TF = 1;
-				}
-				else {
-					System.out.println(year + "년은 윤년이 아닙니다");
-					logic3TF = 0;
-				}
-				break;
-			default:
-				System.out.println(year + "년은 윤년이 맞습니다");
-				logic3TF = 1;
-				break;
-			}
-			
-			break;
-			
-		default:
-			System.out.println(year + "년은 윤년이 아닙니다");
-			logic3TF = 0;
+		//boolean leap = true or false;
+		boolean leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;;
+		if(year % 4 != 0) {//year가 4의 배수가 아니면
+			leap = false;
+		}
+		//여기서부터는 4의 배수인 경우
+		else if(year % 100 == 0 && year % 400 != 0) {//year가 100의 배수이지만 400의 배수는 아니라면
+			leap = false;
+		}
+		else if (year % 400 == 0) {//year가 400의 배수라면
+			leap = true;
+		}
+		else {//나머지 4의 배수
+			leap = true;
 		}
 		
+		int day;
 		switch(month) {
-		case 4: case 6: case 9: case 11:
-			System.out.println(month + "월의 일 수는 30일 입니다");
-			break;
-		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-			System.out.println(month + "월의 일 수는 31일 입니다");
-			break;
 		case 2:
-			if(logic3TF == 0) {
-				System.out.println(month + "월의 일 수는 28일 입니다");
+			//day = 29 or 29;
+			if(leap == true) {
+				day = 29;
 			}
 			else {
-				System.out.println(month + "월의 일 수는 총 29일 입니다");
+				day = 28;
 			}
+			break;
+		case 4: case 6: case 9: case 11:
+			day = 30;
+			break;
+		default:
+			day = 31;
+			break;
 		}
 		
+		System.out.println(year+"년 "+month+"월은 "+day+"일까지 있습니다");
+		
+		//if() {
+		//	System.out.println("윤년입니다");
+		//}
+		//else {
+		//	System.out.println("윤년이 아닙니다");
 	}
-
+	
 }
-
-//실제 지구가 태양을 공전하여 시작점으로 회귀하는데 걸리는 시간은 약 365일 + 6시간
-//4년동안 지구가 태양을 공전하는데 걸리는 실제 시간은 약 365*4일 + 1일
-//2월을 28일로 정할 때 4년마다 실제 지구가 태양을 공전한 시간과 율리우스력 사이의 오차를 보정하기 위해
-//2월에 1일을 추가해야 하는 년도
-//평년 : 2월의 날짜가 28일인 해
-//윤년 : 2월의 날짜가 29일인 해 
+		
