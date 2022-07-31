@@ -17,7 +17,7 @@ public class Test06 {
 		int V = 20;
 		int limitV = 50;
 		int initialFine = 30000;
-		int kmPerFine = 10000;
+		int finePerKm = 10000;
 		
 		//계산
 		//boolean over = 주항속도 > 제한속도; (의사코드)
@@ -25,7 +25,7 @@ public class Test06 {
 		
 		int fine;
 		if(over) {//if(over == true)와 같은 코드
-			fine = initialFine + (kmPerFine * ((V - limitV) / 10));
+			fine = initialFine + (finePerKm * ((V - limitV) / 10));
 			if(fine > 70000) {//벌금이 70000원 이상일 경우
 				fine = 70000;
 			}
