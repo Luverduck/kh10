@@ -20,14 +20,10 @@ public class Test06 {
 			int first = r.nextInt(6) + 1;
 			int second = r.nextInt(6) + 1;
 			
-			boolean escape = (first == 5 && second == 5) || (first == 6 && second == 6);
+			count++;
 			
-			if(escape) {
-				count += 0;
+			if((first == 5 && second == 5) || (first == 6 && second == 6)) {
 				break;
-			}
-			else {
-				count += 1;
 			}
 			
 		}
