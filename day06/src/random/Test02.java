@@ -27,8 +27,8 @@ public class Test02 {
 	
 		//3. OTP번호 1개를 생성한 결과 (6자리 정수)
 		Random r3 = new Random();
-		int OTP = r3.nextInt(1000000) + 1;				// 100000부터 999999까지
-		//int OTP = r.nextInt(900000) + 10000;
+		int OTP = r3.nextInt(1000000) + 1;				// 0부터 999999까지
+		//int OTP = r.nextInt(900000) + 100000;			//100000부터 999999까지
 		System.out.println("OTP 번호 : " + OTP);
 		
 		System.out.println();
