@@ -18,7 +18,7 @@ public class Test01 {
 		int score;
 		do {	
 			System.out.print("점수 : ");
-			score = sc.nextInt();		//1. do 안에서 만든 변수 score를 while에서 못쓴다
+			score = sc.nextInt();			//1. do 안에서 만든 변수 score를 while에서 못쓴다
 		}
 		while(score < 0 || score > 100);	//2. while 끝에 세미콜론(;)을 반드시 써야 한다 (if나 while은 안씀)
 		//잘못 입력했다면
