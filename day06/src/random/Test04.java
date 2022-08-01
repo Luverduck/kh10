@@ -36,7 +36,7 @@ public class Test04 {
 				System.out.println("오답, 남은 기회 : " + countX);
 				System.out.println();
 			
-				if(countX <= 0) {
+				if(countX <= 0) {	//break를 else 안에 쓰는 것과 밖에 쓰는 것이 차이가 있는지
 					break;
 				}
 				
