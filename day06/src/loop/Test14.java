@@ -6,6 +6,8 @@ public class Test14 {
 	
 	public static void main(String[] args) {
 		
+		int score = 0;
+		
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.print("단수 : ");
@@ -15,6 +17,8 @@ public class Test14 {
 		int countO = 0;
 		int countX = 0;
 		
+		int combo = 0;
+		
 		for(int i= 1 ; i <= 9 ; i++) {
 		
 			System.out.print(dan + " X " + i + " = ");
@@ -23,11 +27,17 @@ public class Test14 {
 			if(dan * i == user) {
 				//System.out.println("정답");
 				countO++;
+				//추가 1
+				//-맞추면 +10점, 틀리면 -10점
+				score += combo * 10;
+				combo++;
 			}
 			
 			else {
 				//System.out.println("오답");
 				countX++;
+				score -= 10;
+				combo = 0;
 			}
 			
 		}
@@ -36,6 +46,7 @@ public class Test14 {
 		
 		System.out.println("정답 : " + countO + "개");
 		System.out.println("오답 : " + countX + "개");
+		System.out.println("점수 :" + score + "점");
 	}
 
 }
