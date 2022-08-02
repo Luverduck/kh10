@@ -67,7 +67,7 @@ public class Test07 {
 		double[] gap = new double[data.length];		//위에 data의 배열 크기를 그대로 가져오는 방법
 		for(int i = 0 ; i < data.length ; i ++ ) {	
 			if(data[i] > avg) {
-				gap[i] = data[i] - avg;				//위에 data의 각 위치의 값에서 avg만큼 빼서 새로운 배열을 만드는 방법
+				gap[i] = data[i] - avg;				//위에 data의 각 위치의 값에서 avg를 빼서 새로운 배열을 만드는 방법
 			}
 			else {
 				gap[i] = avg - data[i];
