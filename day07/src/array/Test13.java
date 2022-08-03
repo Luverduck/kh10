@@ -6,7 +6,7 @@ public class Test13 {
 	
 	public static void main(String[] args) {
 		
-		int[] array = new int[] {30, 10, 20, 50, 40};
+		int[] array = new int[] {50, 40, 30, 20, 10};
 		
 		System.out.print("정렬 전 배열 : ");
 		for(int i = 0 ; i < array.length ; i++) {
