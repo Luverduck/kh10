@@ -25,7 +25,7 @@ public class Test03 {
 			for(int i = j ; i < array[j].length ; i++) {
 				array[j][i] = count;
 				count++;
-				//array[j][i] = (column * j) + i + 1;	->	column의 수를 c라 할 때 c진법 식을 만들어도 됨
+				//array[j][i] = (column * j) + i + 1;	->	column의 수를 c라 할 때 (c+1)진법 원리를 이용
 				
 				//array[j][i] = count++;	//대입한 후  증가시킴
 				//array[j][i] = ++count;	//증가시킨 후 대입
