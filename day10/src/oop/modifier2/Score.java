@@ -1,7 +1,7 @@
 package oop.modifier2;
 
 //oop.getter3에서 풀었던 문제를
-//접근제한 키워드와 사용자 입력을 추가해서 1명의 정보를 생성 후 출력
+//접근제한 키워드와 사용자 입력을 추가해서 1명의 정보를 생성 후 출력.
 
 public class Score {
 

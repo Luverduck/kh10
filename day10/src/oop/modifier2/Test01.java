@@ -8,7 +8,7 @@ public class Test01 {
 		
 		//객체 생성을 입력 후에 하는 방법
 		
-		Scanner sc = new Scanner(System.in);	//Scanner 사용 여부(입력을 줄지 말지)는 main 메소드에 작성한다
+		Scanner sc = new Scanner(System.in);	//Scanner 사용 여부(입력을 줄지 말지)는 main 메소드에 작성한다.
 		
 		System.out.print("이름 : ");
 		String name = sc.next();

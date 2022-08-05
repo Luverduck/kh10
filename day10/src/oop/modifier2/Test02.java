@@ -9,7 +9,7 @@ public class Test02 {
 		//객체를 먼저 생성하는 경우
 		Score a = new Score();
 		
-		Scanner sc = new Scanner(System.in);	//Scanner 사용 여부(입력을 줄지 말지)는 main 메소드에 작성한다
+		Scanner sc = new Scanner(System.in);	//Scanner 사용 여부(입력을 줄지 말지)는 main 메소드에 작성한다.
 		
 		System.out.print("이름 : ");
 		a.setName(sc.next());
