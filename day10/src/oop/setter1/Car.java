@@ -30,6 +30,7 @@ public class Car {
 		if(passenger <= 0) {	
 			return;			//0 이하라면 구문 종료(return)
 		}
+		this.passenger = passenger;
 	}
 	void setPrice(int price) {
 //		[1] 가격이 0 초과일때만 입력하세요
@@ -41,7 +42,16 @@ public class Car {
 		if(price < 0) {
 			return;
 		}
+		this.price = price;
 	}
+	
+	Car(String name, int speed, int passenger, int price){
+		this.setName(name);					//setName 과정(필터링)을 거친 후 입력
+		this.setSpeed(speed);
+		this.setPassenger(passenger);
+		this.setPrice(price);
+	}
+	
 	
 	//출력 메소드
 	void print() {
