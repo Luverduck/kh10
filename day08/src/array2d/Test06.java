@@ -10,8 +10,8 @@ public class Test06 {
 	public static void main(String[] args) {
 		
 		//준비
-		int row = 4;
-		int column = 3;
+		int row = 3;
+		int column = 4;
 		
 		int[][] array = new int[row][column];
 		
