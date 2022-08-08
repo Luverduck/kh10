@@ -43,6 +43,9 @@ public class Account {
 	
 	// setter & getter (static에 대한)
 	public static void setInterestN(double interestN) {
+		if(interestN < 0) {
+			return;
+		}
 		Account.interestN = interestN;
 	}
 	public static double getInterestN() {
