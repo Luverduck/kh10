@@ -2,7 +2,7 @@ package oop.inherit5;
 
 public class PPT extends File {	// PPT는 File을 상속받도록 만들어야 한다
 	
-		// PPT 고유 필드
+	// PPT 고유 필드
 	private long pageSize;
 
 	// getter & setter
