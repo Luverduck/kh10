@@ -11,7 +11,7 @@ public class Police {
 	private Gun gun;
 	
 	public Police() {
-		this.gun = new Gun;		// 경찰 객체 생성시 gun을 갖도록
+		//this.gun = new Gun;		// 경찰 객체 생성시 gun을 갖도록
 	}
 	
 	private static class Gun {	
