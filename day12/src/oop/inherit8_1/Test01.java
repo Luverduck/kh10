@@ -6,7 +6,6 @@ public class Test01 {
 		
 		// 객체 생성
 		Warrior a = new Warrior("전사");
-		a.setLv(-3);
 		a.attack();
 		a.move();
 		a.print();
