@@ -1,6 +1,6 @@
 package oop.inherit8;
 
-public class Warrior extends Class {
+public class Warrior extends Player {
 
 	// 생성자 - Class 상속
 	public Warrior(String id) {
@@ -16,11 +16,5 @@ public class Warrior extends Class {
 	@Override
 	public void move() {
 		System.out.println("전사가 뛰어서 이동합니다!");
-	}
-
-	@Override
-	public void print() {
-		System.out.println("ID : " + super.id);
-		System.out.println("LV : " + super.lv);
 	}
 }
