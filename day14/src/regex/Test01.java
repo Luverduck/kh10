@@ -6,7 +6,7 @@ public class Test01 {
 
 	public static void main(String[] args) {
 	
-		// 정규 표현식 (Regular Expression)
+		// 정규 표현식 (Regular Expression) 
 		
 		// (Q) phone의 값이 올바른 휴대전화번호인지 검사하시오
 		// 올바른 형태 - 01X-XXXX-XXXX
