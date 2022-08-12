@@ -21,5 +21,8 @@ public class Test01 {
 		boolean test = Pattern.matches(regex, phone);
 		
 		System.out.println(test);
+		
+		// ^.{8,20}$ -> 점(.)은 any를 의미하며 아무 글자나 8~20번 반복을 의미
+		// ^[a-z]$	-> ASCII 코드의 번호를 기반으로 소문자 a부터 z까지라는 범위를 지정하는 원리
 	}
 }
