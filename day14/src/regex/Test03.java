@@ -9,7 +9,7 @@ public class Test03 {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		// 닉네임 생성 규칙 정규표현식
+		// 닉네임 생성 규칙 정규표현식 
 		String reg = "^[가-힣0-9]{2,10}$";
 		
 		// 닉네임 테스트용
