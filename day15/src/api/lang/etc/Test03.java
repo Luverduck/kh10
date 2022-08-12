@@ -25,6 +25,9 @@ public class Test03 {
 		if(System.getProperty("os.name").startsWith("Windows")) {	// OS 이름이 windows로 시작한다면
 			run.exec("notepad");	// 메모장이 열림
 		}
+		else if(System.getProperty("os.name").startsWith("Mac")) {
+			run.exec("open -a TextEdit.app");
+		}
 		
 	}
 }
