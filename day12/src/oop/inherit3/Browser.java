@@ -4,14 +4,14 @@ package oop.inherit3;
 public class Browser {
 	
 	// 공용 필드
-	private String URL;
+	private String url;
 
 	// setter & getter
-	public String getURL() {
-		return URL;
+	public String getUrl() {
+		return url;
 	}
-	public void setURL(String uRL) {
-		URL = uRL;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 	// 공통 method
