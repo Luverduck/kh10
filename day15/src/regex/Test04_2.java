@@ -17,7 +17,7 @@ public class Test04_2 {
 		
 		// 년도 추출
 		//System.out.println(data.substring(5, 7));
-		String year = data.substring(5, 7);		// 2022인 문자열을 숫자로 바꿔야 한다 - Integer.parseInt​(String s)
+		String year = data.substring(0, 4);		// 2022인 문자열을 숫자로 바꿔야 한다 - Integer.parseInt​(String s)
 		int yearValue = Integer.parseInt(year);
 		
 		// 윤년 판정
