@@ -62,6 +62,8 @@ public class Student {
 	}
 	
 	// 생성자
+	public Student() {}
+	
 	public Student(String name, int korean, int english, int math) throws Exception {
 		this.setName(name);
 		this.setKorean(korean);
