@@ -13,7 +13,7 @@ public class Test04_2 {
 	public static void main(String[] args) {
 		
 		// 입력
-		String data = "1992-02-29";
+		String data = "2020-02-29";
 		
 		// 년도 추출
 		//System.out.println(data.substring(5, 7));
@@ -21,7 +21,7 @@ public class Test04_2 {
 		int yearValue = Integer.parseInt(year);
 		
 		// 윤년 판정
-		boolean leapYear = yearValue % 4 == 0 && yearValue % 100 != 0 && yearValue % 400 == 0;
+		boolean leapYear = yearValue % 4 == 0 && yearValue % 100 != 0 || yearValue % 400 == 0;
 		
 		// 생년월일 검사용 정규식 (2월은 28일)
 		String regex;
