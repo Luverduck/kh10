@@ -35,7 +35,7 @@ public class Test05_3 {
 			
 			System.out.print("영어 : ");
 			int english = sc.nextInt();
-			if(english < 0 || english > 100) {
+			if(english < 0 || english > 100) {	// 강제로 예외처리를 하여 catch로 보내는 것 : throw
 				System.err.println("잘못된 입력입니다");
 				return;
 			}
