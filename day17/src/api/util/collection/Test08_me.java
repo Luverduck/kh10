@@ -27,7 +27,7 @@ public class Test08_me {
 		// list1에 입력 넣기
 		for(int i = 1 ; i <= num ; i ++) {
 			System.out.print(i + "번째 입력 : ");
-			list1.add(sc.next());
+			list1.add(sc.nextLine());
 		}
 		
 		System.out.println();
@@ -35,7 +35,7 @@ public class Test08_me {
 		// list2에 입력 넣기
 		for(int i = 1 ; i <= num ; i ++) {
 			System.out.print(i + "번째 입력 : ");
-			list2.add(sc.next());
+			list2.add(sc.nextLine());
 		}
 		
 		System.out.println();
