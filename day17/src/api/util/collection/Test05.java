@@ -21,26 +21,28 @@ public class Test05 {
 		
 		// 반복문
 		while(true) {
-			
 			// 나라 입력
 			System.out.print("나라 이름 : ");
-			String input = sc.next();		// 입력을 받은 후 바로 List에 넣지 말고 확인해보기
+			String input = sc.nextLine();	// 입력을 받은 후 바로 List에 넣지 말고 확인해보기
 			
 			if(list.contains(input)) {		// 기존 List에 이미 해당 입력이 포함되어 있으면
 				break;						// 구문 종료
 			}
 			
-			else {							// 그렇지 않다면
-				list.add(input);			// 기존 List에 해당 입력을 추가
+			else {							// 그렇지 않다면 (처음 입력한 경우라면)
+				list.add(input);			// 기존 List에 해당 입력을 추가 
 			}			
 		}
 		
 		System.out.println();
 		
-		// 출력
+		// 나라 출력 (L\7+                      ist 전체 출력)
+		System.out.println("Game Over!");
 		System.out.println("지금까지 입력한 나라");
 		for(int i = 0 ; i < list.size() ; i ++) {
 			System.out.println(list.get(i));
 		}
+		
+		sc.close();
 	}
 }
