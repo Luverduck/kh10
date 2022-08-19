@@ -38,7 +38,7 @@ public class Test02_me {
 		String inputPW = sc.nextLine();
 		
 		// 출력
-		if(user.get(inputID).equals(inputPW)) {
+		if(user.containsKey(inputID) && user.get(inputID).equals(inputPW)) {
 			System.out.println("로그인 성공");
 		}
 		else {

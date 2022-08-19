@@ -40,7 +40,7 @@ public class Test02 {
 		boolean isLogin = user.containsKey(inputID) && inputPW.equals(user.get(inputID));
 		
 		// 출력
-		if(user.get(inputID).equals(inputPW)) {
+		if(isLogin) {
 			System.out.println("로그인 성공");
 		}
 		else {
