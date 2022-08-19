@@ -42,7 +42,7 @@ public class Test01 {
 		System.out.println(people.containsKey("정준하"));
 		
 		// .containsValue() : value 값을 검색
-		System.out.println(people.containsValue("50"));
+		System.out.println(people.containsValue(50));
 		
 		// 제거
 		// .remove(Object key) : 해당 key의 key와 value 삭제
