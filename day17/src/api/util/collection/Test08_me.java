@@ -17,6 +17,7 @@ public class Test08_me {
 		// 참여 인원수
 		System.out.print("참여 인원의 수 : ");
 		int num = sc.nextInt();
+		sc.nextLine();	// 반드시 엔터 입력을 제거해줘야 한다
 		
 		// list1
 		List<String> list1 = new ArrayList<>();
