@@ -61,7 +61,6 @@ insert into customer(customer_num, customer_id, customer_tel, customer_registrat
     
 insert into customer(customer_num, customer_id, customer_tel, customer_registration, customer_purchase, customer_point, customer_lv) 
     values(customer_seq.nextval, 'testuser5','010-5656-7878', '2021-12-31', '2022-01-31', 800, '일반');
-);
 
 -- 최종 저장
 commit;
