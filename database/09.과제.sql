@@ -33,12 +33,12 @@ create sequence customer_seq;
 -- 테이블 생성
 create table customer (
 customer_num number not null unique,
-customer_id varchar(60) not null unique check(regexp_like(customer_id, '^[a-z0-9]{8,20}$')),
+customer_id varchar2(60) not null unique check(regexp_like(customer_id, '^[a-z0-9]{8,20}$')),
 customer_tel char(13) not null unique check(regexp_like(customer_tel, '^010-[0-9]{4}-[0-9]{4}$')),
 customer_registration char(10) not null,
 customer_purchase char(10) not null,
 customer_point number default 0 check(customer_point >= 0),
-customer_lv varchar(12) check(customer_lv in ('일반', 'VIP', 'VVIP', '플래티넘'))
+customer_lv varchar2(12) not null check(customer_lv in ('일반', 'VIP', 'VVIP', '플래티넘'))
 );
 
 -- 테이블 삭제
