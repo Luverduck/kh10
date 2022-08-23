@@ -29,16 +29,18 @@
 create sequence customer_seq;
 
 -- 시퀀스 삭제
+drop sequence customer_seq;
 
 -- 테이블 생성
 create table customer (
 customer_num number not null unique,
 customer_id varchar2(60) not null unique check(regexp_like(customer_id, '^[a-z0-9]{8,20}$')),
-customer_tel char(13) not null unique check(regexp_like(customer_tel, '^010-[0-9]{4}-[0-9]{4}$')),
-customer_registration char(10) not null,
-customer_purchase char(10) not null,
+--customer_tel char(13) not null unique check(regexp_like(customer_tel, '^010-[0-9]{4}-[0-9]{4}$')),
+customer_tel char(13) not null unique check(regexp_like(customer_tel, '^010-\d{4}-\d{4}$')),
+customer_registration char(10) not null check(regexp_like(customer_registration, '^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[01])$')),
+customer_purchase char(10) check(regexp_like(customer_purchase, '^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[01])$')),
 customer_point number default 0 check(customer_point >= 0),
-customer_lv varchar2(12) not null check(customer_lv in ('일반', 'VIP', 'VVIP', '플래티넘'))
+customer_lv varchar2(12) default '일반' not null check(customer_lv in ('일반', 'VIP', 'VVIP', '플래티넘'))
 );
 
 -- 테이블 삭제
