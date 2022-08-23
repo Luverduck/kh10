@@ -1,4 +1,4 @@
-# 데이터베이스 예제 파일 모음
+# 데이터베이스 수업
 
 - 데이터베이스 - 정보가 저장되는 저장소
 - DBMS - 데이터베이스에 계정, 객체, 보안 등 다양한 환경을 추가한 프로그램 (ex : oracle)
@@ -51,3 +51,13 @@ Commit과 Rollback이 가능하다 (Transaction 관리가 이루어진다)
 - Transaction 관리 (TCL)
   - commit - Transaction 저장
   - rollback - Transaction 무효화(취소)
+
+# 테이블 제약 조건
+테이블에 원하는 데이터만 들어가도록 설정하는 조건
+
+- primary key - 테이블을 대표하는 컬럼 (not null + unique 포함)
+- not null - 비어있는 값을 허용하지 않는 조건
+- unique - 중복되는 값을 허용하지 않는 조건
+- check - 원치 않는 값을 허용하지 않는 조건
+- default - 미입력 항목에 대한 처리 조건
+
