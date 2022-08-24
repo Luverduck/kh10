@@ -39,7 +39,7 @@ Commit과 Rollback이 가능하다 (Transaction 관리가 이루어진다)
 - update - 수정
 - delete - 삭제
 
-## DCL(Data control Language)
+## DCL(Data Control Language)
 
 데이터를 통제하기 위한 구문
 
