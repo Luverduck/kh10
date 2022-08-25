@@ -21,7 +21,7 @@ select first_name, last_name, hire_date from (select TMP.*, rownum rn from (sele
 
 
 -- (Q4)작업 이력 중에서 가장 오랜 기간동안 작업한 사람의 ID를 출력하세요 (JOB_HISTORY)
--- 1) START_DATE 오름차순 정렬
+-- 1) END_DATE에서 START_DATE를 차이를 오름차순 정렬
 select * from job_history order by end_date - start_date desc;
 -- 2) 정렬된 테이블에 rownum rn을 부여한 후 TMP라 명명하고 TMP의 모든 항목(TMP.*) 가져오기
 select TMP.*, rownum rn from(select * from job_history order by end_date - start_date desc)TMP;
