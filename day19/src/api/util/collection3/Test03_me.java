@@ -46,7 +46,7 @@ public class Test03_me {
 			// 입력을 대문자로 전환 (대소문자 구분이 없도록 대문자로 변환하여 저장하기 위해)
 			String inputUpper = input.toUpperCase();	// 1) 소문자 변환
 			inputUpper = inputUpper.trim();				// 2) 좌우 불필요한 여백 제거
-			inputUpper = inputUpper.replace("","");		// 3) 문자열 내 공백 제거
+			inputUpper = inputUpper.replace(" ","");		// 3) 문자열 내 공백 제거
 			
 			// 판정
 			if(data.containsKey(input.toUpperCase())) {			// 이전에 검색한 적이 있다면
