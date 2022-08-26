@@ -38,7 +38,7 @@ public class Test05 {
 			}
 		};
 		
-		// 4. List 생성
+		// 4. List 생성 - 데이터 '순서'가 유지되어야 하기 때문
 		List<GuestBookDto> list = template.query(sql, mapper);
 		
 		// 5. 출력
