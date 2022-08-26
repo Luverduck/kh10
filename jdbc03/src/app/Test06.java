@@ -28,7 +28,7 @@ public class Test06 {
 		
 		Object[] param = new Object[] {search, search, search};
 		
-		// 4. RowMapper 생성
+		// 4. RowMapper 생성 - RowMapper도 Dto안에 넣어두면 매번 반복해서 쓸 필요가 없다
 		RowMapper<MusicDto> mapper = new RowMapper<MusicDto>(){
 			@Override
 			public MusicDto mapRow(ResultSet rs, int idx) throws SQLException {
