@@ -3,76 +3,63 @@ package select;
 public class CustomerDto {
 
 	// 필드
-	int customer_num;
-	String customer_id;
-	String customer_tel;
-	String customer_registration;
-	String customer_purchase;
-	int customer_point;
-	String customer_lv;
+	int customerNum;
+	String customerId;
+	String customerTel;
+	String customerRegistration;
+	String customerPurchase;
+	int customerPoint;
+	String customerLv;
 	
 	// getter & setter
-	public int getCustomer_num() {
-		return customer_num;
+	public int getCustomerNum() {
+		return customerNum;
 	}
-
-	public void setCustomer_num(int customer_num) {
-		this.customer_num = customer_num;
+	public void setCustomerNum(int customerNum) {
+		this.customerNum = customerNum;
 	}
-
-	public String getCustomer_id() {
-		return customer_id;
+	public String getCustomerId() {
+		return customerId;
 	}
-
-	public void setCustomer_id(String customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
-
-	public String getCustomer_tel() {
-		return customer_tel;
+	public String getCustomerTel() {
+		return customerTel;
 	}
-
-	public void setCustomer_tel(String customer_tel) {
-		this.customer_tel = customer_tel;
+	public void setCustomerTel(String customerTel) {
+		this.customerTel = customerTel;
 	}
-
-	public String getCustomer_registration() {
-		return customer_registration;
+	public String getCustomerRegistration() {
+		return customerRegistration;
 	}
-
-	public void setCustomer_registration(String customer_registration) {
-		this.customer_registration = customer_registration;
+	public void setCustomerRegistration(String customerRegistration) {
+		this.customerRegistration = customerRegistration;
 	}
-
-	public String getCustomer_purchase() {
-		return customer_purchase;
+	public String getCustomerPurchase() {
+		return customerPurchase;
 	}
-
-	public void setCustomer_purchase(String customer_purchase) {
-		this.customer_purchase = customer_purchase;
+	public void setCustomerPurchase(String customerPurchase) {
+		this.customerPurchase = customerPurchase;
 	}
-
-	public int getCustomer_point() {
-		return customer_point;
+	public int getCustomerPoint() {
+		return customerPoint;
 	}
-
-	public void setCustomer_point(int customer_point) {
-		this.customer_point = customer_point;
+	public void setCustomerPoint(int customerPoint) {
+		this.customerPoint = customerPoint;
 	}
-
-	public String getCustomer_lv() {
-		return customer_lv;
+	public String getCustomerLv() {
+		return customerLv;
 	}
-
-	public void setCustomer_lv(String customer_lv) {
-		this.customer_lv = customer_lv;
+	public void setCustomerLv(String customerLv) {
+		this.customerLv = customerLv;
 	}
-
+	
 	// toString 오버라이딩
 	@Override
 	public String toString() {
-		return "CustomerDto [customer_num=" + customer_num + ", customer_id=" + customer_id + ", customer_tel="
-				+ customer_tel + ", customer_registration=" + customer_registration + ", customer_purchase="
-				+ customer_purchase + ", customer_point=" + customer_point + ", customer_lv=" + customer_lv + "]";
+		return "CustomerDto [customerNum=" + customerNum + ", customerId=" + customerId + ", customerTel=" + customerTel
+				+ ", customerRegistration=" + customerRegistration + ", customerPurchase=" + customerPurchase
+				+ ", customerPoint=" + customerPoint + ", customerLv=" + customerLv + "]";
 	}
 }

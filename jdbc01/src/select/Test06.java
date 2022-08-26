@@ -30,13 +30,13 @@ public class Test06 {
 				// CustomerDto의 인스턴스 생성
 				CustomerDto c = new CustomerDto();
 				// 필드 세팅
-				c.setCustomer_num(rs.getInt("customer_num"));
-				c.setCustomer_id(rs.getString("customer_id"));
-				c.setCustomer_tel(rs.getString("customer_tel"));
-				c.setCustomer_registration(rs.getString("customer_registration"));
-				c.setCustomer_purchase(rs.getString("customer_purchase"));
-				c.setCustomer_point(rs.getInt("customer_point"));
-				c.setCustomer_lv(rs.getString("customer_lv"));
+				c.setCustomerNum(rs.getInt("customer_Num"));
+				c.setCustomerId(rs.getString("customer_Id"));
+				c.setCustomerTel(rs.getString("customer_tel"));
+				c.setCustomerRegistration(rs.getString("customer_registration"));
+				c.setCustomerPurchase(rs.getString("customer_purchase"));
+				c.setCustomerPoint(rs.getInt("customer_point"));
+				c.setCustomerLv(rs.getString("customer_lv"));
 				return c;
 			}
 		};
