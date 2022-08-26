@@ -18,6 +18,7 @@ public class Test08 {
 		JdbcTemplate template = JdbcUtil.getTemplate();
 		
 		// 2. SQL문 작성 - like 사용
+		//String sql = "select * from pocket_monster where name like '%?%'";
 		String sql = "select * from pocket_monster where name like '%'||?||'%'"; 
 		// Oracle에서 ||로 문자열 연결
 		
