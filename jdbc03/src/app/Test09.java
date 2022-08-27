@@ -16,6 +16,8 @@ public class Test09 {
 		
 		// 노래 한 곡에 대한 정보만 출력 -> primarity를 기준
 		
+		// 비추천 방식 : RowMapper로 List를 만들고 index=0의 값 추출
+		
 		// 준비
 		int musicNo = 9;
 		
