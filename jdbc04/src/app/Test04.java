@@ -40,7 +40,8 @@ public class Test04 {
 				bookDto.setBookWriter(rs.getString("book_writer"));
 				bookDto.setBookPublisher(rs.getString("book_publisher"));
 				bookDto.setBookPrice(rs.getInt("book_price"));
-				bookDto.setCreationTime(rs.getString("creation_time"));
+				bookDto.setBookGenre(rs.getString("book_genre"));
+				bookDto.setCreationTime(rs.getDate("creation_time"));
 				return bookDto;
 			}
 		};
