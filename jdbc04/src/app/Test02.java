@@ -20,7 +20,7 @@ public class Test02 {
 		JdbcTemplate template = JdbcUtil.getTemplate();
 		
 		// 2. SQL문 작성
-		String sql = "select * from book";
+		String sql = "select * from book order by book_serial asc";
 		
 		// 3. 입력 및 배열 - 입력이 필요없으므로 생략
 		
