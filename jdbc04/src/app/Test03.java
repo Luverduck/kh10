@@ -41,7 +41,7 @@ public class Test03 {
 				bookDto.setBookPublisher(rs.getString("book_publisher"));
 				bookDto.setBookPrice(rs.getLong("book_price"));
 				bookDto.setBookGenre(rs.getString("book_genre"));
-				bookDto.setCreationTime(rs.getString("creation_time"));
+				bookDto.setCreationTime(rs.getDate("creation_time"));
 				return bookDto;
 			}
 		};
