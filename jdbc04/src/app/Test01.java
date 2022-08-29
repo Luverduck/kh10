@@ -16,7 +16,7 @@ public class Test01 {
 		JdbcTemplate template = JdbcUtil.getTemplate();
 		
 		// 2. SQL문 작성
-		String sql = "insert into book(book_serial, book_name, book_writer, book_publisher, book_price, book_genre, creation_time) values(book_seq.nextval, ?, ?, ?, ?, ?, to_date(sysdate, 'yyyy-mm-dd'))";
+		String sql = "insert into book(book_serial, book_name, book_writer, book_publisher, book_price, book_genre, creation_time) values(book_seq.nextval, ?, ?, ?, ?, ?, sysdate)";
 		
 		// 3. 입력 및 배열 생성
 		Scanner sc = new Scanner(System.in);
