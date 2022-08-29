@@ -86,4 +86,24 @@ public class BookDto {
 				+ ", bookPublisher=" + bookPublisher + ", bookPrice=" + bookPrice + ", bookGenre=" + bookGenre
 				+ ", creationTime=" + creationTime + "]";
 	}
+	
+	// RowMapper를 DTO에 미리 넣어놓기
+	private static RowMapper<BookDto> mapper = new RowMapper<BookDto>() {
+		@Override
+		public BookDto mapRow(ResultSet rs, int idx) throws SQLException {
+			BookDto bookDto = new BookDto();
+			bookDto.setBookSerial(rs.getInt("book_serial"));
+			bookDto.setBookName(rs.getString("book_name"));
+			bookDto.setBookWriter(rs.getString("book_writer"));
+			bookDto.setBookPublisher(rs.getString("book_publisher"));
+			bookDto.setBookPrice(rs.getLong("book_price"));
+			bookDto.setBookGenre(rs.getString("book_genre"));
+			bookDto.setCreationTime(rs.getDate("creation_time"));
+			return bookDto;
+		}
+	};
+	
+	public static RowMapper<BookDto> getMapper(){
+		return mapper;
+	}
 }
