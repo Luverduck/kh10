@@ -4,6 +4,8 @@ import java.sql.Date;	// sql.date는 DB 연동을 위한
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 public class BookDto {
@@ -87,7 +89,8 @@ public class BookDto {
 				+ ", creationTime=" + creationTime + "]";
 	}
 	
-	// RowMapper를 DTO에 미리 넣어놓기
+	// 자주 사용하는 도구
+	// 1) RowMapper
 	private static RowMapper<BookDto> mapper = new RowMapper<BookDto>() {
 		@Override
 		public BookDto mapRow(ResultSet rs, int idx) throws SQLException {
@@ -105,5 +108,30 @@ public class BookDto {
 	
 	public static RowMapper<BookDto> getMapper(){
 		return mapper;
+	}
+	
+	// 2) ResultSetExtractor
+	public static ResultSetExtractor<BookDto> extractor = new ResultSetExtractor<BookDto>() {
+		@Override
+		public BookDto extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				BookDto bookDto = new BookDto();
+				bookDto.setBookSerial(rs.getInt("book_serial"));
+				bookDto.setBookName(rs.getString("book_name"));
+				bookDto.setBookWriter(rs.getString("book_writer"));
+				bookDto.setBookPublisher(rs.getString("book_publisher"));
+				bookDto.setBookPrice(rs.getLong("book_price"));
+				bookDto.setBookGenre(rs.getString("book_genre"));
+				bookDto.setCreationTime(rs.getDate("creation_time"));
+				return bookDto;
+			}
+			else {
+				return null;
+			}
+		}
+	};
+	
+	public static ResultSetExtractor<BookDto> getExtractor() {
+		return extractor;
 	}
 }
