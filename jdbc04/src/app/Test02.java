@@ -25,6 +25,7 @@ public class Test02 {
 		// 3. 입력 및 배열 - 입력이 필요없으므로 생략
 		
 		// 4. RowMapper 생성
+		/*
 		RowMapper<BookDto> mapper = new RowMapper<BookDto>() {
 			@Override
 			public BookDto mapRow(ResultSet rs, int idx) throws SQLException {
@@ -39,9 +40,14 @@ public class Test02 {
 				return bookDto;
 			}
 		};
+		*/
+		
 		
 		// 5. List 생성 및 메핑
-		List<BookDto> list = template.query(sql, mapper);
+		//List<BookDto> list = template.query(sql, mapper);
+		
+		// ** BookDto에 있는 Mapper를 불러오기
+		List<BookDto> list = template.query(sql, BookDto.getMapper());
 		
 		// 6. 출력
 		for(BookDto bookDto : list) {
