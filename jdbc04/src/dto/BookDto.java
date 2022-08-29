@@ -1,5 +1,6 @@
 package dto;
 
+import java.sql.Date;	// sql.date는 DB 연동을 위한
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,49 +15,62 @@ public class BookDto {
 	private String bookPublisher;
 	private long bookPrice;
 	private String bookGenre;
-	private String creationTime;
+	private Date creationTime;
 	
 	// getter & setter
 	public int getBookSerial() {
 		return bookSerial;
 	}
+
 	public void setBookSerial(int bookSerial) {
 		this.bookSerial = bookSerial;
 	}
+
 	public String getBookName() {
 		return bookName;
 	}
+
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
 	}
+
 	public String getBookWriter() {
 		return bookWriter;
 	}
+
 	public void setBookWriter(String bookWriter) {
 		this.bookWriter = bookWriter;
 	}
+
 	public String getBookPublisher() {
 		return bookPublisher;
 	}
+
 	public void setBookPublisher(String bookPublisher) {
 		this.bookPublisher = bookPublisher;
 	}
+
 	public long getBookPrice() {
 		return bookPrice;
 	}
+
 	public void setBookPrice(long bookPrice) {
 		this.bookPrice = bookPrice;
 	}
+
 	public String getBookGenre() {
 		return bookGenre;
 	}
+
 	public void setBookGenre(String bookGenre) {
 		this.bookGenre = bookGenre;
 	}
-	public String getCreationTime() {
+
+	public Date getCreationTime() {
 		return creationTime;
 	}
-	public void setCreationTime(String creationTime) {
+
+	public void setCreationTime(Date creationTime) {
 		this.creationTime = creationTime;
 	}
 	
@@ -64,7 +78,7 @@ public class BookDto {
 	public BookDto() {
 		super();
 	}
-	
+
 	// toString 오버라이딩
 	@Override
 	public String toString() {
