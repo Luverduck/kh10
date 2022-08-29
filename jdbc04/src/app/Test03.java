@@ -16,12 +16,13 @@ public class Test03 {
 	public static void main(String[] args) {
 		
 		// app.Test03 - 사용자가 입력한 검색어에 해당하는 장르의 도서를 출력
+		// 일치 검색으로 처리 (유사 검색 X)
 		
 		// 1. template 불러오기
 		JdbcTemplate template = JdbcUtil.getTemplate();
 		
 		// 2. SQL문 작성
-		String sql = "select * from book where book_genre like '%'||?||'%'";
+		String sql = "select * from book where book_genre = ? order by book_serial asc";
 		
 		// 3. 입력 및 배열
 		Scanner sc = new Scanner(System.in);
@@ -31,6 +32,7 @@ public class Test03 {
 		Object[] param = new Object[] {keyword};
 		
 		// 4. RowMapper 생성
+		/*
 		RowMapper<BookDto> mapper = new RowMapper<BookDto>() {
 			@Override
 			public BookDto mapRow(ResultSet rs, int idx) throws SQLException {
@@ -45,13 +47,20 @@ public class Test03 {
 				return bookDto;
 			}
 		};
+		*/
 		
 		// 5. List 생성
-		List<BookDto> list = template.query(sql, mapper, param);
+		List<BookDto> list = template.query(sql, BookDto.getMapper(), param);
 		
 		// 6. 출력
-		for(BookDto bookDto : list) {
-			System.out.println(bookDto);
+		if(list.isEmpty()) {
+			System.out.println("검색 결과가 존재하지 않습니다");
+		}
+		else {
+			System.out.println("\"" + keyword + "\"에 대한 검색 결과 : " + list + "건");
+			for(BookDto bookDto : list) {
+				System.out.println(bookDto);
+			}
 		}
 		
 		sc.close();
