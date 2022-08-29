@@ -21,7 +21,10 @@ public class Test04 {
 		JdbcTemplate template = JdbcUtil.getTemplate();
 		
 		// 2. SQL문 작성
-		String sql = "select * from book where instr(book_name, ?) > 0 or instr(book_writer, ?) > 0 or instr(book_publisher, ?) > 0";
+		String sql = "select * from book where instr(upper(book_name), upper(?)) > 0 "
+						+ "or instr(upper(book_writer), upper(?)) > 0 "
+						+ "or instr(upper(book_publisher), upper(?)) > 0 "
+						+ "order by book_serial asc";
 		
 		// 3. 입력 및 배열 생성
 		Scanner sc = new Scanner(System.in);
@@ -31,6 +34,7 @@ public class Test04 {
 		Object[] param = new Object[] {keyword, keyword, keyword};
 		
 		// 4. RowMapper 작성
+		/*
 		RowMapper<BookDto> mapper = new RowMapper<BookDto>() {
 			@Override
 			public BookDto mapRow(ResultSet rs, int idx) throws SQLException {
@@ -45,13 +49,21 @@ public class Test04 {
 				return bookDto;
 			}
 		};
+		*/
+		
 		
 		// 5. List 생성
-		List<BookDto> list = template.query(sql, mapper, param);
+		List<BookDto> list = template.query(sql, BookDto.getMapper(), param);
 		
 		// 6. 출력
-		for(BookDto bookDto : list) {
-			System.out.println(bookDto);
+		if(list.isEmpty()) {
+			System.out.println("검색 결과가 존재하지 않습니다");
+		}
+		else {
+			System.out.println("\"" + keyword + "\"에 대한 검색 결과 : " + list + "건");
+			for(BookDto bookDto : list) {
+				System.out.println(bookDto);
+			}
 		}
 		
 		sc.close();
