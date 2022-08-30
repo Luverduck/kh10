@@ -25,6 +25,7 @@ public class QuizController {
 	}
 	
 	// 2. 문제 개수(count)를 입력받아 해당 개수만큼 구구단 문제를 랜덤으로 출력
+	// 다중 접속 환경이므로 StringBuffer를 사용해야 한다 (쓰레드 동기화)
 	@RequestMapping("/gugudan")
 	@ResponseBody
 	public StringBuffer gugudan(@RequestParam int count) {
@@ -54,15 +55,24 @@ public class QuizController {
 	}
 	*/
 	
+	// *** 파라미터가 같은 이름으로 여러 개 존재하는 경우
+	// - 1) 배열
+	// - 2) collection
 	// 3. 전달된 v에 해당하는 모든 값들의 합계를 구하여 출력
 	@RequestMapping("/total")
 	@ResponseBody
 	public String sum(@RequestParam List<Integer> v) {
-		
 		int total = 0;
+		/*
 		for(int i = 0 ; i < v.size() ; i ++) {
 			total += v.get(i);
 		}
+		*/
+		// 또는
+		for(int n : v) {
+			total += n;
+		}
+		
 		return "합계 : " + total;
 	}
 }
