@@ -51,7 +51,7 @@ public class GuestBookDto {
 	}
 	
 	// RowMapper
-	public static RowMapper<GuestBookDto> mapper = new RowMapper<GuestBookDto>() {
+	private static RowMapper<GuestBookDto> mapper = new RowMapper<GuestBookDto>() {
 		@Override
 		public GuestBookDto mapRow(ResultSet rs, int idx) throws SQLException {
 			GuestBookDto guestBookDto = new GuestBookDto();
@@ -68,7 +68,7 @@ public class GuestBookDto {
 	}
 	
 	// ResultSetExtractor
-	public static ResultSetExtractor<GuestBookDto> extractor = new ResultSetExtractor<GuestBookDto>() {
+	private static ResultSetExtractor<GuestBookDto> extractor = new ResultSetExtractor<GuestBookDto>() {
 		@Override
 		public GuestBookDto extractData(ResultSet rs) throws SQLException, DataAccessException {
 			if(rs.next()) {
