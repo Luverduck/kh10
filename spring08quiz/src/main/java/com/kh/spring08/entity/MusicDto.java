@@ -88,7 +88,7 @@ public class MusicDto {
 	}
 	
 	// RowMapper
-	public static RowMapper<MusicDto> mapper = new RowMapper<MusicDto>() {
+	private static RowMapper<MusicDto> mapper = new RowMapper<MusicDto>() {
 		@Override
 		public MusicDto mapRow(ResultSet rs, int idx) throws SQLException {
 			MusicDto musicDto = new MusicDto();
@@ -107,7 +107,7 @@ public class MusicDto {
 	}
 	
 	// ResultSetExtractor
-	public static ResultSetExtractor<MusicDto> extractor = new ResultSetExtractor<MusicDto>() {
+	private static ResultSetExtractor<MusicDto> extractor = new ResultSetExtractor<MusicDto>() {
 		@Override
 		public MusicDto extractData(ResultSet rs) throws SQLException, DataAccessException {
 			if(rs.next()) {
