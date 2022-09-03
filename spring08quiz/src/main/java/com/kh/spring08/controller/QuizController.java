@@ -24,12 +24,12 @@ public class QuizController {
 	// 1. 등록(/insert)
 	@RequestMapping("/insert")
 	@ResponseBody
-	public String inser(@ModelAttribute MusicDto musicDto) {
+	public String insert(@ModelAttribute MusicDto musicDto) {
 		String sql = "insert into music(music_no, music_title, music_artist, music_album, music_play, release_title) values(music_seq.nextval, ?, ?, ?, 0, sysdate)";
 		// 파라미터로 전달 가능한 데이터는 String 뿐이다
 		// 하지만 원시형과 배열(리스트)까지는 자동 변환을 해준다
 		// Date는 전달 불가능
-		Object[] param = new Object[] {musicDto.getMusicTitle(), musicDto.getMusicArtist(), musicDto.getMusicAlbum(), musicDto.getMusicPlay()};
+		Object[] param = new Object[] {musicDto.getMusicTitle(), musicDto.getMusicArtist(), musicDto.getMusicAlbum()};
 		int result = jdbcTemplate.update(sql, param);
 		if(result > 0) {
 			return "등록 성공";
