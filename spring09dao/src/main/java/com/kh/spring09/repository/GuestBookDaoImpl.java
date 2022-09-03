@@ -91,8 +91,16 @@ public class GuestBookDaoImpl implements GuestBookDao {
 	private ResultSetExtractor<GuestBookDto> extractor = new ResultSetExtractor<GuestBookDto>() {
 		@Override
 		public GuestBookDto extractData(ResultSet rs) throws SQLException, DataAccessException {
-			
-			return null;
+			if(rs.next()) {
+				GuestBookDto dto = new GuestBookDto();
+				dto.setNo(rs.getInt("no"));
+				dto.setName(rs.getString("name"));
+				dto.setMemo(rs.getString("memo"));
+				return dto;
+			}
+			else {
+				return null;
+			}
 		}
 	};
 
