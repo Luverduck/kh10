@@ -1,5 +1,6 @@
 package com.kh.spring08.entity;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,7 +16,7 @@ public class MusicDto {
 	private String musicArtist;
 	private String musicAlbum;
 	private int musicPlay;
-	private String releaseTitle;
+	private Date releaseTitle;
 	
 	// 생성자
 	public MusicDto() {
@@ -63,11 +64,11 @@ public class MusicDto {
 		this.musicPlay = musicPlay;
 	}
 
-	public String getReleaseTitle() {
+	public Date getReleaseTitle() {
 		return releaseTitle;
 	}
 
-	public void setReleaseTitle(String releaseTitle) {
+	public void setReleaseTitle(Date releaseTitle) {
 		this.releaseTitle = releaseTitle;
 	}
 
@@ -97,7 +98,7 @@ public class MusicDto {
 			musicDto.setMusicArtist(rs.getString("music_artist"));
 			musicDto.setMusicAlbum(rs.getString("music_album"));
 			musicDto.setMusicPlay(rs.getInt("music_play"));
-			musicDto.setReleaseTitle(rs.getString("release_title"));
+			musicDto.setReleaseTitle(rs.getDate("release_title"));
 			return musicDto;
 		}
 	};
@@ -117,7 +118,7 @@ public class MusicDto {
 				musicDto.setMusicArtist(rs.getString("music_artist"));
 				musicDto.setMusicAlbum(rs.getString("music_album"));
 				musicDto.setMusicPlay(rs.getInt("music_play"));
-				musicDto.setReleaseTitle(rs.getString("release_title"));
+				musicDto.setReleaseTitle(rs.getDate("release_title"));
 				return musicDto;
 			}
 			else {
