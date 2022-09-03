@@ -23,7 +23,7 @@ public class QuizController {
 	// 1. 등록(/insert)
 	@RequestMapping("/insert")
 	@ResponseBody
-	public String inser(@ModelAttribute GuestBookDto guestBookDto) {
+	public String insert(@ModelAttribute GuestBookDto guestBookDto) {
 		// 참고 : @ModelAttribute는 객체의 필드에 자동 매핑을 수행한다
 		String sql = "insert into guest_book(no, name, memo) values(guest_book_seq.nextval, ?, ?)";
 		Object[] param = new Object[] {guestBookDto.getName(), guestBookDto.getMemo()};
