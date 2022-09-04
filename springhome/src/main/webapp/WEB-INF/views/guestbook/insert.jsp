@@ -12,7 +12,7 @@
 		<form action = "insert" method = "post">
 		<input name = "name" placeholder = "닉네임" type = "text" required><br><br>
 		<input name = "memo" placeholder = "내용" type = "text" required><br><br>
-		<button>등록</button>
+		<button>등록</button> 
 	</form>
 </body>	
 </html>
