@@ -1,6 +1,7 @@
 package com.kh.spring11.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
  
 @Controller
@@ -48,5 +49,10 @@ public class ViewController {
 	@RequestMapping("/test08")
 	public String test08() {
 		return "tag/test08";
+	}
+	
+	@GetMapping("/test09")
+	public String test09() {
+		return "tag/test09";
 	}
 }
