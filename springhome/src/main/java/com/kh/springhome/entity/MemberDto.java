@@ -104,10 +104,10 @@ public class MemberDto {
 		this.memberLogin = memberLogin;
 	}
 
-	// toString 오버라이딩
+	// toString 오버라이딩 - memberPw(비밀번호)는 보안을 위해 제외할 것
 	@Override
 	public String toString() {
-		return "MemberDto [memberId=" + memberId + ", memberPw=" + memberPw + ", memberNick=" + memberNick
+		return "MemberDto [memberId=" + memberId + ", memberNick=" + memberNick
 				+ ", memberBirth=" + memberBirth + ", memberTel=" + memberTel + ", memberEmail=" + memberEmail
 				+ ", memberPost=" + memberPost + ", memberBaseAddress=" + memberBaseAddress + ", memberDetailAddress="
 				+ memberDetailAddress + ", memberPoint=" + memberPoint + ", memberGrade=" + memberGrade
