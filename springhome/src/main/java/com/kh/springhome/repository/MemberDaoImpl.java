@@ -14,6 +14,7 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public void insert(MemberDto memberDto) {
+		// 테이블 생성시 default를 설정한 컬럼(point, grade, join, login)의 값은 입력하지 않아도 된다
 		String sql = "insert into member("
 										+ "member_id, "
 										+ "member_pw, "
@@ -24,12 +25,8 @@ public class MemberDaoImpl implements MemberDao {
 										+ "member_post, "
 										+ "member_base_address, "
 										+ "member_detail_address, "
-										+ "member_point, "
-										+ "member_grade, "
-										+ "member_join, "
-										+ "member_login"
 										+ ") "
-								+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate, null)";
+								+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] param = new Object[] {
 										memberDto.getMemberId(), 
 										memberDto.getMemberPw(), 
