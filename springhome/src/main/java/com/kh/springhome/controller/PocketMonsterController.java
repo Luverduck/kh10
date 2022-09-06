@@ -1,7 +1,10 @@
 package com.kh.springhome.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,5 +48,13 @@ public class PocketMonsterController {
 	public String insertSuccess() {
 		// return "/WEB-INF/views/pocketmon/insertREsult.jsp";
 		return "pocketmon/insertSuccess";
+	}
+	
+	// 조회 페이지
+	@GetMapping("/list")
+	public String list(Model model) {
+		List<PocketMonsterDto> list = pocketMonsterDao.selectList();
+		model.addAttribute("list", list);
+		return "pocketmon/list";
 	}
 }
