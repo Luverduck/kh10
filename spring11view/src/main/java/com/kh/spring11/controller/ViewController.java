@@ -55,4 +55,16 @@ public class ViewController {
 	public String test09() {
 		return "tag/test09";
 	}
+	
+	@GetMapping("/table01")
+	public String table01() {
+//		return "/WEB-INF/views/tag/table01.jsp"
+		return "tag/table01";
+	}
+	
+	@GetMapping("/table02")
+//	return "/WEB-INF/views/tag/table02.jsp"
+	public String table02() {
+		return "tag/table02";
+	}
 }
