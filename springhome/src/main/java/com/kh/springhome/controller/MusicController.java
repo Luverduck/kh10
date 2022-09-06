@@ -2,10 +2,12 @@ package com.kh.springhome.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.springhome.entity.MusicDto;
 import com.kh.springhome.repository.MusicDao;
@@ -37,5 +39,21 @@ public class MusicController {
 	public String insertSuccess() {
 //		return "/WEB-INF/views/music/insertSuccess";
 		return "music/insertSuccess";
+	}
+	
+	// 조회
+	@GetMapping("/list")
+	public String list(
+						Model model, 
+						@RequestParam(required = false) String type, 
+						@RequestParam(required = false) String keyword) {
+		boolean isSearch = type != null && keyword != null;
+		if(isSearch) {
+			model.addAttribute("list", musicDao.selectList(type, keyword));
+		}
+		else {
+			model.addAttribute("list", musicDao.selectList());
+		}
+		return "music/list";
 	}
 }
