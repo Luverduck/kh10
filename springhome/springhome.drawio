@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-09-05T08:17:55.563Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="9eBRhC_j-pYJTTT_cmJe" version="20.2.8" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2022-09-06T02:35:19.047Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" etag="QyrrdyNjk-ss0pVn3zRy" version="20.2.8" type="github" pages="2">
   <diagram id="O57XJA18-S0DsmIZMTSG" name="Flow">
-    <mxGraphModel dx="1286" dy="1858" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1673" dy="2065" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -51,6 +51,9 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="FwMJxgxvuYq8EWC6jKZR-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=20;fontColor=#000000;strokeColor=#000000;" parent="1" source="oXbdgaAhtaBAxmXEic1q-4" target="FwMJxgxvuYq8EWC6jKZR-29" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tKP0dVKC1xyqjup3bviw-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oXbdgaAhtaBAxmXEic1q-4" target="tKP0dVKC1xyqjup3bviw-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="oXbdgaAhtaBAxmXEic1q-4" value="/&lt;br&gt;메인 페이지" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" parent="1" vertex="1">
@@ -174,7 +177,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="tLdyOI6LnVIX3LAUtrd9-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FwMJxgxvuYq8EWC6jKZR-30" target="tLdyOI6LnVIX3LAUtrd9-1">
+        <mxCell id="tLdyOI6LnVIX3LAUtrd9-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="FwMJxgxvuYq8EWC6jKZR-30" target="tLdyOI6LnVIX3LAUtrd9-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1135" y="2520" />
@@ -186,8 +189,11 @@
         <mxCell id="FwMJxgxvuYq8EWC6jKZR-30" value="/join_finish&lt;br&gt;가입 완료 안내" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" parent="1" vertex="1">
           <mxGeometry x="1050" y="2405" width="170" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="tLdyOI6LnVIX3LAUtrd9-1" value="로그인 기능" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" vertex="1" parent="1">
+        <mxCell id="tLdyOI6LnVIX3LAUtrd9-1" value="로그인 기능" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" parent="1" vertex="1">
           <mxGeometry x="440" y="2540" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tKP0dVKC1xyqjup3bviw-1" value="/list[GET]&lt;br&gt;몬스터 목록" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="414" y="-400" width="130" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
