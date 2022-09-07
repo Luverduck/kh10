@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.MemberDto;
 import com.kh.springhome.repository.MemberDao;
@@ -53,5 +54,38 @@ public class MemberController {
 		// return "목록 페이지 주소";
 		// return "/WEB-INF/views/member/list.jsp";
 		return "member/list";
+	}
+	
+	@GetMapping("/detail")
+	public String detail(Model model, @RequestParam String memberId) {
+		// 조회 결과(memberDto)
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		// model.addAttribute("memberDto", 조회 결과);
+		model.addAttribute("memberDto", memberDto);
+		// return "/WEB-INF/views/member/detail.jsp";
+		return "member/detail";
+	}
+	
+	// 수정
+	@GetMapping("/edit")
+	public String edit(Model model, @RequestParam String memberId) {
+		model.addAttribute("memberDto", memberDao.selectOne(memberId));
+		return "member/edit";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute MemberDto memberDto, RedirectAttributes attr) {
+		if(memberDao.update(memberDto)) {
+			attr.addAttribute("memberId", memberDto.getMemberId());
+			return "redirect:detail";
+		}
+		else {
+			return "redirect:edit_fail";
+		}
+	}
+	
+	@GetMapping("/edit_fail")
+	public String editFail() {
+		return "member/editFail";
 	}
 }

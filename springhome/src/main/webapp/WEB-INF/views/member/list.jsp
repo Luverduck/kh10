@@ -88,6 +88,7 @@
 					<th>전화번호</th>
 					<th>이메일</th>
 					<th>등급</th>
+					<th>상세정보</th>
 				</tr>
 			</thead>
 				
@@ -100,13 +101,18 @@
 						<td>${memberDto.getMemberTel()}</td>
 						<td>${memberDto.getMemberEmail()}</td>
 						<td>${memberDto.getMemberGrade()}</td>
+						<td>
+							<a href = "detail?memberId=${memberDto.getMemberId()}">
+								상세
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 			
 			<tfoot>
 				<tr>
-					<td colspan = "6" align = "right">총 ?개의 결과</td>
+					<td colspan = "7" align = "right">총 ?개의 결과</td>
 				</tr>
 			</tfoot>
 		</table>
