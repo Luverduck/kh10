@@ -12,4 +12,10 @@ public interface GuestBookDao {
 	// 조회(select)
 	List<GuestBookDto> selectList();
 	List<GuestBookDto> selectList(String type, String keyword);
+	
+	// 상세 조회(detail)
+	GuestBookDto detail(int no);
+	
+	// 수정 (update)
+	boolean update(GuestBookDto guestBookDto);
 }

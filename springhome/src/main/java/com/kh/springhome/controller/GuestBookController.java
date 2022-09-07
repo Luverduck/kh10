@@ -1,7 +1,5 @@
 package com.kh.springhome.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.GuestBookDto;
 import com.kh.springhome.repository.GuestBookDao;
@@ -61,5 +60,44 @@ public class GuestBookController {
 			model.addAttribute("list", guestBookDao.selectList());
 		}
 		return "guestbook/list";
+	}
+	
+	// 상세 조회
+	@GetMapping("/detail")
+	public String detail(Model model, @RequestParam int no) {
+		GuestBookDto guestBookDto = guestBookDao.detail(no);
+		model.addAttribute("guestBookDto", guestBookDto);
+		return "guestbook/detail";
+	}
+	
+	// 수정	
+	@GetMapping("/edit")
+	public String edit(Model model, @RequestParam int no) {
+		model.addAttribute("guestBookDto", guestBookDao.detail(no));
+//		return "/WEB-INF/views/guestbook/edit.jsp";
+		return "guestbook/edit";
+	};
+	
+	@PostMapping("/edit")
+	public String edit(
+						@ModelAttribute GuestBookDto guestBookDto, 
+						RedirectAttributes attr	// redirect 전용 저장소(Model의 자식 클래스)
+						) {
+		boolean result = guestBookDao.update(guestBookDto);
+		if(result) {
+//			return "redirect:detail?no=" + guestBookDto.getNo();	// 비추천(직접 작성)
+			attr.addAttribute("no", guestBookDto.getNo());			// 추천(Spring 도구 활용)
+			return "redirect:detail";
+		}
+		else {
+			return "redirect:edit_fail";
+		}
+	}
+	
+	// 수정 실패시
+	@GetMapping("/edit_fail")
+	public String editFail() {
+//		return "/WEB-INF/views/guestbook/editFail";
+		return "guestbook/editFail";
 	}
 }

@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +27,7 @@ public class GuestBookDaoImpl implements GuestBookDao {
 		jdbcTemplate.update(sql, param);
 	}
 	
+	// RowMapper
 	RowMapper<GuestBookDto> mapper = new RowMapper<>() {
 		@Override
 		public GuestBookDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -50,6 +53,39 @@ public class GuestBookDaoImpl implements GuestBookDao {
 		sql = sql.replace("#1", type);
 		Object[] param = new Object[] {keyword};
 		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
+	// ResultSetExtractor
+	ResultSetExtractor<GuestBookDto> extractor = new ResultSetExtractor<>() {
+		@Override
+		public GuestBookDto extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				GuestBookDto guestBookDto = new GuestBookDto();
+				guestBookDto.setNo(rs.getInt("no"));
+				guestBookDto.setName(rs.getString("name"));
+				guestBookDto.setMemo(rs.getString("memo"));
+				return guestBookDto;
+			}
+			else {
+				return null;
+			}
+		}
+	};
+	
+	// 상세 조회(detail)
+	@Override
+	public GuestBookDto detail(int no) {
+		String sql = "select * from guest_book where no = ?";	
+		Object[] param = new Object[] {no};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
+
+	// 수정(update)
+	@Override
+	public boolean update(GuestBookDto guestBookDto) {
+		String sql = "update guest_book set name = ?, memo = ? where no = ?";
+		Object[] param = new Object[] {guestBookDto.getName(), guestBookDto.getMemo(), guestBookDto.getNo()};
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 
 }

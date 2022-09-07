@@ -46,11 +46,17 @@
 				<tr>
 					<td>${guestBookDto.getNo()}</td>
 					<td>${guestBookDto.getName()}</td>
-					
+					<td>
+						<a href = "detail?no=${guestBookDto.getNo()}">
+							<img src = "/image/go.png" width = 20 height = 20>
+						</a>
+					</td>
 				</tr>
+				<!-- 
 				<tr height = "80" valign = "top">
 					<td colspan = "2">${guestBookDto.getMemo()}</td>
 				</tr>
+				 -->
 				</c:forEach>
 			</tbody>
 		</table>
