@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.MusicDto;
 import com.kh.springhome.repository.MusicDao;
@@ -41,7 +42,7 @@ public class MusicController {
 		return "music/insertSuccess";
 	}
 	
-	// 조회
+	// 조회 (select)
 	@GetMapping("/list")
 	public String list(
 						Model model, 
@@ -55,5 +56,39 @@ public class MusicController {
 			model.addAttribute("list", musicDao.selectList());
 		}
 		return "music/list";
+	}
+	
+	// 상세 조회 (detail)
+	@GetMapping("/detail")
+	public String detail(Model model, @RequestParam int musicNo) {
+		model.addAttribute("musicDto", musicDao.selectOne(musicNo));
+		return "music/detail";
+	}
+	
+	// 수정 (update)
+	@GetMapping("/edit")
+	public String edit(Model model, @RequestParam int musicNo) {
+		model.addAttribute("musicDto", musicDao.selectOne(musicNo));
+		return "music/edit";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute MusicDto musicDto, RedirectAttributes attr) {
+		boolean result = musicDao.update(musicDto);
+		if(result) {
+//			return "redirect:detail?musicNo="+musicDto.getMusicNo();
+			attr.addAttribute("musicNo", musicDto.getMusicNo());
+			return "redirect:detail";
+		}
+		else {
+			return "redirect:edit_fail";
+		}
+	}
+	
+	@GetMapping("/edit_fail")
+	public String editFail() {
+//		다른 폴더의 view를 사용할 수도 있따
+//		return "guestbook/editFail";
+		return "music/editFail";
 	}
 }

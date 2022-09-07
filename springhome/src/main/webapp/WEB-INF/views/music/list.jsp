@@ -50,7 +50,9 @@
 				<tr height = "10" valign = "top">
 					<td>${musicDto.getMusicNo()}</td>
 					<td>
-						${musicDto.getMusicTitle()}
+						<a href = "detail?musicNo=${musicDto.getMusicNo()}">
+							${musicDto.getMusicTitle()}
+						</a>
 						<!-- 만약 조회수가 3 이상이면 인기곡이라는 문구가 붙도록 -->
 						<c:if test="${musicDto.musicPlay >= 3}">
 							<img src = "/image/hot.png" width="20" height="20"> 
@@ -66,7 +68,9 @@
 		
 		<tfoot align = "right">
 			<tr>
-				<td colspan = "6"><a href = "insert">음원 등록</a></td>
+				<td colspan = "6">
+					<a href = "insert">음원 등록</a><br>
+				</td>
 			</tr>
 		</tfoot>
 	</table>
