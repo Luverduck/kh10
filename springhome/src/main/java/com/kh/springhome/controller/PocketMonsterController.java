@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.springhome.entity.PocketMonsterDto;
 import com.kh.springhome.repository.PocketMonsterDao;
@@ -56,5 +57,46 @@ public class PocketMonsterController {
 		List<PocketMonsterDto> list = pocketMonsterDao.selectList();
 		model.addAttribute("list", list);
 		return "pocketmon/list";
+	}
+	
+	// 상세 조회 페이지
+	@GetMapping("/detail")
+	public String detail(Model model, @RequestParam int no) {
+//		model.addAttribute("dto", 상세조회 결과);
+		model.addAttribute("dto", pocketMonsterDao.selectOne(no));
+//		전달(return)할 경로 설정
+//		return "/WEB-INF/views/pocketmon/detail.jsp";		
+		return "pocketmon/detail";
+	}
+	
+	// 수정 기능
+	@GetMapping("/edit")
+	public String edit(Model model, @RequestParam int no) {
+		PocketMonsterDto dto = pocketMonsterDao.selectOne(no);
+		model.addAttribute("dto", dto);
+//		return "수정 입력 페이지";
+//		return "/WEB-INF/views/pocketmon/edit.jsp";
+		return "pocketmon/edit";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute PocketMonsterDto dto) {
+		// DB 수정 처리
+		boolean result = pocketMonsterDao.update(dto);
+		// 성공했다면 상세조회(detail) 페이지로 이동
+		if(result) {
+			return "redirect:detail?no=" + dto.getNo();	// 정적 바인딩
+		}
+		// 실패했다면 수정(edit) 페이지로 이동
+		else {
+			return "redirect:edit_fail";
+		}
+	}
+	
+	@GetMapping("/edit_fail")
+	public String editFail() {
+//		return "수정 실패 페이지";
+//		return "/WEB-INF/views/pocketmon/editFail"
+		return "pocketmon/editFail";
 	}
 }

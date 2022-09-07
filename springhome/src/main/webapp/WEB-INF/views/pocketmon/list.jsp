@@ -31,7 +31,11 @@
 		<tr>
 			<%-- 추론(dto.no 방식으로 쓰기)도 가능 --%>
 			<td>${dto.no}</td>
-			<td>${dto.getName()}</td>
+			<td>
+				<a href = "detail?no=${dto.getNo()}">
+					${dto.getName()}
+				</a>
+			</td>
 			<td>${dto.getType()}</td>
 		</tr>
 		</c:forEach>
