@@ -12,5 +12,6 @@
 <h2><a href = "guestbook/list">방명록 목록</a></h2>
 <h2><a href = "music/list">음원 목록</a></h2>
 <h2><a href = "member/insert">회원 가입</a></h2>
+<h2><a href = "member/list">회원 목록</a></h2>
 </body>
 </html>
