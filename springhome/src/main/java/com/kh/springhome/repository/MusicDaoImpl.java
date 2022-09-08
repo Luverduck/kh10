@@ -94,4 +94,11 @@ public class MusicDaoImpl implements MusicDao {
 		Object[] param = new Object[] {musicDto.getMusicTitle(), musicDto.getMusicArtist(), musicDto.getMusicAlbum(), musicDto.getMusicPlay(), musicDto.getReleaseTitle(), musicDto.getMusicNo()};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
+
+	// 삭제
+	@Override
+	public boolean delte(int musicNo) {
+		String sql = "delete music where music_no = ?";
+		return jdbcTemplate.update(sql, musicNo) > 0;
+	}
 }

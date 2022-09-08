@@ -91,4 +91,15 @@ public class MusicController {
 //		return "guestbook/editFail";
 		return "music/editFail";
 	}
+	
+	// 삭제
+	@GetMapping("/delete")
+	public String delete(@RequestParam int musicNo) {
+		if(musicDao.delte(musicNo)) {
+			return "redirect:list";
+		}
+		else {
+			return "music/editFail";
+		}
+	}
 }

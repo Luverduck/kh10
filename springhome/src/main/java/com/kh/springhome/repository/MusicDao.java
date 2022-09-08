@@ -18,4 +18,7 @@ public interface MusicDao {
 	
 	// Dao의 추상 메소드 - 수정(update)
 	boolean update(MusicDto musicDto);
+	
+	// Dao의 추상 메소드 - 삭제(delete)
+	boolean delte(int musicNo);
 }
