@@ -1,5 +1,7 @@
 package com.kh.springhome.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -118,17 +120,36 @@ public class MemberController {
 	
 	// inputDto는 사용자가 입력한 정보, findDto는 DB 조회 결과
 	@PostMapping("/login")
-	public String login(@ModelAttribute MemberDto inputDto) {
+	public String login(@ModelAttribute MemberDto inputDto, HttpSession session) {
 		MemberDto findDto = memberDao.selectOne(inputDto.getMemberId());
 		if(findDto == null) {	// a)
 			return "redirect:login?error";	// redirect는 언제나 get방식
 		}
 		boolean passwordMatch = inputDto.getMemberPw().equals(findDto.getMemberPw());
 		if(passwordMatch) {		// c)
+			// 로그인 유지 : HttpSession에 이 사용자가 로그인 했음을 기록
+			// - 필요시 컨트롤러에 매개변수에 대한 변수를 선언
+			// - key=value 형태로 관리되는 저장소이며 다음의 명령이 존재
+			// 	1) session.setAttribute("이름", 값);
+			// 	2) session.getAttribute("이름");
+			// 	3) session.removeAttribute("이름");
+			
+			session.setAttribute("loginId", inputDto.getMemberId());
+			
 			return "redirect:/";
 		}
 		else {					// )
 			return "redirect:login?error";	// redirect는 언제나 get방식
 		}
+	}
+	
+	// 로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		// session에는 중요한 정보만 간결하게 넣는다
+		// 1. 로그아웃을 누르면 세션의 loginId라는 이름의 데이터를 삭제 : .removeAttribute("이름")
+		// 2. 메인 페이지로 강제 이동
+		session.removeAttribute("loginId");
+		return "redirect:/";
 	}
 }
