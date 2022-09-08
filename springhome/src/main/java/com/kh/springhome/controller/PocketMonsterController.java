@@ -99,4 +99,18 @@ public class PocketMonsterController {
 //		return "/WEB-INF/views/pocketmon/editFail"
 		return "pocketmon/editFail";
 	}
+	
+	// 삭제
+	@GetMapping("/delete")
+	public String delete(@RequestParam int no) {
+		boolean result = pocketMonsterDao.delete(no);
+		if(result) {
+			return "redirect:list";
+		}
+		else {
+//			return "/WEB-INF/views/pocketmon/editFail.jsp";
+			return "pocketmon/editFail";
+		}
+	}
+	
 }
