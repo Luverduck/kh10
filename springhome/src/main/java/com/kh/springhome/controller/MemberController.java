@@ -99,4 +99,36 @@ public class MemberController {
 			return "member/editFail";
 		}
 	}
+	
+	// 로그인
+	// 1. 로그인 페이지로 이동
+	@GetMapping("/login")
+	public String login() {
+//		return "/WEB-INF/views/member/login.jsp";
+		return "member/login";
+	}
+	
+	// 2. 로그인 정보 검새
+	// 1) DB에서 아이디에 해당하는 정보를 불러온다
+	// 2) 불러온 정보의 비밀번호와 사용자가 입력한 비밀번호를 비교한다
+	// 	<결과>
+	// 	a) 1번이 실패할 경우 - 로그인 실패(아이디 없음)
+	// 	b) 1번이 성공했으나 2번이 실패할 경우 - 로그인 실패(비밀번호 틀림)
+	// 	c) 1번과 2번이 모두 성공할 경우 - 로그인 성공
+	
+	// inputDto는 사용자가 입력한 정보, findDto는 DB 조회 결과
+	@PostMapping("/login")
+	public String login(@ModelAttribute MemberDto inputDto) {
+		MemberDto findDto = memberDao.selectOne(inputDto.getMemberId());
+		if(findDto == null) {	// a)
+			return "redirect:login?error";	// redirect는 언제나 get방식
+		}
+		boolean passwordMatch = inputDto.getMemberPw().equals(findDto.getMemberPw());
+		if(passwordMatch) {		// c)
+			return "redirect:/";
+		}
+		else {					// )
+			return "redirect:login?error";	// redirect는 언제나 get방식
+		}
+	}
 }
