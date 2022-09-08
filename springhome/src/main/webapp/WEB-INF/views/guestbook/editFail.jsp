@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>변경 실패</title>
+<title>오류</title>
 </head>
 <body>
 	<div align = "center">

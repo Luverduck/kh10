@@ -88,4 +88,12 @@ public class GuestBookDaoImpl implements GuestBookDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 
+	// 삭제(delete)
+	@Override
+	public boolean delete(int no) {
+		String sql = "delete guest_book where no = ?";
+		Object[] param = new Object[] {no};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+
 }

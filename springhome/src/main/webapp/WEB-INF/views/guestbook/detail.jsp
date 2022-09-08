@@ -28,6 +28,7 @@
 		<h2><a href = "list">목록</a></h2>
 		<h2><a href = "insert">등록</a></h2>
 		<h2><a href = "edit?no=${guestBookDto.getNo()}">수정</a></h2>
+		<h2><a href = "delete?no=${guestBookDto.getNo()}">삭제</a></h2>
 	</div>
 
 </body>

@@ -100,4 +100,17 @@ public class GuestBookController {
 //		return "/WEB-INF/views/guestbook/editFail";
 		return "guestbook/editFail";
 	}
+	
+	// 삭제
+	@GetMapping("/delete")
+	public String delete(@RequestParam int no) {
+		boolean result = guestBookDao.delete(no);
+		if(result) {
+			return "redirect:list";
+		}
+		else {
+//			return "/WEB-INF/views/pocketmon/editFail.jsp";
+			return "redirect/editFail";
+		}
+	}
 }

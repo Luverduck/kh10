@@ -18,4 +18,7 @@ public interface GuestBookDao {
 	
 	// 수정 (update)
 	boolean update(GuestBookDto guestBookDto);
+	
+	// 삭제 (delete)
+	boolean delete(int no);
 }
