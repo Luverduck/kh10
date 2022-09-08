@@ -102,9 +102,9 @@
 						<td>${memberDto.getMemberEmail()}</td>
 						<td>${memberDto.getMemberGrade()}</td>
 						<td>
-							<a href = "detail?memberId=${memberDto.getMemberId()}">
-								상세
-							</a>
+							<a href = "detail?memberId=${memberDto.getMemberId()}">상세</a>
+							<a href = "edit?memberId=${memberDto.getMemberId()}">수정</a>
+							<a href = "delete?memberId=${memberDto.getMemberId()}">삭제</a>
 						</td>
 					</tr>
 				</c:forEach>

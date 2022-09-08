@@ -32,8 +32,7 @@ public class MemberDaoImpl implements MemberDao {
 										+ "member_email, "
 										+ "member_post, "
 										+ "member_base_address, "
-										+ "member_detail_address, "
-										+ ") "
+										+ "member_detail_address) "
 								+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] param = new Object[] {
 										memberDto.getMemberId(), 
@@ -145,5 +144,12 @@ public class MemberDaoImpl implements MemberDao {
 										memberDto.getMemberId()
 										};
 		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	// 추상 메소드 오버라이딩 (삭제)
+	@Override
+	public boolean delete(String memberId) {
+		String sql = "delete member where member_id = ?";
+		return jdbcTemplate.update(sql, memberId) > 0;
 	}
 }

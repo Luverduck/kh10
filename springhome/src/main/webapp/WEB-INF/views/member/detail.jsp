@@ -71,7 +71,8 @@
 			</tbody>
 		</table>
 		
-		<hr3><a href = "edit?memberId=${memberDto.getMemberId()}">회원 정보 변경</a></hr3>
+		<h3><a href = "edit?memberId=${memberDto.getMemberId()}">회원 정보 변경</a></h3>
+		<h3><a href = "delete?memberId=${memberDto.getMemberId()}">회원 탈퇴</a></h3>
 	</div>
 
 </body>

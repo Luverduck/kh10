@@ -18,4 +18,7 @@ public interface MemberDao {
 	
 	// MemberDao의 추상 메소드 (수정 메소드)
 	boolean update(MemberDto memberDto);
+	
+	// MemberDao의 추상 메소드 (삭제 메소드)
+	boolean delete(String memberId);
 }

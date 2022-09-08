@@ -88,4 +88,15 @@ public class MemberController {
 	public String editFail() {
 		return "member/editFail";
 	}
+	
+	// 삭제
+	@GetMapping("/delete")
+	public String delete(@RequestParam String memberId) {
+		if(memberDao.delete(memberId)) {
+			return "redirect:list";
+		}
+		else {
+			return "member/editFail";
+		}
+	}
 }
