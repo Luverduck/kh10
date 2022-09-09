@@ -4,7 +4,7 @@
 <jsp:include page = "/WEB-INF/views/template/header.jsp">
 	<jsp:param name = "title" value = "회원 정보 수정"/>
 </jsp:include>
-
+ 
 	<div align = "center">
 		<h1>회원 정보 수정</h1>
 		<form action = "edit" method = "post">

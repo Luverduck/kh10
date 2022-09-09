@@ -1,7 +1,7 @@
 package com.kh.springhome.entity;
 
 import java.sql.Date;
-
+ 
 public class MemberDto {
 
 	// 필드

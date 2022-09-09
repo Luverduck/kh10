@@ -15,7 +15,7 @@ import com.kh.springhome.entity.MemberDto;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
-
+ 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	

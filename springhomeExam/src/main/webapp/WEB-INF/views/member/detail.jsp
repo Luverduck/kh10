@@ -6,7 +6,7 @@
 <jsp:include page = "/WEB-INF/views/template/header.jsp">
 <jsp:param name = "title" value = "회원 정보"/>
 </jsp:include>
-
+ 
 	<div align = "center">
 		
 		<h1>${memberDto.getMemberId()} 회원 정보</h1>

@@ -5,7 +5,7 @@
 <jsp:include page = "/WEB-INF/views/template/header.jsp">
 	<jsp:param name = "title" value = "회원 조회"/>
 </jsp:include>
-
+ 
 	<div align = "center">
 		
 		<!-- 제목 -->
