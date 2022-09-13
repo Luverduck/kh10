@@ -59,13 +59,15 @@
 				</c:forEach>
 			</tbody>
 			
-			<tfoot align = "right">
-				<tr>
-					<td colspan = "6">
-						<a href = "insert">음원 등록</a><br>
-					</td>
-				</tr>
-			</tfoot>
+			<c:if test = "${mg == '관리자'}">
+				<tfoot align = "right">
+					<tr>
+						<td colspan = "6">
+							<a href = "insert">음원 등록</a><br>
+						</td>
+					</tr>
+				</tfoot>
+			</c:if>
 		</table>
 	</div>
 
