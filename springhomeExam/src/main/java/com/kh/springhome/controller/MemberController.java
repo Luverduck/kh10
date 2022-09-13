@@ -140,8 +140,9 @@ public class MemberController {
 		}
 		boolean passwordMatch = inputDto.getMemberPw().equals(findDto.getMemberPw());
 		if(passwordMatch) {	// c) 아이디와 비밀번호 모두 일치
-			// Session에 loginId에 memberId 값을 저장
+			// Session에 loginId에 memberId, memberGrade 값을 저장
 			session.setAttribute("loginId", inputDto.getMemberId());
+			session.setAttribute("mg", findDto.getMemberGrade());
 			// 메인 Mapping으로 강제 이동
 			return "redirect:/";
 		}
@@ -157,6 +158,8 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		// 1) Session에 저장된 loginId 삭제
 		session.removeAttribute("loginId");
+		session.removeAttribute("mg");
+		// session.invalidate(); - 세션 파괴(비추천 - 방문자 수 카운트시 문제 발생)
 		// 2) 메인 Mapping으로 강제 이동
 		return "redirect:/";
 	}
