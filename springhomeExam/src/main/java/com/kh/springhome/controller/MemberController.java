@@ -161,61 +161,20 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	// 7. 마이 페이지 
-	// 7-1. 마이페이지 Mapping
+	// 7. 마이페이지 - 현재 로그인한 회원의 정보를 화면에 출력
+	// 마이페이지 Mapping
 	@GetMapping("/mypage")
 	public String mypage(Model model, @ModelAttribute MemberDto memberDto, HttpSession session) { 
 		// 0) Session에 저장된 MemberId(loginId)를 반환
 		// .getAttribute(attributeName) : Session에 저장된 loginId라는 key에 저장된 value를 반환
+		// - Session의 데이터는 Object 형태로 저장되므로 꺼내려면 down casting 필요
 		String MemberId = (String) session.getAttribute("loginId");
 		// 1) Model의 변수명과 값 설정 - MemberId와 일치하는 단일 조회 selectOne()의 결과값으로 설정
-		model.addAttribute("memberDto", memberDao.selectOne(MemberId));
-		// 2) Model을 view에 전달 (mypage.jsp에서 전달 받은 Model을 표시할 형식을 정의)
+		model.addAttribute("memberDto", memberDao.selectOne(MemberId));	
+		// 2) Model을 view에 전달 (전달 받은 Model은 mypage.jsp에서 표시 형식을 정의)
 		return "member/mypage";
-	}
-	
-	// 7-2. 마이페이지 
-	
-	
-	// footer의 각 항목으로 이동하기 위한 redirect 모음
-	// - 포켓몬스터
-	@GetMapping("/pocketmon/list")
-	public String footPocketmon() {
-		return "redirect:../../pocketmon/list";
-	} 
-	// - 방명록
-	@GetMapping("/guestbook/list")
-	public String footGuestbook() {
-		return "redirect:../../guestbook/list";
-	}
-	// - 음원 관리
-	@GetMapping("/music/list")
-	public String footMusic() {
-		return "redirect:../../music/list";
-	}
-	// - 로그인
-	@GetMapping("/member/login")
-	public String footLogin() {
-		return "redirect:../../member/login";
-	}
-	// - 회원가입
-	@GetMapping("/member/insert")
-	public String footJoin() {
-		return "redirect:../../member/insert";
-	}
-	// - 로그아웃
-	@GetMapping("/member/logout")
-	public String footLogout() {
-		return "redirect:../../member/logout";
-	}
-	// - 회원목록
-	@GetMapping("member/list")
-	public String footList() {
-		return "redirect:../../member/list";
-	}
-	// - 마이페이지
-	@GetMapping("/member/mypage")
-	public String footMypage() {
-		return "redirect:../../member/mypage";
-	}
+		// (참고) 기존에 만든 detail에 전달
+		// 2) Model을 view에 전달 (전달 받은 Model은 detail.jsp에서 표시 형식을 정의)
+		// return "member/detail";
+	}	
 }
