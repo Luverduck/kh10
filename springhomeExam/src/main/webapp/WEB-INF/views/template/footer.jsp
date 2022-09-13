@@ -17,11 +17,12 @@
 				
 				세션 ID : ${pageContext.session.getId()}<br>
 				신규 세션인가? : ${pageContext.session.isNew()}
-				
-				loginId : ${sessionScope.loginId}
-				로그인 상태인가? : ${sessionScope.loginId != null}
 			--%>
-		
+			
+			loginId : ${sessionScope.loginId}<br>
+			로그인 상태인가? : ${sessionScope.loginId != null}<br>
+			mg : ${sessionScope.mg}<br>
+			관리자인가? : ${sessionScope.mg == '관리자'}<br>
 		</div>
 	</body>
 </html>
