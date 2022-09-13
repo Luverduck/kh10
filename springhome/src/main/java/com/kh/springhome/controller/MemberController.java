@@ -130,9 +130,9 @@ public class MemberController {
 			// 로그인 유지 : HttpSession에 이 사용자가 로그인 했음을 기록
 			// - 필요시 컨트롤러에 매개변수에 대한 변수를 선언
 			// - key=value 형태로 관리되는 저장소이며 다음의 명령이 존재
-			// 	1) session.setAttribute("이름", 값);
-			// 	2) session.getAttribute("이름");
-			// 	3) session.removeAttribute("이름");
+			// 	1) 저장 : session.setAttribute("이름", 값);
+			// 	2) 반환 : session.getAttribute("이름");
+			// 	3) 제거 : session.removeAttribute("이름");
 			
 			session.setAttribute("loginId", inputDto.getMemberId());
 			
