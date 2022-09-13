@@ -98,7 +98,7 @@ public class MusicController {
 			return "redirect:edit_fail";
 		}
 	}
-	
+	 
 	// 3-3. 수정 실패 Mapping
 	@GetMapping("/edit_fail")
 	public String editFail() {
@@ -117,47 +117,5 @@ public class MusicController {
 		else {	// false라면 수정 실패 Mapping으로 이동
 			return "music/editFail";
 		}
-	}
-	
-	// footer의 각 항목으로 이동하기 위한 redirect 모음
-	// - 포켓몬스터
-	@GetMapping("/pocketmon/list")
-	public String footPocketmon() {
-		return "redirect:../../pocketmon/list";
-	} 
-	// - 방명록
-	@GetMapping("/guestbook/list")
-	public String footGuestbook() {
-		return "redirect:../../guestbook/list";
-	}
-	// - 음원 관리
-	@GetMapping("/music/list")
-	public String footMusic() {
-		return "redirect:../../music/list";
-	}
-	// - 로그인
-	@GetMapping("/member/login")
-	public String footLogin() {
-		return "redirect:../../member/login";
-	}
-	// - 회원가입
-	@GetMapping("/member/insert")
-	public String footJoin() {
-		return "redirect:../../member/insert";
-	}
-	// - 로그아웃
-	@GetMapping("/member/logout")
-	public String footLogout() {
-		return "redirect:../../member/logout";
-	}
-	// - 회원목록
-	@GetMapping("member/list")
-	public String footList() {
-		return "redirect:../../member/list";
-	}
-	// - 마이페이지
-	@GetMapping("/member/mypage")
-	public String mypage() {
-		return "redirect:../../member/mypage";
 	}
 }
