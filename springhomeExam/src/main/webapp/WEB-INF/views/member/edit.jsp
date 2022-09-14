@@ -17,7 +17,6 @@
 			기본주소 : <input type = "text" name = "memberBaseAddress" value = "${memberDto.getMemberBaseAddress()}"><br><br>
 			상세주소 : <input type = "text" name = "memberDetailAddress" value = "${memberDto.getMemberDetailAddress()}"><br><br>
 			포인트 : <input type = "text" name = "memberPoint" value = "${memberDto.getMemberPoint()}"><br><br>
-			등급 : <input type = "text" name = "memberGrade" value = "${memberDto.getMemberGrade()}"><br><br>
 			<button type = "submit">변경</button>
 		</form>
 	</div>

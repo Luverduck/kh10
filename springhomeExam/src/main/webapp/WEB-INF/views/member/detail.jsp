@@ -77,7 +77,7 @@
 			</c:when>
 			<!-- 회원용 메뉴 -->
 			<c:otherwise>
-				<h3><a href = "#">비밀번호 변경</a></h3>
+				<h3><a href = "/member/password">비밀번호 변경</a></h3>
 				<h3><a href = "#">개인정보 변경</a></h3>
 				<h3><a href = "#">회원 탈퇴</a></h3>
 			</c:otherwise>
