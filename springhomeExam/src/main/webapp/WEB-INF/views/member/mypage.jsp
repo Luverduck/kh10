@@ -24,6 +24,7 @@
 		<br>
 		
 		<h3><a href = "edit?memberId=${memberDto.getMemberId()}">회원 정보 변경</a></h3>
+		<h3><a href = "/member/password">비밀번호 변경</a></h3>
 	</div>
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>
