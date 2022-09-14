@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.MemberDto;
+import com.kh.springhome.entity.PasswordDto;
 import com.kh.springhome.repository.MemberDao;
  
 @Controller
@@ -79,7 +80,7 @@ public class MemberController {
 	}
 	
 	// 3. 수정 (update)
-		// 3-1. 수정 Mapping
+	// 3-1. 수정 Mapping
 	@GetMapping("/edit")
 	public String edit(Model model, @RequestParam String memberId) {
 		// 1) Model의 변수명과 값 설정 - 단일조회 selectOne()의 결과값으로 설정
@@ -129,7 +130,7 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	// 5-2. 등록 Mapping에 DTO 전달 및 DB 처리
+	// 5-2. 로그인 Mapping에 DTO 전달
 	// inputDto는 사용자가 입력한 정보, findDto는 DB 조회 결과
 	// 입력한 inputDto의 memberId, memberPw와 DB 조회 결과인 findDto의 memberId, memberPw를 비교
 	@PostMapping("/login")
@@ -171,13 +172,52 @@ public class MemberController {
 		// 0) Session에 저장된 MemberId(loginId)를 반환
 		// .getAttribute(attributeName) : Session에 저장된 loginId라는 key에 저장된 value를 반환
 		// - Session의 데이터는 Object 형태로 저장되므로 꺼내려면 down casting 필요
-		String MemberId = (String) session.getAttribute("loginId");
+		String memberId = (String) session.getAttribute("loginId");
 		// 1) Model의 변수명과 값 설정 - MemberId와 일치하는 단일 조회 selectOne()의 결과값으로 설정
-		model.addAttribute("memberDto", memberDao.selectOne(MemberId));	
+		model.addAttribute("memberDto", memberDao.selectOne(memberId));	
 		// 2) Model을 view에 전달 (전달 받은 Model은 mypage.jsp에서 표시 형식을 정의)
-		return "member/mypage";
+		return "/member/mypage";
 		// (참고) 기존에 만든 detail에 전달
 		// 2) Model을 view에 전달 (전달 받은 Model은 detail.jsp에서 표시 형식을 정의)
 		// return "member/detail";
 	}	
+	
+	// 8. 비밀번호 변경 (me)
+	// 8-1. 비밀번호 변경 Mapping
+	@GetMapping("/password")
+	public String changePassword() {
+		return "/member/password";
+	}
+	
+	// 8-2. 비밀번호 변경 Mapping에 DB처리 
+	// PasswordDto는 view로부터 전달받는 비밀번호 변경을 위한 Dto 
+	// - pwNow(현재 비밀번호), pwChange(변경 비밀번호), pwChangeCheck(비밀번호 확인)으로 구성
+	@PostMapping("/password")
+	public String changePassword(HttpSession session, @ModelAttribute PasswordDto passwordDto) {
+		// 1) 현재 비밀번호 확인을 위해 Session에 저장된 아이디에 해당하는 MemberDto 및 비밀번호 반환
+		String memberId = (String) session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		String memberPw = memberDto.getMemberPw();
+		// 2) 다음 여부를 모두 만족하는 경우 비밀번호 변경
+		//   i) memberDto의 비밀번호(memberPw)와 passwordDto의 현재 비밀번호(pwNow)가 일치하는지
+		//   ii) passwordDto의 변경 비밀번호(pwChange)와 비밀번호 확인(pwChangeCheck)가 일치하는지
+		if(memberPw.equals(passwordDto.getPwNow()) && passwordDto.getPwChange().equals(passwordDto.getPwChangeCheck())) {
+			// i)와 ii)를 모두 만족하는 경우 memberDto에서 비밀번호만 passwordDto의 변경 비밀번호(pwChange)로 변경
+			memberDto.setMemberPw(passwordDto.getPwChange());
+			// 비밀번호 부분만 수정한 memberDto를 매개변수로 하여 수정(update) 메소드 실행 
+			memberDao.update(memberDto);
+			// 수정(update) 메소드 실행 후 비밀번호 변경 완료 Mapping으로 강제 이동(redirect)
+			return "redirect:password_change";
+		}
+		else {
+			// 그외 경우는 비밀번호 변경 Mapping으로 강제 이동(redirect)
+			return "redirect:password";
+		}
+	}
+	
+	// 8-3. 비밀번호 변경 완료 Mapping
+	@GetMapping("/password_change")
+	public String changePasswordSuccess() {
+		return "/member/passwordSuccess";
+	}
 }
