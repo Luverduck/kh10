@@ -30,6 +30,8 @@ public class MemberInterceptor implements HandlerInterceptor {
 //		return true;	// 통과
 //		return false;	// 차단
 		
+		System.out.println("Member Interceptor");
+		
 		// 시나리오
 		// 1. 접속한 사용자가 로그인 상태인지 검사 (request 객체 필요)
 		// 	- HttpSession에 loginId란 값이 있는지 검사
