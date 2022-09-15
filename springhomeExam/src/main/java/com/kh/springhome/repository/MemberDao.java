@@ -21,4 +21,13 @@ public interface MemberDao {
 	
 	// MemberDao의 추상 메소드 (삭제 메소드)
 	boolean delete(String memberId);
+	
+	// MemberDao의 추상 메소드 (비밀번호 변경)
+	boolean changePassword(String memberId, String memberPw);
+	
+	// MemberDao의 추상 메소드 (개인정보 변경)
+	boolean changeInformation(MemberDto memberDto);
+	
+	// MemberDao의 추상 메소드 (로그인 시간 갱신)
+	boolean updateLoginTime(String memberId);
 }

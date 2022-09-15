@@ -11,7 +11,7 @@
 			제목 : <input name = "musicTitle" placeholder = "음원명" type = "text" required><br><br>
 			가수 : <input name = "musicArtist" placeholder = "아티스트명" type = "text" required><br><br>
 			앨범 : <input name = "musicAlbum" placeholder = "앨범명" type = "text" required><br><br>
-			발매일 : <input nane = "releaseTitle" placeholder = "발매일" type = "date" required><br><br>
+			발매일 : <input name = "releaseTitle" placeholder = "발매일" type = "date" required><br><br>
 			<button>등록</button>
 		</form>
 	</div>

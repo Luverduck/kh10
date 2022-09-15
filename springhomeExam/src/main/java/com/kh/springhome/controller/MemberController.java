@@ -144,6 +144,8 @@ public class MemberController {
 			// Session에 loginId에 memberId, memberGrade 값을 저장
 			session.setAttribute("loginId", inputDto.getMemberId());
 			session.setAttribute("mg", findDto.getMemberGrade());
+			// 로그인 시간 갱신
+			memberDao.updateLoginTime(inputDto.getMemberId());
 			// 메인 Mapping으로 강제 이동
 			return "redirect:/";
 		}
@@ -219,5 +221,81 @@ public class MemberController {
 	@GetMapping("/password_change")
 	public String changePasswordSuccess() {
 		return "/member/passwordSuccess";
+	}
+	
+	// 9. 개인정보 변경
+	// 9-1. 개인정보 변경 Mapping
+	@GetMapping("/information")
+	public String information(HttpSession session, Model model) {
+		// 1) 자신의 아이디를 획득(HttpSession)
+		String memberId = (String) session.getAttribute("loginId");
+		
+		// 2) 아이디로 정보를 조회
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		
+		// 3) 조회한 정보를 화면으로 전달
+		model.addAttribute("memberDto", memberDto);
+		
+		// 4) 연결될 화면 주소 반환
+//			return "/WEB-INF/view/member/information.jsp";
+		return "/member/information";
+	}
+	
+	// 9-2. 개인정보 변경 Mapping에 DB처리
+	@PostMapping("/information")
+	public String information(HttpSession session, @ModelAttribute MemberDto inputDto) {
+		// memberDto에 memberId가 없다 -> Session에서 memberId 반환 후 추가 설정
+		String memberId = (String) session.getAttribute("loginId");
+		inputDto.setMemberId(memberId);
+		
+		// 1) 비밀번호 검사
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		boolean passwordMatch = inputDto.getMemberPw().equals(memberDto.getMemberPw());
+		
+		if(passwordMatch) {
+			// 2) 비밀번호 검사를 통과했다면 정보를 변경하도록 처리
+			memberDao.changeInformation(inputDto);
+			return "redirect:mypage";
+		}
+		else {	// 비밀번호가 틀린 경우
+			return "redirect:information?error";
+		}
+	}
+	
+	// 9-3. 정보 변경 실패 Mapping
+	@GetMapping("/information_fail")
+	public String informationFail() {
+		return "redirect:editFail";
+	}
+	
+	// 10. 회원 탈퇴
+	// 10-1. 회원 탈퇴 Mapping
+	@GetMapping("/goodbye")
+	public String goodbye() {
+		return "/member/goodbye";
+	}
+	
+	// 10-2. 회원 탈퇴 Mapping에서 DB 처리
+	@PostMapping("/goodbye")
+	public String goodbye(HttpSession session, @RequestParam String memberPw, @RequestParam String memberPwCheck) {
+		String memberId = (String) session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		boolean passwordMatch = memberDto.getMemberPw().equals(memberPw) && memberPw.equals(memberPwCheck);
+		if(passwordMatch) {
+			// 회원 탈퇴
+			memberDao.delete(memberId);
+			// Session의 모든 정보 삭제
+			session.removeAttribute("loginId");
+			session.removeAttribute("mg");
+			return "redirect:goodbye_result";
+		}
+		else {
+			return "redirect:goodbye?error";
+		}
+	}
+	// 10-3. 회원 탈퇴 성공 페이지
+	@GetMapping("/goodbye_result")
+	public String goodbyeResult() {
+		return "/member/goodbyeResult";
 	}
 }

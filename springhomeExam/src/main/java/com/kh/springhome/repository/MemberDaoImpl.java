@@ -152,4 +152,28 @@ public class MemberDaoImpl implements MemberDao {
 		String sql = "delete member where member_id = ?";
 		return jdbcTemplate.update(sql, memberId) > 0;
 	}
+	
+	// 추상 메소드 오버라이딩 (비밀번호 변경)
+	@Override
+	public boolean changePassword(String memberId, String memberPw) {
+		String sql = "update member set member_pw = ? where member_id = ?";
+		Object[] param = {memberPw, memberId};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+	
+	// 추상 메소드 오버라이딩 (개인정보 변경)
+	@Override
+	public boolean changeInformation(MemberDto memberDto) {
+		String sql = "update member set member_nick = ?, member_tel = ?, member_email = ?, member_post = ?, member_base_address = ?, member_detail_address = ? where member_id = ?";
+		Object[] param = {memberDto.getMemberNick(), memberDto.getMemberTel(), memberDto.getMemberEmail(), memberDto.getMemberPost(), memberDto.getMemberBaseAddress(), memberDto.getMemberDetailAddress(), memberDto.getMemberId()};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+	
+	// 추상 메소드 재정의 (로그인 시간 갱신)
+	@Override
+	public boolean updateLoginTime(String memberId) {
+		String sql = "update member set member_login = sysdate where member_id = ?";
+		Object[] param = {memberId};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
 }
