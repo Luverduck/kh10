@@ -3,6 +3,7 @@ package com.kh.springhome.repository;
 import java.util.List;
 
 import com.kh.springhome.entity.PocketMonsterDto;
+import com.kh.springhome.vo.PocketMonsterCountVO;
 
 public interface PocketMonsterDao {
 
@@ -20,4 +21,7 @@ public interface PocketMonsterDao {
 	
 	// 삭제
 	boolean delete(int no);
+	
+	//
+	List<PocketMonsterCountVO> selectCountList();
 }
