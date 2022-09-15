@@ -3,8 +3,9 @@ package com.kh.springhome.vo;
 public class MusicYearCountVO {
 
 	// 필드
-	String musicYear;
-	int cnt;
+	private int rank;
+	private int year;
+	private int cnt;
 	
 	// 생성자
 	public MusicYearCountVO() {
@@ -12,12 +13,20 @@ public class MusicYearCountVO {
 	}
 	
 	// getter & setter
-	public String getMusicYear() {
-		return musicYear;
+	public int getRank() {
+		return rank;
 	}
 
-	public void setMusicYear(String musicYear) {
-		this.musicYear = musicYear;
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	public int getCnt() {
@@ -27,4 +36,5 @@ public class MusicYearCountVO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
+
 }

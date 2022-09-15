@@ -33,5 +33,8 @@ public interface MusicDao {
 	List<MusicDto> selectTopNtoN(int begin, int end);
 	
 	// Dao의 추상 메소드 - 연도별 발매수
-	List<MusicYearCountVO> selectCountList();
+	List<MusicYearCountVO> releaseByYear();
+	
+	// Dao의 추상 메소드 - 연도별 발매수 + 순위
+	List<MusicYearCountVO> releaseByYearWithRank();
 }

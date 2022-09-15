@@ -11,6 +11,7 @@
 <table border = "1" width = "300">
 	<thead>
 		<tr>
+			<th>순위</th>
 			<th>년도</th>
 			<th>발매수</th>
 		</tr>
@@ -18,7 +19,8 @@
 	<tbody align = "center">
 		<c:forEach var = "vo" items = "${list}">
 			<tr>
-				<td>${vo.getMusicYear()}</td>
+				<td>${vo.getRank()}</td>
+				<td>${vo.getYear()}</td>
 				<td>${vo.getCnt()}</td>
 			</tr>
 		</c:forEach>

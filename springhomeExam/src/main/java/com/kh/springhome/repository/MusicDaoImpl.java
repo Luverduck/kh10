@@ -130,7 +130,8 @@ public class MusicDaoImpl implements MusicDao {
 		@Override
 		public MusicYearCountVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			MusicYearCountVO vo = new MusicYearCountVO();
-			vo.setMusicYear(rs.getString("music_year"));
+			vo.setRank(rs.getInt("rank"));
+			vo.setYear(rs.getInt("year"));
 			vo.setCnt(rs.getInt("cnt"));
 			return vo;
 		}
@@ -138,8 +139,19 @@ public class MusicDaoImpl implements MusicDao {
 	
 	// 추상 메소드 오버라이딩 - 연도별 발매수
 	@Override
-	public List<MusicYearCountVO> selectCountList() {
-		String sql = "select to_char(release_title, 'yyyy') music_year, count(*) cnt from music group by to_char(release_title, 'yyyy') order by to_char(release_title, 'yyyy') desc";
+	public List<MusicYearCountVO> releaseByYear() {
+		// to_char(release_title, 'yyyy')
+		// extractor(year from release_title)
+		String sql = "select to_char(release_title, 'yyyy') year, count(*) cnt from music group by to_char(release_title, 'yyyy') order by year desc";
+		return jdbcTemplate.query(sql, countMapper);
+	}
+	
+	// 추상 메소드 오버라이딩 - 연도별 발매수 + 순위
+	@Override
+	public List<MusicYearCountVO> releaseByYearWithRank() {
+		// to_char(release_title, 'yyyy')
+		// extractor(year from release_title)
+		String sql = "select TMP.*, rank() over(order by cnt desc) rank from (select extract(year from release_title) year, count(*) cnt from music group by extract(year from release_title) order by year desc)TMP";
 		return jdbcTemplate.query(sql, countMapper);
 	}
 }
