@@ -3,6 +3,7 @@ package com.kh.springhome.repository;
 import java.util.List;
 
 import com.kh.springhome.entity.MusicDto;
+import com.kh.springhome.vo.MusicYearCountVO;
 
 public interface MusicDao {
 
@@ -21,4 +22,10 @@ public interface MusicDao {
 	
 	// Dao의 추상 메소드 - 삭제(delete)
 	boolean delte(int musicNo);
+	
+	// Dao의 추상 메소드 - Top 10
+	List<MusicDto> selectTopten();
+	
+	// Dao의 추상 메소드 - 연도별 발매수
+	List<MusicYearCountVO> selectCountList();
 }

@@ -10,9 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.kh.springhome.entity.MusicDto;
+import com.kh.springhome.vo.MusicYearCountVO;
 
 @Repository
 public class MusicDaoImpl implements MusicDao {
@@ -100,5 +100,30 @@ public class MusicDaoImpl implements MusicDao {
 	public boolean delte(int musicNo) {
 		String sql = "delete music where music_no = ?";
 		return jdbcTemplate.update(sql, musicNo) > 0;
+	}
+
+	// 추상 메소드 오버라이딩 - Top 10
+	@Override
+	public List<MusicDto> selectTopten() {
+		String sql = "select * from (select TMP.*, rownum music_rate from (select * from music order by music_play desc)TMP) where music_rate <= 10";
+		return jdbcTemplate.query(sql, mapper);
+	}
+
+	// MusicYearCountVO를 위한 Mapper
+	RowMapper<MusicYearCountVO> countMapper = new RowMapper<>() {
+		@Override
+		public MusicYearCountVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			MusicYearCountVO vo = new MusicYearCountVO();
+			vo.setMusicYear(rs.getString("music_year"));
+			vo.setCnt(rs.getInt("cnt"));
+			return vo;
+		}
+	};
+	
+	// 추상 메소드 오버라이딩 - 연도별 발매수
+	@Override
+	public List<MusicYearCountVO> selectCountList() {
+		String sql = "select to_char(release_title, 'yyyy') music_year, count(*) cnt from music group by to_char(release_title, 'yyyy') order by to_char(release_title, 'yyyy') desc";
+		return jdbcTemplate.query(sql, countMapper);
 	}
 }
