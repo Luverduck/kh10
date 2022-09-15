@@ -2,7 +2,7 @@ package com.kh.spring12.entity;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-
+ 
 public class PocketMonsterDto {
 
 	// field - 컬럼과 동일하게

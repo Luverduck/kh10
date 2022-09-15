@@ -22,7 +22,7 @@ public class PocketMonsterDaoImpl implements PocketMonsterDao {
 
 	// Dao의 추상 메소드 오버라이딩 - 등록
 	@Override
-	public void inser(PocketMonsterDto pocketMonsterDto) {
+	public void insert(PocketMonsterDto pocketMonsterDto) {
 		this.insert(pocketMonsterDto.getNo(), pocketMonsterDto.getName(), pocketMonsterDto.getType());
 	}
 }
