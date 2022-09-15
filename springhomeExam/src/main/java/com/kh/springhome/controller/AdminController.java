@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.springhome.repository.MusicDao;
 import com.kh.springhome.repository.PocketMonsterDao;
@@ -30,10 +32,34 @@ public class AdminController {
 		return "admin/pocketmon";
 	}
 	
+	// Top 10
 	@GetMapping("/music/play")
 	public String musicPlay(Model model) {
-		model.addAttribute("list", musicDao.selectTopten());
-		return "admin/musicTopTen";
+		model.addAttribute("list", musicDao.selectTopTen());
+		return "admin/music/play";
+	}
+	
+	// Top N
+	@GetMapping("/music/play/{limit}")
+	public String musicPlay(Model model, @PathVariable int limit) {
+		model.addAttribute("list", musicDao.selectTopN(limit));
+		return "admin/music/play";
+	}
+	
+	// Top N to N
+	@GetMapping("/music/play2")
+	public String musicPlay2(Model model, @RequestParam(required = false, defaultValue = "1") int begin, @RequestParam(required = false, defaultValue = "10") int end) {
+		model.addAttribute("list", musicDao.selectTopNtoN(begin, end));
+		return "admin/music/play";
+	}
+	
+	// 
+	@GetMapping("/music/play3")
+	public String musicPlay3(Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int size) {
+		int end  = page * size;
+		int begin = end - (size - 1);
+		model.addAttribute("list", musicDao.selectTopNtoN(begin, end));
+		return "admin/music/play";
 	}
 	
 	@GetMapping("/music/release")

@@ -3,10 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
     
 <jsp:include page = "/WEB-INF/views/template/adminHeader.jsp">
-	<jsp:param name = "title" value = "음원 재생 순위"/>
+	<jsp:param name = "title" value = "인기 음원 Top ${list.size()}"/>
 </jsp:include>
 
-<h1>음원 재생 순위</h1>
+<h1>인기 음원 Top ${list.size()}</h1>
+
+<a href = "/admin/music/play/3">Top 3</a>
+<a href = "/admin/music/play/5">Top 5</a>
+<a href = "/admin/music/play/10">Top 10</a>
+<a href = "/admin/music/play/20">Top 20</a>
 
 <table border = "1" width = "300">
 	<thead>
@@ -18,7 +23,7 @@
 		</tr>
 	</thead>
 	<tbody align = "center">
-		<c:forEach var = "musicDto" items = "${list}">
+		<c:forEach var = "musicDto" items = "${list}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
 				<td>${musicDto.getMusicTitle()}</td>

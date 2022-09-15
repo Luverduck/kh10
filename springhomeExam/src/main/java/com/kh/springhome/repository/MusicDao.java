@@ -24,7 +24,13 @@ public interface MusicDao {
 	boolean delte(int musicNo);
 	
 	// Dao의 추상 메소드 - Top 10
-	List<MusicDto> selectTopten();
+	List<MusicDto> selectTopTen();
+	
+	// Dao의 추상 메소드 - Top N
+	List<MusicDto> selectTopN(int limit);
+	
+	// Dao의 추상 메소드 - Top N to N
+	List<MusicDto> selectTopNtoN(int begin, int end);
 	
 	// Dao의 추상 메소드 - 연도별 발매수
 	List<MusicYearCountVO> selectCountList();

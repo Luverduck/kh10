@@ -104,11 +104,27 @@ public class MusicDaoImpl implements MusicDao {
 
 	// 추상 메소드 오버라이딩 - Top 10
 	@Override
-	public List<MusicDto> selectTopten() {
+	public List<MusicDto> selectTopTen() {
 		String sql = "select * from (select TMP.*, rownum music_rate from (select * from music order by music_play desc)TMP) where music_rate <= 10";
 		return jdbcTemplate.query(sql, mapper);
 	}
 
+	// 추상 메소드 오버라이딩 - Top N
+	@Override
+	public List<MusicDto> selectTopN(int limit) {
+		String sql = "select * from (select TMP.*, rownum music_rate from (select * from music order by music_play desc)TMP) where music_rate between 1 and ?";
+		Object[] param = new Object[] {limit};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
+	// 추상 메소드 오버라이딩 - Top N to N
+	@Override
+	public List<MusicDto> selectTopNtoN(int begin, int end) {
+		String sql = "select * from (select TMP.*, rownum music_rate from (select * from music order by music_play desc)TMP) where music_rate between ? and ?";
+		Object[] param = new Object[] {begin, end};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
 	// MusicYearCountVO를 위한 Mapper
 	RowMapper<MusicYearCountVO> countMapper = new RowMapper<>() {
 		@Override
