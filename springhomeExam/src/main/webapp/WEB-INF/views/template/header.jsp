@@ -43,6 +43,7 @@
 			<!-- 관리자 기능 -->
 			<c:if test = "${login && admin}">
 				<a href = "/member/list">회원목록</a>
+				<a href = "/admin/home">관리자 페이지</a>
 			</c:if>
 		</div>
 		
