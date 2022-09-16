@@ -26,6 +26,7 @@
 			<a href = "/pocketmon/list">포켓몬스터</a>
 			<a href = "/guestbook/list">방명록</a>
 			<a href = "/music/list">음원관리</a>
+			<a href = "/board/list">게시판</a>
 			
 <%-- 		<c:set var = "login" value = "${loginId != null}"></c:set>					--%>
 			<c:set var = "login" value = "${sessionScope.loginId != null}"></c:set>
@@ -42,6 +43,7 @@
 			
 			<!-- 관리자 기능 -->
 			<c:if test = "${login && admin}">
+				<a href = "/board/detail"></a>
 				<a href = "/member/list">회원목록</a>
 				<a href = "/admin/home">관리자 페이지</a>
 			</c:if>
