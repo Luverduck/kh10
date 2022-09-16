@@ -1,0 +1,26 @@
+package com.kh.springhome.repository;
+
+import java.util.List;
+
+import com.kh.springhome.entity.BoardDto;
+
+public interface BoardDao {
+
+	// 1. 추상 메소드 - 게시글 작성
+	void write(String boardWriter, String boardTitle, String boardContent, String boardHead);
+	
+	// 2. 추상 메소드 - 게시글 수정
+	boolean update(BoardDto boardDto);
+	
+	// 3. 추상 메소드 - 게시글 삭제
+	
+	
+	// 4. 추상 메소드 - 게시글 목록
+	// - 전체 목록
+	List<BoardDto> selectList();
+	// - 검색 목록
+	List<BoardDto> selectList(String type, String keyword);
+	
+	// 5. 추상 메소드 - 게시글 상세
+	BoardDto selectOne(int boardNo);
+}
