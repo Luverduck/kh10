@@ -26,17 +26,24 @@ public class BoardDaoImpl implements BoardDao {
 		Object[] param = new Object[] {boardWriter, boardTitle, boardContent, boardHead};
 		jdbcTemplate.update(sql, param);
 	}
+	
 
 	// 2. 추상 메소드 오버라이딩 - 게시글 수정
 	@Override
-	public boolean update(BoardDto boardDto) {
+	public void update(BoardDto boardDto) {
 		String sql = "update board set board_title = ?, board_content = ?, board_head = ? where board_no = ?";
 		Object[] param = new Object[] {boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardHead(), boardDto.getBoardNo()};
-		return jdbcTemplate.update(sql, param) > 0;
+		jdbcTemplate.update(sql, param);
 	}
 		
 	// 3. 추상 메소드 오버라이딩 - 게시글 삭제
-		
+	@Override
+	public void delete(int boardNo) {
+		String sql = "delete board where board_no = ?";
+		Object[] param = new Object[] {boardNo};
+		jdbcTemplate.update(sql, param);
+	}
+	
 	// BoardDto에 대한 RowMapper
 	private RowMapper<BoardDto> mapper = new RowMapper<>() {
 		@Override
@@ -103,4 +110,11 @@ public class BoardDaoImpl implements BoardDao {
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 
+	// 6. 추상 메소드 오버라이딩 - 조회수 증가
+	@Override
+	public void readCount(int boardNo) {
+		String sql = "update board set board_read = board_read + 1 where board_no = ?";
+		Object[] param = new Object[] {boardNo};
+		jdbcTemplate.update(sql, param);
+	}
 }

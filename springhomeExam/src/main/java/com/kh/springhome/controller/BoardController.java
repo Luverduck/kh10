@@ -38,35 +38,50 @@ public class BoardController {
 	
 	@GetMapping("/write_success")
 	public String writeSuccess() {
-		return "board/writeSuccess";
+		return "redirect:list";
 	}
 	
 	// 2. 게시글 수정
+	// 1) 수정 페이지 Mapping
 	@GetMapping("/edit")
 	public String edit(Model model, @RequestParam int boardNo) {
 		model.addAttribute("boardDto", boardDao.selectOne(boardNo));
 		return "board/edit";
 	}
 	
+	// 2) 수정 Mapping에 DTO 전달 및 DB 처리 
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute BoardDto boardDto, RedirectAttributes attr) {
+		boardDao.update(boardDto);
+		attr.addAttribute("boardNo", boardDto.getBoardNo());
+		return "redirect:detail";
+	}
+	
+	/*
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto, RedirectAttributes attr) {
 		boolean result = boardDao.update(boardDto);
-		if(result) {
-			attr.addAttribute("boardNo", boardDto.getBoardNo());
-			return "redirect:detail";
+		try {
+			if(result) {
+				attr.addAttribute("boardNo", boardDto.getBoardNo());
+				return "redirect:detail";
+			}
+			else {
+				throw new Exception();
+			}
 		}
-		else {
-			return "redirect:edit_fail";
+		catch(Exception e) {
+			return "redirect:edit?bookNo=" + boardDto.getBoardNo();
 		}
 	}
-	
-	@GetMapping("/edit_fail")
-	public String editFail() {
-		return "redirect:edit";
-	}
+	*/
 	
 	// 3. 게시글 삭제
-		
+	@GetMapping("/delete")
+	public String delete(@RequestParam int boardNo) {
+		boardDao.delete(boardNo);
+		return "redirect:list";
+	}
 		
 	// 4. 게시글 목록
 	// - 전체 목록 / 검색 목록
@@ -86,6 +101,7 @@ public class BoardController {
 	// 5. 게시글 상세
 	@GetMapping("/detail")
 	public String selectOne(Model model, @RequestParam int boardNo) {
+		boardDao.readCount(boardNo);
 		model.addAttribute("boardDto", boardDao.selectOne(boardNo));
 		return "board/detail";
 	}
