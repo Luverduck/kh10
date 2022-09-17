@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kh.springhome.interceptor.AdminInterceptor;
+import com.kh.springhome.interceptor.BoardInterceptor;
 import com.kh.springhome.interceptor.MemberInterceptor;
 import com.kh.springhome.interceptor.TestInterceptor;
 
@@ -26,6 +27,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 	
 	@Autowired
 	private TestInterceptor testInterceptor;
+	
+	@Autowired
+	private BoardInterceptor boardInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -60,6 +64,14 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 															"/music/list",			// 음원 목록
 															"/music/detail"		// 음원 상세
 															);
+		registry.addInterceptor(boardInterceptor)
+													.addPathPatterns(
+																	"/board/*"
+																	)
+													.excludePathPatterns(
+																		"/board/list",
+																		"/board/detail*"
+																		);
 	}
 	
 	
