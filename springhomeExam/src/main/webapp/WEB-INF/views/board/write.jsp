@@ -8,9 +8,10 @@
 	<h1>게시글 작성</h1>
 	<form action = "write" method = "post">
 		<select name = "boardHead">
-			<option value = "정보">정보</option>
-			<option value = "유머">유머</option>
-			<option value = "공지">공지</option>
+			<option value = "">말머리선택</option>
+			<option value = "[정보]">정보</option>
+			<option value = "[유머]">유머</option>
+			<option value = "[공지]">공지</option>
 		</select>
 		<input name = "boardTitle" placeholder = "제목" required><br><br>
 		<input name = "boardContent" placeholder = "내용" required><br><br>
