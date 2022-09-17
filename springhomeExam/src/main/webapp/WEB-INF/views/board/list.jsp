@@ -34,7 +34,7 @@
 			<c:forEach var = "boardDto" items = "${list}">
 				<tr align="center">
 					<td>${boardDto.getBoardNo()}</td>
-					<td><a href = "detail?boardNo=${boardDto.boardNo}">[${boardDto.getBoardHead()}] ${boardDto.getBoardTitle()}</a></td>
+					<td><a href = "detail?boardNo=${boardDto.boardNo}">${boardDto.getBoardHead()} ${boardDto.getBoardTitle()}</a></td>
 					<td>${boardDto.getBoardWriter()}</td>
 					<td>${boardDto.getBoardWritetime()}</td>
 					<td>${boardDto.getBoardRead()}</td>
@@ -42,7 +42,9 @@
 				</tr>
 			</c:forEach>
 			<tr align="right">
-				<td colspan="6"><a href = "/board/write">게시글 작성</a></td>
+				<td colspan="6">
+					<a href = "/board/write">글쓰기</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
