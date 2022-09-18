@@ -30,15 +30,12 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String write(HttpSession session, @RequestParam String boardTitle, @RequestParam String boardContent, @RequestParam String boardHead) {
+	public String write(HttpSession session, @RequestParam String boardTitle, @RequestParam String boardContent, @RequestParam String boardHead, RedirectAttributes attr) {
 		String boardWriter = (String)session.getAttribute("loginId");
 		boardDao.write(boardWriter, boardTitle, boardContent, boardHead);
-		return "redirect:write_success";
-	}
-	
-	@GetMapping("/write_success")
-	public String writeSuccess() {
-		return "redirect:list";
+		int currentBoardNo = boardDao.currentNo().getCurrentBoardNo();
+		attr.addAttribute("boardNo", currentBoardNo);
+		return "redirect:detail";
 	}
 	
 	// 2. 게시글 수정

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.BoardDto;
+import com.kh.springhome.entity.CurrentBoardNoVO;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -27,6 +28,27 @@ public class BoardDaoImpl implements BoardDao {
 		jdbcTemplate.update(sql, param);
 	}
 	
+	// CurrentBoardNoVO를 위한 ResultSetExtractor
+	private ResultSetExtractor<CurrentBoardNoVO> boardNoExtractor = new ResultSetExtractor<>() {
+		@Override
+		public CurrentBoardNoVO extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				CurrentBoardNoVO currentBoardNoVO = new CurrentBoardNoVO();
+				currentBoardNoVO.setCurrentBoardNo(rs.getInt("currval"));
+				return currentBoardNoVO;
+			}
+			else {
+				return null;
+			}
+		}
+	};
+	
+	// 1-1. 추상 메소드 오버라이딩 - 현재 게시글 번호
+	@Override
+	public CurrentBoardNoVO currentNo() {
+		String sql = "select board_seq.currval from dual";		
+		return jdbcTemplate.query(sql, boardNoExtractor);
+	}
 
 	// 2. 추상 메소드 오버라이딩 - 게시글 수정
 	@Override
@@ -110,7 +132,7 @@ public class BoardDaoImpl implements BoardDao {
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 
-	// 6. 추상 메소드 오버라이딩 - 조회수 증가
+	// 5-1. 추상 메소드 오버라이딩 - 조회수 증가
 	@Override
 	public void readCount(int boardNo) {
 		String sql = "update board set board_read = board_read + 1 where board_no = ?";
