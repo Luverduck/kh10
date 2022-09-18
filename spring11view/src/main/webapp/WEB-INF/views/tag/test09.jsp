@@ -29,29 +29,60 @@
 		테이블 폭 : width - 값 또는 퍼텐트(%)
  	-->
  
-	<table border = "1" width = "500">
+	<table border = "1" width = "800">
 		<thead>
 			<tr>
-				<th>순위</th>
-				<th>국가</th>
-				<th>포인트</th>
+				<th rowspan = "2">NO</th>
+				<th rowspan = "2">부하의 종류</th>
+				<th rowspan = "2">출력[kW]</th>
+				<th colspan = "4">전부하 특성</th>
 			</tr>
-		</thead>
-		
+			<tr>
+				<th>역률[%]</th>
+				<th>효율[%]</th>
+				<th>입력[kVA]</th>
+				<th>입력[kW]</th>
+			</tr>
+		</thead>	
 		<tbody>
 			<tr>
-				<td>1</td>
-				<td>브라질</td>
-				<td>1805.9</td>
+				<td>NO.1</td>
+				<td>유도전동기</td>
+				<td>6대 X 37</td>
+				<td>87.0</td>
+				<td>80.5</td>
+				<td>6대 X 53</td>
+				<td>6대 X 46</td>
 			</tr>
 			<tr>
-				<td>2</td>
-				<td>아르헨티나</td>
-				<td>1820.5</td>
+				<td>NO.2</td>
+				<td>유도전동기</td>
+				<td>1대 X 11</td>
+				<td>84.0</td>
+				<td>77.0</td>
+				<td>17</td>
+				<td>14.3</td>
+			</tr>
+			<tr>
+				<td>NO.3</td>
+				<td>전등 및 기타</td>
+				<td>30</td>
+				<td>100</td>
+				<td>-</td>
+				<td>30</td>
+				<td>30</td>
 			</tr>
 		</tbody>
-		
+		<tfoot>
+			<tr>
+				<td colspan = "2">합계</td>
+				<td>263</td>
+				<td>88.0</td>
+				<td>-</td>
+				<td>365</td>
+				<td>320.3</td>
+			</tr>
+		</tfoot>
 	</table>
- 
 </body>
 </html>
