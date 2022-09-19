@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page = "/WEB-INF/views/template/header.jsp">
@@ -42,6 +42,11 @@
 		<tfoot>
 			<tr>
 				<td colspan = "2" align = "right">
+					
+					<c:if test = "${loginId != null}">
+					<a href = "write">글쓰기</a>
+					</c:if>
+					
 					<a href = "write">글쓰기</a>
 					<a href = "edit?boardNo=${boardDto.getBoardNo()}">수정</a>
 					<a href = "delete?boardNo=${boardDto.getBoardNo()}">삭제</a>

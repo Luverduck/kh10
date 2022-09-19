@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.BoardDto;
 import com.kh.springhome.entity.BoardListSearchVO;
+import com.kh.springhome.error.TargetNotFoundException;
 import com.kh.springhome.repository.BoardDao;
 
 @Controller
@@ -22,7 +23,7 @@ public class BoardController {
 
 	@Autowired
 	private BoardDao boardDao;
-	
+/*	
 	// 1. 게시글 작성 
 	@GetMapping("/write")
 	public String write() {		
@@ -38,11 +39,33 @@ public class BoardController {
 		attr.addAttribute("boardNo", currentBoardNo);
 		return "redirect:detail";
 	}
+*/	
+	
+	// 1. 게시글 작성 - 다음 시퀀스 번호를 뽑아서 게시글 작성
+	// 1) 등록 페이지 Mapping
+	@GetMapping("/write")
+	public String write() {
+		return "board/write";
+	}
+	
+	// 2) 등록 Mapping에 DTO 전달 및 DB 처리 
+	@PostMapping("/write")
+	public String write(HttpSession session, @ModelAttribute BoardDto boardDto, RedirectAttributes attr) {
+		String boardWriter = (String)session.getAttribute("loginId");
+		boardDto.setBoardWriter(boardWriter);
+		int boardNo = boardDao.write(boardDto);
+		attr.addAttribute("boardNo", boardNo);
+		return "redirect:detail";
+	}
 	
 	// 2. 게시글 수정
 	// 1) 수정 페이지 Mapping
 	@GetMapping("/edit")
 	public String edit(Model model, @RequestParam int boardNo) {
+		BoardDto boardDto = boardDao.selectOne(boardNo);
+		if(boardDto == null) {// 상세 조회 결과가 없는 경우 내가 만든 예외 발생
+			throw new TargetNotFoundException();
+		}
 		model.addAttribute("boardDto", boardDao.selectOne(boardNo));
 		return "board/edit";
 	}
@@ -50,35 +73,27 @@ public class BoardController {
 	// 2) 수정 Mapping에 DTO 전달 및 DB 처리 
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto, RedirectAttributes attr) {
-		boardDao.update(boardDto);
-		attr.addAttribute("boardNo", boardDto.getBoardNo());
-		return "redirect:detail";
-	}
-	
-	/*
-	@PostMapping("/edit")
-	public String edit(@ModelAttribute BoardDto boardDto, RedirectAttributes attr) {
 		boolean result = boardDao.update(boardDto);
-		try {
-			if(result) {
-				attr.addAttribute("boardNo", boardDto.getBoardNo());
-				return "redirect:detail";
-			}
-			else {
-				throw new Exception();
-			}
+		if(result) {// 성공했다면 상세페이지로 이동
+			attr.addAttribute("boardNo", boardDto.getBoardNo());
+			return "redirect:detail";
 		}
-		catch(Exception e) {
-			return "redirect:edit?bookNo=" + boardDto.getBoardNo();
+		else {
+			throw new TargetNotFoundException();
 		}
 	}
-	*/
 	
 	// 3. 게시글 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam int boardNo) {
-		boardDao.delete(boardNo);
-		return "redirect:list";
+		boolean result = boardDao.delete(boardNo);
+		if(result) {// 삭제 성공
+			return "redirect:list";	
+		}
+		else {// 구문은 실행되었지만 바뀐게 없는 경우 (강제 예외 처리)
+			throw new TargetNotFoundException();
+		}
+		
 	}
 
 	// <참고> ModelAttribute로 수신한 데이터는 자동으로 Model에 첨부된다

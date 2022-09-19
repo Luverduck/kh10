@@ -11,7 +11,7 @@
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>제목</th>
+				<th width = "45%">제목</th>
 				<th>글쓴이</th>
 				<th>등록일</th>
 				<th>조회수</th>
@@ -19,9 +19,9 @@
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody align = "center">
 			<c:forEach var = "boardDto" items = "${list}">
-				<tr align="center">
+				<tr>
 					<td>${boardDto.getBoardNo()}</td>					
 					<td align = "left">
 						<!-- 말머리 출력(있을 경우에만 -->
@@ -49,6 +49,7 @@
 	</table>
 	<!-- 페이지 네비게이터 -->
 	<h4>&laquo; &lt; 이전 1 2 3 4 5 6 7 8 9 10 다음 &gt; &raquo;</h4>
+	<!-- 검색창 -->
 	<form action = "list" method = "get">
 		<select name = "type" required>
 			<option value = "board_title"><c:if test = "${vo.type == 'board_title'}">selected</c:if>제목</option>

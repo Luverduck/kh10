@@ -20,7 +20,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+/*	
 	// 1. 추상 메소드 오버라이딩 - 게시글 작성
 	@Override
 	public void write(String boardWriter, String boardTitle, String boardContent, String boardHead) {
@@ -43,28 +43,38 @@ public class BoardDaoImpl implements BoardDao {
 			}
 		}
 	};
-	
-	// 1-1. 추상 메소드 오버라이딩 - 현재 게시글 번호
+
+	// 1. 추상 메소드 오버라이딩 - 현재 게시글 번호
 	@Override
 	public CurrentBoardNoVO currentNo() {
 		String sql = "select board_seq.currval from dual";		
 		return jdbcTemplate.query(sql, boardNoExtractor);
 	}
-
+*/	
+	// 1-2. 추상 메소드 오버라이딩 - 다음 시퀀스 번호를 뽑아서 게시글 작성
+	@Override
+	public int write(BoardDto boardDto) {
+		String sql = "select board_seq.nextval from dual";
+		int boardNo = jdbcTemplate.queryForObject(sql, int.class);	
+		sql = "insert into board(board_no, board_title, board_content, board_writer, board_head) values(?, ?, ?, ?, ?)";
+		Object[] param = new Object[] {boardNo, boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardWriter(), boardDto.getBoardHead()};
+		return jdbcTemplate.update(sql, param);
+	}
+	
 	// 2. 추상 메소드 오버라이딩 - 게시글 수정
 	@Override
-	public void update(BoardDto boardDto) {
-		String sql = "update board set board_title = ?, board_content = ?, board_head = ? where board_no = ?";
+	public boolean update(BoardDto boardDto) {
+		String sql = "update board set board_title = ?, board_content = ?, board_head = ?, board_updatetime = sysdate where board_no = ?";
 		Object[] param = new Object[] {boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardHead(), boardDto.getBoardNo()};
-		jdbcTemplate.update(sql, param);
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 		
 	// 3. 추상 메소드 오버라이딩 - 게시글 삭제
 	@Override
-	public void delete(int boardNo) {
+	public boolean delete(int boardNo) {
 		String sql = "delete board where board_no = ?";
 		Object[] param = new Object[] {boardNo};
-		jdbcTemplate.update(sql, param);
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
 	// BoardDto에 대한 RowMapper
@@ -82,7 +92,7 @@ public class BoardDaoImpl implements BoardDao {
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardHead(rs.getString("board_head"));
 			return boardDto;
-		}	
+		}
 	};
 	
 	// 4. 추상 메소드 오버라이딩 - 게시글 목록
