@@ -16,13 +16,13 @@ import lombok.ToString;
 public class BoardDto {
 
 	// 필드
-	int boardNo;
-	String boardWriter;
-	String boardTitle;
-	String boardContent;
-	Date boardWritetime;
-	Date boardUpdatetime;
-	int boardRead;
-	int boardLike;
-	String boardHead;	
+	private int boardNo;
+	private String boardWriter;
+	private String boardTitle;
+	private String boardContent;
+	private Date boardWritetime;
+	private Date boardUpdatetime;
+	private int boardRead;
+	private int boardLike;
+	private String boardHead;	
 }
