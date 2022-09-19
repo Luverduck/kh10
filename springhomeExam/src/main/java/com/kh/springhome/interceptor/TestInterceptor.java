@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Component
 public class TestInterceptor implements HandlerInterceptor {
-/*
+
 	@Override
 	public boolean preHandle(
 								HttpServletRequest request, 	// 사용자 요청 정보
@@ -49,5 +49,5 @@ public class TestInterceptor implements HandlerInterceptor {
 			
 		}
 	}
-*/	
+
 }
