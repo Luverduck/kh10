@@ -20,45 +20,16 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-/*	
-	// 1. 추상 메소드 오버라이딩 - 게시글 작성
-	@Override
-	public void write(String boardWriter, String boardTitle, String boardContent, String boardHead) {
-		String sql = "insert into board(board_no, board_writer, board_title, board_content, board_head) values(board_seq.nextval, ?, ?, ?, ?)";
-		Object[] param = new Object[] {boardWriter, boardTitle, boardContent, boardHead};
-		jdbcTemplate.update(sql, param);
-	}
-	
-	// CurrentBoardNoVO를 위한 ResultSetExtractor
-	private ResultSetExtractor<CurrentBoardNoVO> boardNoExtractor = new ResultSetExtractor<>() {
-		@Override
-		public CurrentBoardNoVO extractData(ResultSet rs) throws SQLException, DataAccessException {
-			if(rs.next()) {
-				CurrentBoardNoVO currentBoardNoVO = new CurrentBoardNoVO();
-				currentBoardNoVO.setCurrentBoardNo(rs.getInt("currval"));
-				return currentBoardNoVO;
-			}
-			else {
-				return null;
-			}
-		}
-	};
 
-	// 1. 추상 메소드 오버라이딩 - 현재 게시글 번호
-	@Override
-	public CurrentBoardNoVO currentNo() {
-		String sql = "select board_seq.currval from dual";		
-		return jdbcTemplate.query(sql, boardNoExtractor);
-	}
-*/	
-	// 1-2. 추상 메소드 오버라이딩 - 다음 시퀀스 번호를 뽑아서 게시글 작성
+	// 1. 추상 메소드 오버라이딩 - 게시글 작성 (다음 시퀀스 번호를 뽑아서 게시글 작성)
 	@Override
 	public int write(BoardDto boardDto) {
 		String sql = "select board_seq.nextval from dual";
-		int boardNo = jdbcTemplate.queryForObject(sql, int.class);	
+		int boardNo = jdbcTemplate.queryForObject(sql, int.class);			
 		sql = "insert into board(board_no, board_title, board_content, board_writer, board_head) values(?, ?, ?, ?, ?)";
-		Object[] param = new Object[] {boardNo, boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardWriter(), boardDto.getBoardHead()};
-		return jdbcTemplate.update(sql, param);
+		Object[] param = {boardNo, boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardWriter(), boardDto.getBoardHead()};
+		jdbcTemplate.update(sql, param);
+		return boardNo;
 	}
 	
 	// 2. 추상 메소드 오버라이딩 - 게시글 수정
@@ -160,14 +131,9 @@ public class BoardDaoImpl implements BoardDao {
 	// 5. 추상 메소드 오버라이딩 -  조회수 증가 + 게시글 상세
 	@Override
 	public BoardDto selectOne(int boardNo) {
-		// 조회수 증가
-		String sql1 = "update board set board_read = board_read + 1 where board_no = ?";
-		Object[] param1 = new Object[] {boardNo};
-		jdbcTemplate.update(sql1, param1);
-		// 게시글 상세
-		String sql2 = "select * from board where board_no = ?";
-		Object[] param2 = new Object[] {boardNo};
-		return jdbcTemplate.query(sql2, extractor, param2);
+		String sql = "select * from board where board_no = ?";
+		Object[] param = new Object[] {boardNo};
+		return jdbcTemplate.query(sql, extractor, param);
 	}
 
 	// 5-1. 추상 메소드 오버라이딩 - 조회수 증가
@@ -176,6 +142,12 @@ public class BoardDaoImpl implements BoardDao {
 		String sql = "update board set board_read = board_read + 1 where board_no = ?";
 		Object[] param = new Object[] {boardNo};
 		jdbcTemplate.update(sql, param);
+	}
+	
+	@Override
+	public BoardDto read(int boardNo) {
+		this.readCount(boardNo);
+		return this.selectOne(boardNo);
 	}
 
 	// #. 추상 메소드 오버라이딩 - DB 전부 삭제 (TEST용)
