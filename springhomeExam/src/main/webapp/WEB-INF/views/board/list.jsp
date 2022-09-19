@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- 현재 시간 구하기 -->
+<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
+<c:set var="today">
+	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>
+</c:set>
+
 <jsp:include page = "/WEB-INF/views/template/header.jsp">
 	<jsp:param name = "title" value = "게시글 목록"/>
 </jsp:include>
@@ -26,14 +34,26 @@
 					<td align = "left">
 						<!-- 말머리 출력(있을 경우에만 -->
 						<c:if test = "${boardDto.getBoardHead() != null}">
-							${boardDto.getBoardHead()}
+						[${boardDto.getBoardHead()}]
 						</c:if>
 						<a href = "detail?boardNo=${boardDto.boardNo}">
-							${boardDto.getBoardTitle()}
+						${boardDto.getBoardTitle()}
 						</a>
 					</td>
 					<td>${boardDto.getBoardWriter()}</td>
-					<td>${boardDto.getBoardWritetime()}</td>
+					<td>
+						<c:set var="current">
+							<fmt:formatDate value = "${boardDto.getBoardWritetime()}"/>
+						</c:set>
+						<c:choose>
+							<c:when test = "${today == current}">
+								<fmt:formatDate value = "${boardDto.getBoardWritetime()}" pattern = "HH:mm"/>
+							</c:when>
+							<c:otherwise>
+								<fmt:formatDate value = "${boardDto.getBoardWritetime()}" pattern = "yyyy-MM-dd"/>
+							</c:otherwise>
+						</c:choose>
+					</td>
 					<td>${boardDto.getBoardRead()}</td>
 					<td>${boardDto.getBoardLike()}</td>
 				</tr>
