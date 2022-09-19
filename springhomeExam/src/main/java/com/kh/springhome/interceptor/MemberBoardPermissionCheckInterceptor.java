@@ -32,7 +32,7 @@ public class MemberBoardPermissionCheckInterceptor implements HandlerInterceptor
 		}
 		// 2) 1번이 아니라면 boardHead라는 파라미터 값이 "공지"이면 차단, 아니면 허용
 		String boardHead = request.getParameter("boardHead");
-		if(boardHead != null && !boardHead.equals("[공지]")) {
+		if(boardHead != null && !boardHead.equals("공지")) {
 			return true;	// boardHead의 값이 null이 아니면서 "공지"가 아니면 통과(true)
 		}
 		
