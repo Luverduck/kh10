@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.BoardDto;
+import com.kh.springhome.entity.BoardListSearchVO;
 import com.kh.springhome.entity.CurrentBoardNoVO;
 
 @Repository
@@ -93,11 +94,20 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	// - 검색 목록
+	/*
 	@Override
 	public List<BoardDto> selectList(String type, String keyword) {
 		String sql = "select * from board where instr(#1, ?) > 0 order by board_writetime desc";
 		sql = sql.replace("#1", type);
 		Object[] param = new Object[] {keyword};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	*/
+	@Override
+	public List<BoardDto> selectList(BoardListSearchVO vo) {
+		String sql = "select * from board where instr(#1, ?) > 0 order by board_writetime desc";
+		sql = sql.replace("#1", vo.getType());
+		Object[] param = new Object[] {vo.getKeyword()};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 	
@@ -106,6 +116,7 @@ public class BoardDaoImpl implements BoardDao {
 		@Override
 		public BoardDto extractData(ResultSet rs) throws SQLException, DataAccessException {
 			if(rs.next()) {
+				/*
 				BoardDto boardDto = new BoardDto();
 	            boardDto.setBoardNo(rs.getInt("board_no"));
 	            boardDto.setBoardWriter(rs.getString("board_writer"));
@@ -116,7 +127,19 @@ public class BoardDaoImpl implements BoardDao {
 	            boardDto.setBoardRead(rs.getInt("board_read"));
 	            boardDto.setBoardLike(rs.getInt("board_like"));
 	            boardDto.setBoardHead(rs.getString("board_head"));
-	            return boardDto;         	
+	            return boardDto;  
+	            */
+				return BoardDto.builder()
+										.boardNo(rs.getInt("board_no"))
+										.boardWriter(rs.getString("board_writer"))
+										.boardTitle(rs.getString("board_title"))
+										.boardContent(rs.getString("board_content"))
+										.boardWritetime(rs.getDate("board_writetime"))
+										.boardUpdatetime(rs.getDate("board_updatetime"))
+										.boardRead(rs.getInt("board_read"))
+										.boardLike(rs.getInt("board_like"))
+										.boardHead(rs.getString("board_head"))
+										.build();
 			}
 			else {
 				return null;
@@ -124,12 +147,17 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	};
 
-	// 5. 추상 메소드 오버라이딩 - 게시글 상세
+	// 5. 추상 메소드 오버라이딩 -  조회수 증가 + 게시글 상세
 	@Override
 	public BoardDto selectOne(int boardNo) {
-		String sql = "select * from board where board_no = ?";
-		Object[] param = new Object[] {boardNo};
-		return jdbcTemplate.query(sql, extractor, param);
+		// 조회수 증가
+		String sql1 = "update board set board_read = board_read + 1 where board_no = ?";
+		Object[] param1 = new Object[] {boardNo};
+		jdbcTemplate.update(sql1, param1);
+		// 게시글 상세
+		String sql2 = "select * from board where board_no = ?";
+		Object[] param2 = new Object[] {boardNo};
+		return jdbcTemplate.query(sql2, extractor, param2);
 	}
 
 	// 5-1. 추상 메소드 오버라이딩 - 조회수 증가
@@ -138,5 +166,12 @@ public class BoardDaoImpl implements BoardDao {
 		String sql = "update board set board_read = board_read + 1 where board_no = ?";
 		Object[] param = new Object[] {boardNo};
 		jdbcTemplate.update(sql, param);
+	}
+
+	// #. 추상 메소드 오버라이딩 - DB 전부 삭제 (TEST용)
+	@Override
+	public void clear() {
+		String sql = "delete board";
+		jdbcTemplate.update(sql);
 	}
 }
