@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.BoardDto;
+import com.kh.springhome.entity.BoardListSearchVO;
 import com.kh.springhome.repository.BoardDao;
 
 @Controller
@@ -79,15 +80,27 @@ public class BoardController {
 		boardDao.delete(boardNo);
 		return "redirect:list";
 	}
-		
+
+	// <참고> ModelAttribute로 수신한 데이터는 자동으로 Model에 첨부된다
+	// - 옵션에 name을 작성하면 해당하는 이름으로 model에 첨부
 	// 4. 게시글 목록
 	// - 전체 목록 / 검색 목록
 	@GetMapping("/list")
-	public String selectList(Model model, @RequestParam(required = false) String type, @RequestParam(required = false) String keyword) {
+	public String selectList(Model model, 
+								@ModelAttribute(name = "vo") BoardListSearchVO vo
+								// @RequestParam(required = false) String type, 
+								// @RequestParam(required = false) String keyword
+							) {
 		// 목록 판정 - 검색 목록을 표시할 것인지 true/false
-		boolean searchTF = type != null && keyword != null;
-		if(searchTF) {	// 검색 목록이라면
-			model.addAttribute("list", boardDao.selectList(type, keyword));
+		//boolean searchTF = type != null && keyword != null;
+		//if(searchTF) {	// 검색 목록이라면
+		//	model.addAttribute("list", boardDao.selectList(type, keyword));
+		//}
+		
+		// vo의 isSearch() 메소드 사용
+		if(vo.isSearch()) {
+			//model.addAttribute("list", boardDao.selectList(vo.getType(), vo.getKeyword()));
+			model.addAttribute("list", boardDao.selectList(vo));
 		}
 		else {	// 검색 목록이 아니라면 (전체 목록이라면)
 			model.addAttribute("list", boardDao.selectList());
@@ -98,7 +111,6 @@ public class BoardController {
 	// 5. 게시글 상세
 	@GetMapping("/detail")
 	public String selectOne(Model model, @RequestParam int boardNo) {
-		boardDao.readCount(boardNo);
 		model.addAttribute("boardDto", boardDao.selectOne(boardNo));
 		return "board/detail";
 	}
