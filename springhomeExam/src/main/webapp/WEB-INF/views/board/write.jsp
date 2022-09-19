@@ -16,13 +16,11 @@
 				<td>
 					<select name = "boardHead">
 						<option value = "">선택</option>
-						<option value = "[정보]" <c:if test = "${boardDto.getBoardHead == '정보'}">selected</c:if>>정보</option>
-						<option value = "[유머]" <c:if test = "${boardDto.getBoardHead == '정보'}">selected</c:if>>유머</option>
-						
+						<option value = "정보">정보</option>
+						<option value = "유머">유머</option>
 						<c:if test = "${mg == '관리자'}">
-						<option value = "[공지]" <c:if test = "${boardDto.getBoardHead == '정보'}">selected</c:if>>공지</option>
+						<option value = "공지">공지</option>
 						</c:if>
-						
 					</select>
 				</td>
 			</tr>
@@ -51,6 +49,7 @@
 			</tr>
 		</tfoot>
 	</table>
+	</form>
 </div>
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>

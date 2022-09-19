@@ -18,11 +18,11 @@
 				<td>
 					<select name="boardHead">
 						<option value="">선택</option>
-						<option <c:if test="${boardDto.boardHead == '[정보]'}">selected</c:if>>정보</option>
-						<option <c:if test="${boardDto.boardHead == '[유머]'}">selected</c:if>>유머</option>
+						<option <c:if test = "${boardDto.boardHead == '정보'}">selected</c:if>>정보</option>
+						<option <c:if test = "${boardDto.boardHead == '유머'}">selected</c:if>>유머</option>
 						
 						<c:if test = "${mg == '관리자'}">
-						<option <c:if test="${boardDto.boardHead == '[공지]'}">selected</c:if>>공지</option>
+						<option <c:if test = "${boardDto.boardHead == '공지'}">selected</c:if>>공지</option>
 						</c:if>
 						
 					</select>
