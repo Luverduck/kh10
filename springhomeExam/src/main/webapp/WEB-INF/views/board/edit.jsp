@@ -8,9 +8,9 @@
 	<form action="edit" method = "post">
 		<input type = "hidden" name = "boardNo" value = "${boardDto.getBoardNo()}">
 		제목 : <select name = "boardHead">
-			<option value = "정보">정보</option>
-			<option value = "유머">유머</option>
-			<option value = "공지">공지</option>
+			<option value = "[정보]">정보</option>
+			<option value = "[유머]">유머</option>
+			<option value = "[공지]">공지</option>
 		</select>
 		<input type = "text" name = "boardTitle" value = "${boardDto.getBoardTitle()}" size = "50%"><br><br>
 		내용 : <input type = "text" name = "boardContent" value = "${boardDto.getBoardContent()}" size = "55%"><br><br>
