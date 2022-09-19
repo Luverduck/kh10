@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kh.springhome.interceptor.AdminInterceptor;
-import com.kh.springhome.interceptor.BoardInterceptor;
+import com.kh.springhome.interceptor.MemberBoardPermissionCheckInterceptor;
 import com.kh.springhome.interceptor.MemberInterceptor;
 import com.kh.springhome.interceptor.TestInterceptor;
 
@@ -29,7 +29,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 	private TestInterceptor testInterceptor;
 	
 	@Autowired
-	private BoardInterceptor boardInterceptor;
+	private MemberBoardPermissionCheckInterceptor memberBoardPermissionCheckInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -42,13 +42,16 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 													.addPathPatterns(		// 인터셉터가 감시할 주소
 																	"/pocketmon/**",	// 포켓몬 전부
 																	"/music/detail",	// 음원 상세
-																	"/member/**"		// 회원 전체
+																	"/member/**",		// 회원 전체
+																	"/board/**"			// 게시판 전체
 																	)
 													.excludePathPatterns(	// 위 주소에서 제외할 주소
 																	"/member/insert",			// 회원 가입
 																	"/member/insert_success",	// 회원 가입 완료
 																	"/member/login",			// 로그인
-																	"/member/goodbye_result"	// 탈퇴 완료
+																	"/member/goodbye_result",	// 탈퇴 완료
+																	"/board/list",				// 게시판 목록
+																	"/board/detail"				// 게시판 상세
 																	);
 	
 		registry.addInterceptor(adminInterceptor)
@@ -64,15 +67,15 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 															"/music/list",			// 음원 목록
 															"/music/detail"		// 음원 상세
 															);
-		registry.addInterceptor(boardInterceptor)
+		
+		// 관리자만 공지사항을 등록할 수 있도록 검사하는 인터셉터
+		registry.addInterceptor(memberBoardPermissionCheckInterceptor)
 													.addPathPatterns(
-																	"/board/*"
-																	)
+															"/board/edit",
+															"/board/write"
+															)
 													.excludePathPatterns(
-																		"/board/list",
-																		"/board/detail*"
-																		);
+															
+															);
 	}
-	
-	
 }
