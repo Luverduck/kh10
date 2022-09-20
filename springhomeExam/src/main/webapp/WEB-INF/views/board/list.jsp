@@ -69,14 +69,59 @@
 			</tr>
 		</tfoot>
 	</table>
+	
 	<!-- 페이지 네비게이터 -->
-	<h4>&laquo; &lt; 이전 1 2 3 4 5 6 7 8 9 10 다음 &gt; &raquo;</h4>
+	<h4>
+		<c:choose>
+			<c:when test = "${not vo.isFirst()}">	
+				<a href = "list?p=${vo.firstBlock()}&${vo.parameter()}">&laquo;</a>
+			</c:when>
+			<c:otherwise>
+				<a href = "#">&laquo;</a>
+			</c:otherwise>
+		</c:choose>
+	
+		<!-- 이전을 누르면 이전 구간의 마지막 페이지로 안내 -->
+		<c:choose>
+			<c:when test = "${vo.hasPrev()}">	<!-- 이전 페이지가 있으면 이전 페이지 이동 -->
+				<a href = "list?p=${vo.prevBlock()}&${vo.parameter()}">&lt; </a> 
+			</c:when>
+			<c:otherwise>
+				<a href = "#">&lt; </a> <!-- 이전 페이지가 없으면(1페이지면) 그대로 -->
+			</c:otherwise>
+		</c:choose>
+		
+		<c:forEach var = "i" begin = "${vo.startBlock()}" end = "${vo.endBlock()}" step = "1">
+			<a href = "list?p=${i}&${vo.parameter()}">${i}</a>
+		</c:forEach>
+		
+		<!-- 다음을 누르면 다음 구간의 마지막 페이지로 안내 -->
+		<c:choose>
+			<c:when test = "${vo.hasNext()}">	<!-- 다음 페이지가 있으면 다음 페이지 이동 -->
+				<a href = "list?p=${vo.nextBlock()}&${vo.parameter()}">&gt;</a> 
+			</c:when>
+			<c:otherwise>	<!-- 다음 페이지가 없으면(마지막 페이지이면) 그대로 -->
+				<a href = "">&gt;</a>	
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test = "${not vo.isLast()}">
+				<a href = "list?p=${vo.lastBlock()}&${vo.parameter()}">&raquo;</a>
+			</c:when>
+			<c:otherwise>
+				<a href ="">&raquo;</a>
+			</c:otherwise>
+		</c:choose>
+		
+	</h4>
+	
 	<!-- 검색창 -->
 	<form action = "list" method = "get">
 		<select name = "type" required>
-			<option value = "board_title"><c:if test = "${vo.type == 'board_title'}">selected</c:if>제목</option>
-			<option value = "board_content"><c:if test = "${vo.type == 'board_content'}">selected</c:if>내용</option>
-			<option value = "board_writer"><c:if test = "${vo.type == 'board_writer'}">selected</c:if>작성자</option>
+			<option value="board_title" <c:if test="${vo.type == 'board_title'}">selected</c:if>>제목</option>
+			<option value="board_title" <c:if test="${vo.type == 'board_content'}">selected</c:if>>내용</option>
+			<option value="board_title" <c:if test="${vo.type == 'board_writer'}">selected</c:if>>작성자</option>
 		</select>
 		<input type = "search" name = "keyword" placeholder = "검색어" required value = "${vo.getKeyword()}">
 		<button type = "submit">검색</button>

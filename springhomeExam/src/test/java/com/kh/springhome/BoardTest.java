@@ -28,7 +28,7 @@ public class BoardTest {
 	
 	@Test
 	public void test() {
-		for(int i = 1 ; i <= 7905 ; i ++) {
+		for(int i = 1 ; i <= 305 ; i ++) {
 			boardDao.write(BoardDto.builder()
 											.boardHead(null)
 											.boardTitle("테스트" + i)

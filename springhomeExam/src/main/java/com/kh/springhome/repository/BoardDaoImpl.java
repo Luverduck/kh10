@@ -12,8 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.BoardDto;
-import com.kh.springhome.entity.BoardListSearchVO;
-import com.kh.springhome.entity.CurrentBoardNoVO;
+import com.kh.springhome.vo.BoardListSearchVO;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -66,7 +65,7 @@ public class BoardDaoImpl implements BoardDao {
 		}
 	};
 	
-	// 4. 추상 메소드 오버라이딩 - 게시글 목록
+	// 4. 추상 메소드 오버라이딩 - 게시글 목록	
 	// - 전체 목록
 	@Override
 	public List<BoardDto> selectList() {
@@ -83,13 +82,66 @@ public class BoardDaoImpl implements BoardDao {
 		Object[] param = new Object[] {keyword};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
-	*/
+	/*
 	@Override
 	public List<BoardDto> selectList(BoardListSearchVO vo) {
 		String sql = "select * from board where instr(#1, ?) > 0 order by board_writetime desc";
 		sql = sql.replace("#1", vo.getType());
 		Object[] param = new Object[] {vo.getKeyword()};
 		return jdbcTemplate.query(sql, mapper, param);
+	}
+	*/
+	
+	// - 통합 검색
+	@Override
+	public List<BoardDto> selectList(BoardListSearchVO vo) {
+		if(vo.isSearch()) {	// 검색 조회이라면
+			return search(vo);
+		}
+		else {	// 전체 조회라면
+			return list(vo);
+		}
+	}
+	
+	// - 통합 검색 1) 전체 조회
+	@Override
+	public List<BoardDto> list(BoardListSearchVO vo) {
+		String sql = "select * from (select rownum rn, TMP.* from (select * from board order by board_no desc)TMP) where rn between ? and ?";
+		Object[] param = new Object[] {vo.startRow(), vo.endRow()};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+
+	// - 통합 검색 2) 검색 조회
+	@Override
+	public List<BoardDto> search(BoardListSearchVO vo) {
+		String sql = "select * from (select rownum rn, TMP.* from (select * from board where instr(#1, ?) > 0 order by board_no desc)TMP) where rn between ? and ?";
+		sql = sql.replace("#1", vo.getType());
+		Object[] param = new Object[] {vo.getKeyword(), vo.startRow(), vo.endRow()};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
+	@Override
+	public int count(BoardListSearchVO vo) {
+		if(vo.isSearch()) {
+			return searchCount(vo);
+		}
+		else {
+			return listCount(vo);
+		}
+	}
+
+	@Override
+	public int searchCount(BoardListSearchVO vo) {
+		String sql = "select count(*) from board where instr(#1, ?) > 0";
+		sql = sql.replace("#1", vo.getType());
+		Object[] param = new Object[] {vo.getKeyword()};
+		return jdbcTemplate.queryForObject(sql, int.class, param);
+	}
+
+	@Override
+	public int listCount(BoardListSearchVO vo) {
+		String sql = "select count(*) from board";
+		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	
 	// ResultSetExtractor

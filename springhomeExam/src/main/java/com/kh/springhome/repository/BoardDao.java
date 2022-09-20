@@ -3,8 +3,7 @@ package com.kh.springhome.repository;
 import java.util.List;
 
 import com.kh.springhome.entity.BoardDto;
-import com.kh.springhome.entity.BoardListSearchVO;
-import com.kh.springhome.entity.CurrentBoardNoVO;
+import com.kh.springhome.vo.BoardListSearchVO;
 
 public interface BoardDao {
 
@@ -23,7 +22,16 @@ public interface BoardDao {
 	List<BoardDto> selectList();
 	// - 검색 목록
 	//List<BoardDto> selectList(String type, String keyword);
+	
+	// 4-1. 통합 검색 메소드
 	List<BoardDto> selectList(BoardListSearchVO vo);
+	List<BoardDto> list(BoardListSearchVO vo);
+	List<BoardDto> search(BoardListSearchVO vo);
+	
+	// 검색과 목록의 총 데이터 개수를 구하는 메소드
+	int count(BoardListSearchVO vo);
+	int searchCount(BoardListSearchVO vo);
+	int listCount(BoardListSearchVO vo);
 	
 	// 5. 추상 메소드 - 게시글 상세
 	BoardDto selectOne(int boardNo);

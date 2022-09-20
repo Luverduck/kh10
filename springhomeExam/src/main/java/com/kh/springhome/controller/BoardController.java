@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.BoardDto;
-import com.kh.springhome.entity.BoardListSearchVO;
 import com.kh.springhome.error.TargetNotFoundException;
 import com.kh.springhome.repository.BoardDao;
+import com.kh.springhome.vo.BoardListSearchVO;
 
 @Controller
 @RequestMapping("/board")
@@ -91,13 +91,14 @@ public class BoardController {
 								// @RequestParam(required = false) String type, 
 								// @RequestParam(required = false) String keyword
 								@ModelAttribute(name = "vo") BoardListSearchVO vo
-							) {
+							) {		
+		/*
 		// 목록 판정 - 검색 목록을 표시할 것인지 true/false
 		//boolean searchTF = type != null && keyword != null;
 		//if(searchTF) {	// 검색 목록이라면
 		//	model.addAttribute("list", boardDao.selectList(type, keyword));
 		//}
-		
+		 
 		// vo의 isSearch() 메소드 사용
 		if(vo.isSearch()) {
 			//model.addAttribute("list", boardDao.selectList(vo.getType(), vo.getKeyword()));
@@ -106,7 +107,11 @@ public class BoardController {
 		else {	// 검색 목록이 아니라면 (전체 목록이라면)
 			model.addAttribute("list", boardDao.selectList());
 		}
-		
+		*/
+		// 페이지 네비게이터를 위한 게시글 수를 구한다
+		int count = boardDao.count(vo);
+		vo.setCount(count);
+		model.addAttribute("list", boardDao.selectList(vo));
 		return "board/list";
 	}
 	
