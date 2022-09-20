@@ -9,6 +9,8 @@
 	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>
 </c:set>
 
+<h3>${vo}</h3>
+
 <jsp:include page = "/WEB-INF/views/template/header.jsp">
 	<jsp:param name = "title" value = "게시글 목록"/>
 </jsp:include>

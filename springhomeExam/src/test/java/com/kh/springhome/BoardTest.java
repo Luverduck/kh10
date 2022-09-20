@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.kh.springhome.entity.BoardDto;
 import com.kh.springhome.repository.BoardDao;
 
 @SpringBootTest
@@ -27,15 +28,14 @@ public class BoardTest {
 	
 	@Test
 	public void test() {
-		// DB의 시퀀스 번호 생성
-		String sql = "select board_seq.nextval from dual";
-		int boardNo = jdbcTemplate.queryForObject(sql, int.class);
-		System.out.println("boardNo = " + boardNo);
-		
-		// 등록
-		sql = "insert into board(board_no, board_title, board_content, board_writer, board_head) values(?, ?, ?, ?, ?)";
-		Object[] param = new Object[] {boardNo, "테스트", "테스트", "hello1234", null};
-		jdbcTemplate.update(sql, param);
+		for(int i = 1 ; i <= 7905 ; i ++) {
+			boardDao.write(BoardDto.builder()
+											.boardHead(null)
+											.boardTitle("테스트" + i)
+											.boardContent("테스트" + i)
+											.boardWriter("tester1")
+										.build());
+		}
 	}
 	
 	@AfterEach
