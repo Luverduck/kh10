@@ -27,4 +27,8 @@ public class BoardDto {
 	private int boardRead;
 	private int boardLike;
 	private String boardHead;	
+	
+	// 계층형 게시판 데이터 추가
+	// (참고) boardParent는 null일 수 있지만 JDBC에서 0으로 변환해준다
+	private int boardGroup, boardParent, boardDepth;
 }

@@ -47,7 +47,7 @@ public class BoardDaoImpl implements BoardDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
-	// BoardDto에 대한 RowMapper
+	// BoardDto에 대한 RowMapper (계층형 게시판 항목을 위해 수정)
 	private RowMapper<BoardDto> mapper = new RowMapper<>() {
 		@Override
 		public BoardDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -61,6 +61,9 @@ public class BoardDaoImpl implements BoardDao {
 			boardDto.setBoardRead(rs.getInt("board_read"));
 			boardDto.setBoardLike(rs.getInt("board_like"));
 			boardDto.setBoardHead(rs.getString("board_head"));
+			boardDto.setBoardGroup(rs.getInt("board_group"));
+			boardDto.setBoardParent(rs.getInt("board_parent"));
+			boardDto.setBoardDepth(rs.getInt("board_depth"));
 			return boardDto;
 		}
 	};
@@ -106,7 +109,7 @@ public class BoardDaoImpl implements BoardDao {
 	// - 통합 검색 1) 전체 조회
 	@Override
 	public List<BoardDto> list(BoardListSearchVO vo) {
-		String sql = "select * from (select rownum rn, TMP.* from (select * from board order by board_no desc)TMP) where rn between ? and ?";
+		String sql = "select * from (select rownum rn, TMP.* from (select * from board connect by prior board_no = board_parent start with board_parent is null order siblings by board_group desc, board_no asc)TMP) where rn between ? and ?";
 		Object[] param = new Object[] {vo.startRow(), vo.endRow()};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
@@ -114,7 +117,7 @@ public class BoardDaoImpl implements BoardDao {
 	// - 통합 검색 2) 검색 조회
 	@Override
 	public List<BoardDto> search(BoardListSearchVO vo) {
-		String sql = "select * from (select rownum rn, TMP.* from (select * from board where instr(#1, ?) > 0 order by board_no desc)TMP) where rn between ? and ?";
+		String sql = "select * from (select rownum rn, TMP.* from (select * from board where instr(#1, ?) > 0 connect by prior board_no = board_parent start with board_parent is null order siblings by board_group desc, board_no asc)TMP) where rn between ? and ?";
 		sql = sql.replace("#1", vo.getType());
 		Object[] param = new Object[] {vo.getKeyword(), vo.startRow(), vo.endRow()};
 		return jdbcTemplate.query(sql, mapper, param);

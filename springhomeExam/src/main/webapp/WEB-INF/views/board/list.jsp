@@ -26,6 +26,9 @@
 				<th>등록일</th>
 				<th>조회수</th>
 				<th>추천수</th>
+				<th>그룹</th>
+				<th>부모</th>
+				<th>차수</th>
 			</tr>
 		</thead>
 		
@@ -34,6 +37,11 @@
 				<tr>
 					<td>${boardDto.getBoardNo()}</td>					
 					<td align = "left">
+						<!-- 차수만큼 띄어쓰기를 반복 -->
+						<c:forEach var = "i" begin = "1" end = "${boardDto.getBoardDepth()}">
+							&nbsp;&nbsp;
+						</c:forEach>
+						
 						<!-- 말머리 출력(있을 경우에만 -->
 						<c:if test = "${boardDto.getBoardHead() != null}">
 						[${boardDto.getBoardHead()}]
@@ -45,19 +53,22 @@
 					<td>${boardDto.getBoardWriter()}</td>
 					<td>
 						<c:set var="current">
-							<fmt:formatDate value = "${boardDto.getBoardWritetime()}"/>
+							<fmt:formatDate value="${boardDto.boardWritetime}" pattern="yyyy-MM-dd"/>
 						</c:set>
 						<c:choose>
-							<c:when test = "${today == current}">
-								<fmt:formatDate value = "${boardDto.getBoardWritetime()}" pattern = "HH:mm"/>
-							</c:when>
+							<c:when test="${today == current}">
+								<fmt:formatDate value="${boardDto.boardWritetime}" pattern="HH:mm"/>
+						</c:when>
 							<c:otherwise>
-								<fmt:formatDate value = "${boardDto.getBoardWritetime()}" pattern = "yyyy-MM-dd"/>
+								<fmt:formatDate value="${boardDto.boardWritetime}" pattern="yyyy-MM-dd"/>
 							</c:otherwise>
 						</c:choose>
 					</td>
 					<td>${boardDto.getBoardRead()}</td>
 					<td>${boardDto.getBoardLike()}</td>
+					<td>${boardDto.getBoardGroup()}</td>
+					<td>${boardDto.getBoardParent()}</td>
+					<td>${boardDto.getBoardDepth()}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
