@@ -7,8 +7,24 @@
 </jsp:include>
 
 <div align = "center">
-	<h1>게시글 작성</h1>
+	
+	<c:set var = "isReply" value = "${param.boardParent != null}"></c:set>
+	<c:choose>
+		<c:when test = "${isReply}">
+			<h1>답글 작성</h1>
+		</c:when>
+		<c:otherwise>
+			<h1>게시글 작성</h1>
+		</c:otherwise>
+	</c:choose>
+	
 	<form action = "write" method = "post">
+	
+	<%-- 답글이라면 부모글번호를 추가로 전송하도록 처리 --%>
+	<c:if test="${isReply}">
+		<input type = "hidden" name = "boardParent" value = "${param.boardParent}">
+	</c:if>
+	
 	<table border = "1" width = "500">
 		<tbody>
 			<tr>

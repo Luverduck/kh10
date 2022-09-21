@@ -45,6 +45,7 @@
 					
 					<c:if test = "${loginId != null}">
 					<a href = "write">글쓰기</a>
+					<a href = "write?boardParent=${boardDto.getBoardNo()}">답글쓰기</a>
 					</c:if>
 					<%--
 						관리자는 삭제만, 회원은 자신의 글만 수정/삭제 가능하도록 처리 

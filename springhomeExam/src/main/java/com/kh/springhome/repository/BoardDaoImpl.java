@@ -19,16 +19,21 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	// 1-1. 추상 메소드 - 시퀀스 번호 반환 메소드
+	@Override
+	public int sequence() {
+		String sql = "select board_seq.nextval from dual";
+		int boardNo = jdbcTemplate.queryForObject(sql, int.class);
+		return boardNo;
+	}
 
 	// 1. 추상 메소드 오버라이딩 - 게시글 작성 (다음 시퀀스 번호를 뽑아서 게시글 작성)
 	@Override
-	public int write(BoardDto boardDto) {
-		String sql = "select board_seq.nextval from dual";
-		int boardNo = jdbcTemplate.queryForObject(sql, int.class);			
-		sql = "insert into board(board_no, board_title, board_content, board_writer, board_head) values(?, ?, ?, ?, ?)";
-		Object[] param = {boardNo, boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardWriter(), boardDto.getBoardHead()};
+	public void write(BoardDto boardDto) {		
+		String sql = "insert into board(board_no, board_title, board_content, board_writer, board_head, board_group, board_parent, board_depth) values(?, ?, ?, ?, ?, ?, ?, ?)";
+		Object[] param = {boardDto.getBoardNo(), boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardWriter(), boardDto.getBoardHead(), boardDto.getBoardGroup(), boardDto.getBoardParentInteger(), boardDto.getBoardDepth()};
 		jdbcTemplate.update(sql, param);
-		return boardNo;
 	}
 	
 	// 2. 추상 메소드 오버라이딩 - 게시글 수정

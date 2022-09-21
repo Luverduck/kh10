@@ -7,9 +7,11 @@ import com.kh.springhome.vo.BoardListSearchVO;
 
 public interface BoardDao {
 
-	// 1. 추상 메소드 - 게시글 작성 (다음 시퀀스 번호를 뽑아서 게시글 작성)
-	int write(BoardDto boardDto);
-		
+	// 1-1. 추상 메소드 - 시퀀스 번호 반환 메소드
+	int sequence();
+	
+	// 1. 추상 메소드 - 게시글 작성 : 시퀀스 번호를 대입하여 등록하는 메소드
+	void write(BoardDto boardDto);
 	
 	// 2. 추상 메소드 - 게시글 수정
 	boolean update(BoardDto boardDto);

@@ -39,7 +39,24 @@ public class BoardController {
 	public String write(HttpSession session, @ModelAttribute BoardDto boardDto, RedirectAttributes attr) {
 		String boardWriter = (String)session.getAttribute("loginId");
 		boardDto.setBoardWriter(boardWriter);
-		int boardNo = boardDao.write(boardDto);
+		
+		// 등록될 글의 번호를 미리 생성
+		int boardNo = boardDao.sequence();
+		boardDto.setBoardNo(boardNo);
+		
+		// 등록을 하기 전에 "새 글"인지 "답글"인지 파악해서 그에 맞는 계산을 수행
+		if(boardDto.getBoardParent() == 0) {	// 새 글이라면 (부모글의 번호가 0이면)
+			boardDto.setBoardGroup(boardNo);
+			boardDto.setBoardParent(0);
+			boardDto.setBoardDepth(0);
+		}
+		else {	// 답글이라면 (부모글의 번호가 0이 아니면)
+			BoardDto parentDto = boardDao.selectOne(boardDto.getBoardParent());
+			boardDto.setBoardGroup(parentDto.getBoardGroup());
+			boardDto.setBoardDepth(parentDto.getBoardDepth() + 1);
+		}
+		
+		boardDao.write(boardDto);
 		attr.addAttribute("boardNo", boardNo);
 		return "redirect:detail";
 	}
