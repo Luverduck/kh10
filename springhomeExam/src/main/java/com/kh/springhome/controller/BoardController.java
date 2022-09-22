@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.BoardDto;
+import com.kh.springhome.entity.ReplyDto;
 import com.kh.springhome.error.TargetNotFoundException;
 import com.kh.springhome.repository.BoardDao;
+import com.kh.springhome.repository.ReplyDao;
 import com.kh.springhome.vo.BoardListSearchVO;
 
 @Controller
@@ -26,6 +28,9 @@ public class BoardController {
 
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private ReplyDao replyDao;
 	
 	// 1. 게시글 작성 (다음 시퀀스 번호를 뽑아서 게시글 작성)
 	// 1) 등록 페이지 Mapping
@@ -144,19 +149,61 @@ public class BoardController {
 //			-> 세션에 저장할 이름을 history로 지정
 //		(2) 현재 history라는 이름이 없을지 모르므로 꺼내서 없으면 생성
 		Set<Integer> history = (Set<Integer>) session.getAttribute("history");
-		
-		if(history == null) {	// history가 없다면 신규 생성
+		if(history == null) {//history가 없다면 신규 생성
 			history = new HashSet<>();
 		}
-		
+
+//		(3) 현재 글 번호를 읽은적이 있는지 검사
 		// 중복 검사 - 현재 글 번호의 글을 읽은 적이 있는지
-		if(history.contains(boardNo) == true) {	// 추가된 경우 - 처음 읽는 번호면
-			model.addAttribute("boardDto", boardDao.read(boardNo));	// 게시글 상세 + 조회수 증가
+		if(history.add(boardNo)) {//추가된 경우 - 처음 읽는 번호면
+			model.addAttribute("boardDto", boardDao.read(boardNo));	// 조회수 증가 + 게시글 상세
 		}
-		else {	// 그렇지 않은 경우 - 읽은 적이 있는 번호면
-			model.addAttribute("boardDto", boardDao.selectOne(boardNo)); // 게시글 상세
+		else {//추가가 안된 경우 - 읽은 적이 있는 번호면
+			model.addAttribute("boardDto", boardDao.selectOne(boardNo));	// 게시글 상세
 		}
+		
+//		(4) 갱신된 저장소를 세션에 다시 저장
+		session.setAttribute("history", history);
+		
+		// 2. 댓글 목록을 첨부
+		model.addAttribute("replyList", replyDao.replyList(boardNo));
 		
 		return "board/detail";
+	}
+	
+
+	// 여기서부터는 댓글 관련 Controller
+	// 1. 댓글 작성
+	@PostMapping("/reply/write")
+	public String replyWrite(HttpSession session, RedirectAttributes attr, @ModelAttribute ReplyDto replyDto) {
+		String replyWriter = (String) session.getAttribute("loginId");
+		replyDto.setReplyWriter(replyWriter);
+		replyDao.replyWrite(replyDto);
+		attr.addAttribute("boardNo", replyDto.getReplyOrigin());
+		return "redirect:/board/detail";
+	}
+
+	// 3. 댓글 수정
+	@PostMapping("/reply/edit")
+	public String replyEdit(HttpSession session, RedirectAttributes attr, @RequestParam int boardNo, @RequestParam int replyNo, @RequestParam String replyContent) {
+		String loginId = (String) session.getAttribute("loginId");
+		String replyWriter = replyDao.replyWriterReturn(replyNo);
+		if(loginId.equals(replyWriter)) {
+			replyDao.replyUpdate(replyContent, replyNo);
+		}
+		attr.addAttribute("boardNo", boardNo);
+		return "redirect:/board/detail";
+	}
+	
+	// 4. 댓글 삭제
+	@GetMapping("/reply/delete")
+	public String replyDelete(HttpSession session, RedirectAttributes attr, @RequestParam int boardNo, @RequestParam int replyNo) {
+		String loginId = (String) session.getAttribute("loginId");
+		String replyWriter = replyDao.replyWriterReturn(replyNo);
+		if(loginId.equals(replyWriter)) {
+			replyDao.replyDelete(replyNo);
+		}
+		attr.addAttribute("boardNo", boardNo);
+		return "redirect:/board/detail";
 	}
 }

@@ -39,7 +39,7 @@ public interface BoardDao {
 	BoardDto selectOne(int boardNo);
 	
 	// #. 추상 메소드 - 조회수 증가
-	void readCount(int boardNo);
+	boolean updateReadcount(int boardNo);
 	
 	// 5-1. 추상 메소드 - 게시글 상세 + 조회수 증가
 	BoardDto read(int boardNo);

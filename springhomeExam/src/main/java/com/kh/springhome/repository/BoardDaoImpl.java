@@ -198,15 +198,15 @@ public class BoardDaoImpl implements BoardDao {
 
 	// 5-1. 추상 메소드 오버라이딩 - 조회수 증가
 	@Override
-	public void readCount(int boardNo) {
+	public boolean updateReadcount(int boardNo) {
 		String sql = "update board set board_read = board_read + 1 where board_no = ?";
-		Object[] param = new Object[] {boardNo};
-		jdbcTemplate.update(sql, param);
+		Object[] param = {boardNo};
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
 	@Override
 	public BoardDto read(int boardNo) {
-		this.readCount(boardNo);
+		this.updateReadcount(boardNo);
 		return this.selectOne(boardNo);
 	}
 

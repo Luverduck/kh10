@@ -37,7 +37,7 @@
 			<tr>
 				<th>조회수</th>
 				<td>${boardDto.getBoardRead()}</td>
-			</tr>
+			</tr>			
 		</tbody>
 		<tfoot>
 			<tr>
@@ -68,6 +68,54 @@
 			</tr>
 		</tfoot>
 	</table>	
+	
+	<br><br>
+	
+	<h3>댓글 목록</h3>
+	<table width = "900" border = "1">
+		<tbody>
+			<%-- 댓글 --%>
+			<c:forEach var = "replyDto" items = "${replyList}">
+			<tr align = "center">
+				<td>		
+				${replyDto.getReplyWriter()}
+				</td>
+				<td>
+				${replyDto.getReplyContent()}
+				</td>
+				<td>
+				${replyDto.getReplyWritetime()}
+				</td>
+				<td>
+					<!-- 글 제목을 누르면 수정창이 나오도록 -->
+					<form action = "reply/edit" method = "post" id = "replyEdit">
+						<input type = "text" name = "replyContent" required>
+						<input type = "hidden" name = "boardNo" value = "${replyDto.getReplyOrigin()}">
+						<input type = "hidden" name = "replyNo" value = "${replyDto.getReplyNo()}">
+						<button>수정</button>
+					</form>
+				</td>
+				<td>
+					<form action = "reply/delete" method = "get">
+						<input type = "hidden" name = "boardNo" value = "${replyDto.getReplyOrigin()}">
+						<input type = "hidden" name = "replyNo" value = "${replyDto.getReplyNo()}">
+						<button type = "submit">삭제</button>
+					</form>
+				</td>
+			</tr>	
+			</c:forEach>
+		</tbody>
+	</table>
+	
+	<br><br>
+	
+	<h3>댓글 작성</h3>
+	<form action = "reply/write" method = "post">
+		<textarea name="replyContent" rows="10" cols="50" required></textarea><br><br>
+		<input type = hidden name = "replyOrigin" value = "${boardDto.getBoardNo()}">
+	<button type = "submit">댓글작성</button>
+	</form>
+			
 </div>
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>
