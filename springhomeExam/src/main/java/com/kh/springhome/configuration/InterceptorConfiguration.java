@@ -62,6 +62,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 																	"/board/detail"				// 게시판 상세
 																	);
 	
+		// 관리자용 인터셉터
 		registry.addInterceptor(adminInterceptor)
 													.addPathPatterns(		// 인터셉터가 감시할 주소
 															"/guestbook/edit*",		// 방명록 수정 페이지 - edit로 시작하는 주소 : edit과 editFail을 모두 포함
@@ -69,10 +70,12 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 															"/music/**",			// 움원 전체
 															"/member/list",			// 회원 목록
 															"/member/edit*",		// 회원 수정
-															"/member/delete"		// 회원 삭제
+															"/member/delete",		// 회원 삭제
+															"/admin/**",			// 관리자 기능
+															"/board/reply/blind"	// 블라인드 기능
 															)
 													.excludePathPatterns(	// 위 주소에서 제외할 주소
-															"/music/list",			// 음원 목록
+															"/music/list",		// 음원 목록
 															"/music/detail"		// 음원 상세
 															);
 		

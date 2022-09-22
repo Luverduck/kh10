@@ -16,9 +16,11 @@ import lombok.ToString;
 public class ReplyDto {
 
 	// 필드
-	int replyNo;
-	String replyWriter;
-	int replyOrigin;
-	Date replyWritetime;
-	String replyContent;
+	private int replyNo;
+	private String replyWriter;
+	private int replyOrigin;
+	private Date replyWritetime;
+	private String replyContent;
+	// DB의 char(1)을 논리로 변환
+	private boolean replyBlind;
 }

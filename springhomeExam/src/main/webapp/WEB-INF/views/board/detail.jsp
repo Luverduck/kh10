@@ -42,7 +42,19 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td height="200" align = "left" valign = "top">${boardDto.getBoardContent()}</td>
+				<td height="200" align = "left" valign = "top">
+				
+				<!-- 블라인드 여부에 따라 다르게 표시 -->
+				<c:choose>
+					<c:when test = "${replyDto.getReplyBlind()}">
+						<pre>블라인드 처리된 게시물입니다</pre>
+					</c:when>
+					<c:otherwise>
+						${boardDto.getBoardContent()}
+					</c:otherwise>
+				</c:choose>
+				
+				</td>
 			</tr>
 			<tr>
 				<th>작성자</th>
@@ -120,7 +132,17 @@
 					</c:if>
 					
 					<c:if test="${admin}">
-						<a href="#">블라인드</a>
+					
+						<!-- 블라인드 여부에 따라 다르게 표시 -->
+						<c:choose>
+							<c:when test = "${replyDto.replyBlind}">
+								<a href="reply/blind?replyNo=${replyDto.replyNo}&replyOrigin=${replyDto.replyOrigin}">블라인드<br>해제</a>
+							</c:when>
+							<c:otherwise>
+								<a href="reply/blind?replyNo=${replyDto.replyNo}&replyOrigin=${replyDto.replyOrigin}">블라인드<br>설정</a>
+							</c:otherwise>
+						</c:choose>
+						
 					</c:if>
 				</th>
 			</tr>

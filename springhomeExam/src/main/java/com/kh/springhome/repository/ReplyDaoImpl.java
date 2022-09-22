@@ -38,6 +38,8 @@ public class ReplyDaoImpl implements ReplyDao {
 			replyDto.setReplyOrigin(rs.getInt("reply_origin"));
 			replyDto.setReplyWritetime(rs.getDate("reply_writetime"));
 			replyDto.setReplyContent(rs.getString("reply_content"));
+			// DB의 char(1)을 논리로 변환
+			replyDto.setReplyBlind(rs.getString("reply_blind") != null);
 			return replyDto;
 		}
 	};
@@ -77,6 +79,8 @@ public class ReplyDaoImpl implements ReplyDao {
 				replyDto.setReplyOrigin(rs.getInt("reply_origin"));
 				replyDto.setReplyWritetime(rs.getDate("reply_writetime"));
 				replyDto.setReplyContent(rs.getString("reply_content"));
+				// DB의 char(1)을 논리로 변환
+				replyDto.setReplyBlind(rs.getString("reply_blind") != null);
 				return replyDto;
 			}
 			else {
@@ -91,5 +95,14 @@ public class ReplyDaoImpl implements ReplyDao {
 		String sql = "select * from reply where reply_no = ?";
 		Object[] param = new Object[] {replyNo};
 		return jdbcTemplate.query(sql, extractor, param);
+	}
+
+	// 추상 메소드 오버라이딩 - 댓글 블라인드
+	@Override
+	public boolean updateBlind(int replyNo, boolean blind) {
+		String sql = "update reply set reply_blind = ? where reply_no = ?";
+		String replyBlind = blind ? "Y" : null;	// 삼항 연산
+		Object[] param = new Object[] {replyBlind, replyNo};
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 }

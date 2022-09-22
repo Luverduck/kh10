@@ -20,4 +20,7 @@ public interface ReplyDao {
 	
 	// 추상 메소드 - 댓글 정보
 	ReplyDto selectOne(int replyNo);
+
+	// 추상 메소드 - 댓글 블라인드
+	boolean updateBlind(int replyNo, boolean blind);
 }

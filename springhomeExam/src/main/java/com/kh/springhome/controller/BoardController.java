@@ -198,4 +198,21 @@ public class BoardController {
 		attr.addAttribute("boardNo", replyOrigin);
 		return "redirect:/board/detail";
 	}
+	
+	// 5. 댓글 블라인드
+	@GetMapping("/reply/blind")
+	public String replyBlind(RedirectAttributes attr, @RequestParam int replyNo, @RequestParam int replyOrigin) {
+		// replyBlind를 조회하기 위함
+		ReplyDto replyDto = replyDao.selectOne(replyNo);
+		replyDao.updateBlind(replyNo, !replyDto.isReplyBlind());
+/*		if(replyDto.isReplyBlind()) {
+			replyDao.updateBlind(replyNo, false);
+		}
+		else {
+			replyDao.updateBlind(replyNo, false);
+		}*/
+		
+		attr.addAttribute("boardNo", replyOrigin);
+		return "redirect:/board/detail";
+	}
 }
