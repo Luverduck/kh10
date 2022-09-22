@@ -98,7 +98,7 @@
 		<!-- 댓글 목록 -->
 		<tbody>
 			<c:forEach var = "replyDto" items = "${replyList}">
-			<tr>
+			<tr class="view">
 				<td width = "90%">		
 					<!-- 작성자 -->
 					${replyDto.getReplyWriter()} 
