@@ -7,6 +7,28 @@
 	<jsp:param name = "title" value = "${boardDto.getBoardTitle()}"/>
 </jsp:include>
 
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+	$(function(){
+		//목표 : 
+		//1. edit-btn을 누르면 view를 숨기고 editor를 보여준다
+		//2. cancel-btn을 누르면 editor를 숨기고 view를 보여준다
+		//3. 처음에는 view만 보여준다
+		//1
+		$(".edit-btn").click(function(){
+			$(this).parents(".view").hide();
+			$(this).parents(".view").next(".editor").show();
+		});
+		//2
+		$(".cancel-btn").click(function(){
+			$(this).parents(".editor").hide();
+			$(this).parents(".editor").prev(".view").show();
+		});
+		//3
+		$(".editor").hide();
+	});
+</script>
+
 <div align = "center">
 	<table border = "1" width = "900">	
 		<tbody align= "center">
@@ -71,20 +93,20 @@
 	
 	<br><br>
 
-<%-- 회원일 경우와 아닐 경우 댓글 작성창이 다르게 보이도록 처리 --%>
-
+	<%-- 회원일 경우와 아닐 경우 댓글 작성창이 다르게 보이도록 처리 --%>
 	<table border = "1" width = "900" >
 		<!-- 댓글 목록 -->
 		<tbody>
 			<c:forEach var = "replyDto" items = "${replyList}">
 			<tr>
-				<td width = "80%">		
+				<td width = "90%">		
+					<!-- 작성자 -->
 					${replyDto.getReplyWriter()} 
 					<c:if test = "${boardDto.getBoardWriter() == replyDto.getReplyWriter()}">
 					(작성자)
 					</c:if>
 
-					(등급은 table 조인을 배워야 할 수 있는 항목))
+					(등급은 table 조인을 배워야 할 수 있는 항목)
 					<pre>${replyDto.getReplyContent()}</pre>
 					<br><br>
 					<fmt:formatDate value="${replyDto.getReplyWritetime()}" pattern = "yyyy-mm-dd HH:mm"/>
@@ -92,62 +114,74 @@
 				<th>
 					<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시하기 -->
 					<c:if test = "${loginId == replyDto.getReplyWriter()}">
-						수정
+						<a class="edit-btn">수정</a>
 						<br>
 						<a href = "reply/delete?replyNo=${replyDto.getReplyNo()}&replyOrigin=${replyDto.getReplyOrigin()}">삭제</a>
 					</c:if>
 					
-					<form action = "reply/edit" method = "post" id = "replyEdit">
-						<input type = "text" name = "replyContent" required>
-						<input type = "hidden" name = "boardNo" value = "${replyDto.getReplyOrigin()}">
-						<input type = "hidden" name = "replyNo" value = "${replyDto.getReplyNo()}">
-						<button>수정</button>
+					<c:if test="${admin}">
+						<a href="#">블라인드</a>
+					</c:if>
+				</th>
+			</tr>
+			
+			<!-- 수정하기 위한 화면 : 댓글 작성자 본인에게만 출력 -->
+			<c:if test="${loginId ==  replyDto.replyWriter}">
+			<tr class="editor">
+				<th colspan="2">
+					<form action="reply/edit" method="post">
+						<input type="hidden" name="replyNo" value="${replyDto.replyNo}">
+						<input type="hidden" name="replyOrigin" value="${replyDto.replyOrigin}">
+						<textarea name="replyContent" rows="5" cols="50" required>${replyDto.replyContent}</textarea>
+						<button type="submit">변경</button>
+						<a class="cancel-btn">취소</a>
 					</form>
 				</th>
-			</tr>	
+			</tr>
+			</c:if>
+				
 			</c:forEach>
 		</tbody>
 	</table>
 
-<c:choose>
-	<c:when test = "${loginId != null}">	<!-- 회원일 경우 -->
-		<!-- 댓글 입력창 -->
-		<form action = "reply/write" method = "post">
-		<input type = hidden name = "replyOrigin" value = "${boardDto.getBoardNo()}">
-		<table border = "1" width = "500">
-			<tbody>
-				<tr>
-					<th>
-						<textarea name="replyContent" rows = "5" cols = "55" required placeholder = "댓글 내용"></textarea>
-					</th>
-					<th>
-						<button type = "submit">댓글 작성</button>
-					</th>
-				</tr>
-			</tbody>
-		</table>
-		</form>
-	</c:when>
-	
-	<c:otherwise>	<!-- 비회원일 경우 -->
-		<table width="500">
-			<tbody>
-				<tr>
-					<th>
-						<textarea name="replyContent" rows="5" cols="55" 
-							placeholder="로그인 후 댓글 작성이 가능합니다" disabled></textarea>
-					</th>
-					<th>
-						<button type="submit" disabled>등록</button>
-					</th>
-				</tr>
-			</tbody>
-		</table>
-	</c:otherwise>
-	
-</c:choose>	
-	
-	
+	<%-- 회원일 경우와 아닐 경우 댓글 작성창이 다르게 보이도록 처리 --%>
+	<c:choose>
+		<c:when test = "${loginId != null}">	<!-- 회원일 경우 -->
+			<!-- 댓글 입력창 -->
+			<form action = "reply/write" method = "post">
+			<input type = hidden name = "replyOrigin" value = "${boardDto.getBoardNo()}">
+			<table border = "1" width = "500">
+				<tbody>
+					<tr>
+						<th>
+							<textarea name="replyContent" rows = "5" cols = "55" required placeholder = "댓글 내용"></textarea>
+						</th>
+						<th>
+							<button type = "submit">댓글 작성</button>
+						</th>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</c:when>
+		
+		<c:otherwise>	<!-- 비회원일 경우 -->
+			<table width="500">
+				<tbody>
+					<tr>
+						<th>
+							<textarea name="replyContent" rows="5" cols="55" 
+								placeholder="로그인 후 댓글 작성이 가능합니다" disabled></textarea>
+						</th>
+						<th>
+							<button type="submit" disabled>등록</button>
+						</th>
+					</tr>
+				</tbody>
+			</table>
+		</c:otherwise>
+		
+	</c:choose>	
 </div>
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>
