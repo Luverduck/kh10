@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -63,12 +65,31 @@ public class ReplyDaoImpl implements ReplyDao {
 		Object[] param = new Object[] {replyNo};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
+	
+	// ResultSetExtractor
+	private ResultSetExtractor<ReplyDto> extractor = new ResultSetExtractor<>() {
+		@Override
+		public ReplyDto extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if(rs.next()) {
+				ReplyDto replyDto = new ReplyDto();
+				replyDto.setReplyNo(rs.getInt("reply_no"));
+				replyDto.setReplyWriter(rs.getString("reply_writer"));
+				replyDto.setReplyOrigin(rs.getInt("reply_origin"));
+				replyDto.setReplyWritetime(rs.getDate("reply_writetime"));
+				replyDto.setReplyContent(rs.getString("reply_content"));
+				return replyDto;
+			}
+			else {
+				return null;
+			}
+		}	
+	};
 
-	// 추상 메소드 오버라이딩 - 댓글 작성자 검사를 위한 작성자 반환
+	// 추상 메소드 오버라이딩 - 댓글 정보
 	@Override
-	public String replyWriterReturn(int replyNo) {
-		String sql = "select reply_writer from reply where reply_no = ?";
+	public ReplyDto selectOne(int replyNo) {
+		String sql = "select * from reply where reply_no = ?";
 		Object[] param = new Object[] {replyNo};
-		return jdbcTemplate.queryForObject(sql, String.class, param);
+		return jdbcTemplate.query(sql, extractor, param);
 	}
 }

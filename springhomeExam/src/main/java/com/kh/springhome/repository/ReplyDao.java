@@ -18,6 +18,6 @@ public interface ReplyDao {
 	// 추상 메소드 - 댓글 삭제
 	boolean replyDelete(int replyNo);
 	
-	// 추상 메소드 - 댓글 작성자 검사를 위한 작성자 반환
-	String replyWriterReturn(int replyNo);
+	// 추상 메소드 - 댓글 정보
+	ReplyDto selectOne(int replyNo);
 }
