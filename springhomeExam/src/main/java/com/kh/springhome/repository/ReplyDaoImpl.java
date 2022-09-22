@@ -99,10 +99,10 @@ public class ReplyDaoImpl implements ReplyDao {
 
 	// 추상 메소드 오버라이딩 - 댓글 블라인드
 	@Override
-	public boolean updateBlind(int replyNo, boolean blind) {
+	public boolean updateBlind(int replyNo, boolean replyBlind) {
 		String sql = "update reply set reply_blind = ? where reply_no = ?";
-		String replyBlind = blind ? "Y" : null;	// 삼항 연산
-		Object[] param = new Object[] {replyBlind, replyNo};
+		String setReplyBlind = replyBlind ? "Y" : null;	// 삼항 연산
+		Object[] param = new Object[] {setReplyBlind, replyNo};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 }
