@@ -23,7 +23,7 @@
 				<td height="200" align = "left" valign = "top">${boardDto.getBoardContent()}</td>
 			</tr>
 			<tr>
-				<th>글쓴이</th>
+				<th>작성자</th>
 				<td>${boardDto.getBoardWriter()}</td>
 			</tr>
 			<tr>
@@ -70,52 +70,84 @@
 	</table>	
 	
 	<br><br>
-	
-	<h3>댓글 목록</h3>
-	<table width = "900" border = "1">
+
+<%-- 회원일 경우와 아닐 경우 댓글 작성창이 다르게 보이도록 처리 --%>
+
+	<table border = "1" width = "900" >
+		<!-- 댓글 목록 -->
 		<tbody>
-			<%-- 댓글 --%>
 			<c:forEach var = "replyDto" items = "${replyList}">
-			<tr align = "center">
-				<td>		
-				${replyDto.getReplyWriter()}
+			<tr>
+				<td width = "80%">		
+					${replyDto.getReplyWriter()} 
+					<c:if test = "${boardDto.getBoardWriter() == replyDto.getReplyWriter()}">
+					(작성자)
+					</c:if>
+
+					(등급은 table 조인을 배워야 할 수 있는 항목))
+					<pre>${replyDto.getReplyContent()}</pre>
+					<br><br>
+					<fmt:formatDate value="${replyDto.getReplyWritetime()}" pattern = "yyyy-mm-dd HH:mm"/>
 				</td>
-				<td>
-				${replyDto.getReplyContent()}
-				</td>
-				<td>
-				${replyDto.getReplyWritetime()}
-				</td>
-				<td>
-					<!-- 글 제목을 누르면 수정창이 나오도록 -->
+				<th>
+					<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시하기 -->
+					<c:if test = "${loginId == replyDto.getReplyWriter()}">
+						수정
+						<br>
+						<a href = "reply/delete?replyNo=${replyDto.getReplyNo()}&replyOrigin=${replyDto.getReplyOrigin()}">삭제</a>
+					</c:if>
+					
 					<form action = "reply/edit" method = "post" id = "replyEdit">
 						<input type = "text" name = "replyContent" required>
 						<input type = "hidden" name = "boardNo" value = "${replyDto.getReplyOrigin()}">
 						<input type = "hidden" name = "replyNo" value = "${replyDto.getReplyNo()}">
 						<button>수정</button>
 					</form>
-				</td>
-				<td>
-					<form action = "reply/delete" method = "get">
-						<input type = "hidden" name = "boardNo" value = "${replyDto.getReplyOrigin()}">
-						<input type = "hidden" name = "replyNo" value = "${replyDto.getReplyNo()}">
-						<button type = "submit">삭제</button>
-					</form>
-				</td>
+				</th>
 			</tr>	
 			</c:forEach>
 		</tbody>
 	</table>
-	
-	<br><br>
-	
-	<h3>댓글 작성</h3>
-	<form action = "reply/write" method = "post">
-		<textarea name="replyContent" rows="10" cols="50" required></textarea><br><br>
+
+<c:choose>
+	<c:when test = "${loginId != null}">	<!-- 회원일 경우 -->
+		<!-- 댓글 입력창 -->
+		<form action = "reply/write" method = "post">
 		<input type = hidden name = "replyOrigin" value = "${boardDto.getBoardNo()}">
-	<button type = "submit">댓글작성</button>
-	</form>
-			
+		<table border = "1" width = "500">
+			<tbody>
+				<tr>
+					<th>
+						<textarea name="replyContent" rows = "5" cols = "55" required placeholder = "댓글 내용"></textarea>
+					</th>
+					<th>
+						<button type = "submit">댓글 작성</button>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</c:when>
+	
+	<c:otherwise>	<!-- 비회원일 경우 -->
+		<table width="500">
+			<tbody>
+				<tr>
+					<th>
+						<textarea name="replyContent" rows="5" cols="55" 
+							placeholder="로그인 후 댓글 작성이 가능합니다" disabled></textarea>
+					</th>
+					<th>
+						<button type="submit" disabled>등록</button>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+	</c:otherwise>
+	
+</c:choose>	
+	
+	
 </div>
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>

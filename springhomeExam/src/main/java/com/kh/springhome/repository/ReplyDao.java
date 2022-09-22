@@ -13,10 +13,10 @@ public interface ReplyDao {
 	List<ReplyDto> replyList(int replyOrigin);
 	
 	// 추상 메소드 - 댓글 수정
-	void replyUpdate(String replyContent, int replyNo);
+	boolean replyUpdate(ReplyDto replyDto);
 	
 	// 추상 메소드 - 댓글 삭제
-	void replyDelete(int replyNo);
+	boolean replyDelete(int replyNo);
 	
 	// 추상 메소드 - 댓글 작성자 검사를 위한 작성자 반환
 	String replyWriterReturn(int replyNo);

@@ -43,25 +43,25 @@ public class ReplyDaoImpl implements ReplyDao {
 	// 추상 메소드 오버라이딩 - 댓글 목록
 	@Override
 	public List<ReplyDto> replyList(int replyOrigin) {
-		String sql = "select * from reply where reply_origin = ? order by reply_writetime asc";
+		String sql = "select * from reply where reply_origin = ? order by reply_no asc";
 		Object[] param = new Object[] {replyOrigin};
 		return jdbcTemplate.query(sql, mapper, param);
 	}
 
 	// 추상 메소드 오버라이딩 - 댓글 수정
 	@Override
-	public void replyUpdate(String replyContent, int replyNo) {
+	public boolean replyUpdate(ReplyDto replyDto) {
 		String sql = "update reply set reply_content = ? where reply_no = ?";
-		Object[] param = new Object[] {replyContent, replyNo};
-		jdbcTemplate.update(sql, param);
+		Object[] param = new Object[] {replyDto.getReplyContent(), replyDto.getReplyNo()};
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
 	// 추상 메소드 오버라이딩 - 댓글 삭제
 	@Override
-	public void replyDelete(int replyNo) {
+	public boolean replyDelete(int replyNo) {
 		String sql = "delete reply where reply_no = ?";
 		Object[] param = new Object[] {replyNo};
-		jdbcTemplate.update(sql, param);
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 
 	// 추상 메소드 오버라이딩 - 댓글 작성자 검사를 위한 작성자 반환
