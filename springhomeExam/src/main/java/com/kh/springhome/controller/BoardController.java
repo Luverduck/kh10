@@ -165,45 +165,37 @@ public class BoardController {
 //		(4) 갱신된 저장소를 세션에 다시 저장
 		session.setAttribute("history", history);
 		
-		// 2. 댓글 목록을 첨부
+		// 2. 댓글 목록 - 댓글 목록(전체 조회 결과)을 model에 추가
 		model.addAttribute("replyList", replyDao.replyList(boardNo));
 		
 		return "board/detail";
 	}
-	
 
 	// 여기서부터는 댓글 관련 Controller
 	// 1. 댓글 작성
 	@PostMapping("/reply/write")
-	public String replyWrite(HttpSession session, RedirectAttributes attr, @ModelAttribute ReplyDto replyDto) {
+	public String replyWrite(@ModelAttribute ReplyDto replyDto, RedirectAttributes attr, HttpSession session) {
 		String replyWriter = (String) session.getAttribute("loginId");
 		replyDto.setReplyWriter(replyWriter);
 		replyDao.replyWrite(replyDto);
 		attr.addAttribute("boardNo", replyDto.getReplyOrigin());
-		return "redirect:/board/detail";
+		// return "redirect:../detail"		// 상대 경로
+		return "redirect:/board/detail";	// 절대 경로
 	}
 
 	// 3. 댓글 수정
 	@PostMapping("/reply/edit")
-	public String replyEdit(HttpSession session, RedirectAttributes attr, @RequestParam int boardNo, @RequestParam int replyNo, @RequestParam String replyContent) {
-		String loginId = (String) session.getAttribute("loginId");
-		String replyWriter = replyDao.replyWriterReturn(replyNo);
-		if(loginId.equals(replyWriter)) {
-			replyDao.replyUpdate(replyContent, replyNo);
-		}
-		attr.addAttribute("boardNo", boardNo);
+	public String replyEdit(RedirectAttributes attr, @ModelAttribute ReplyDto replyDto) {
+		replyDao.replyUpdate(replyDto);
+		attr.addAttribute("boardNo", replyDto.getReplyOrigin());
 		return "redirect:/board/detail";
 	}
 	
 	// 4. 댓글 삭제
 	@GetMapping("/reply/delete")
-	public String replyDelete(HttpSession session, RedirectAttributes attr, @RequestParam int boardNo, @RequestParam int replyNo) {
-		String loginId = (String) session.getAttribute("loginId");
-		String replyWriter = replyDao.replyWriterReturn(replyNo);
-		if(loginId.equals(replyWriter)) {
-			replyDao.replyDelete(replyNo);
-		}
-		attr.addAttribute("boardNo", boardNo);
+	public String replyDelete(RedirectAttributes attr, @RequestParam int replyNo, @RequestParam int replyOrigin) {
+		replyDao.replyDelete(replyNo);
+		attr.addAttribute("boardNo", replyOrigin);
 		return "redirect:/board/detail";
 	}
 }
