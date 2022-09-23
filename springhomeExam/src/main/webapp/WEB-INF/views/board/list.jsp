@@ -49,6 +49,15 @@
 						<a href = "detail?boardNo=${boardDto.boardNo}">
 						${boardDto.getBoardTitle()}
 						</a>
+						
+						<!-- 댓글 개수 출력 -->
+						<c:if test="${boardDto.replyCount > 0}">
+							[${boardDto.replyCount}]
+						</c:if>
+						
+						<c:if test = "${boardDto.getBoardLike() > 0}">
+							♥ ${boardDto.getBoardLike()}
+						</c:if>
 					</td>
 					<td>${boardDto.getBoardWriter()}</td>
 					<td>

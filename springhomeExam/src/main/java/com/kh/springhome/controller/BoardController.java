@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.BoardDto;
+import com.kh.springhome.entity.MemberBoardLikeDto;
 import com.kh.springhome.entity.ReplyDto;
 import com.kh.springhome.error.TargetNotFoundException;
 import com.kh.springhome.repository.BoardDao;
+import com.kh.springhome.repository.MemberBoardLikeDao;
 import com.kh.springhome.repository.ReplyDao;
 import com.kh.springhome.vo.BoardListSearchVO;
 
@@ -31,6 +33,9 @@ public class BoardController {
 	
 	@Autowired
 	private ReplyDao replyDao;
+	
+	@Autowired
+	private MemberBoardLikeDao likeDao;
 	
 	// 1. 게시글 작성 (다음 시퀀스 번호를 뽑아서 게시글 작성)
 	// 1) 등록 페이지 Mapping
@@ -165,8 +170,19 @@ public class BoardController {
 //		(4) 갱신된 저장소를 세션에 다시 저장
 		session.setAttribute("history", history);
 		
-		// 2. 댓글 목록 - 댓글 목록(전체 조회 결과)을 model에 추가
+		// (+추가) 댓글 목록 - 댓글 목록(전체 조회 결과)을 model에 추가
 		model.addAttribute("replyList", replyDao.replyList(boardNo));
+		
+		// (추가) 좋아요 기록이 있는지 조회하여 첨부
+		String MemberId = (String) session.getAttribute("loginId");
+		if(MemberId != null) {
+			MemberBoardLikeDto likeDto = new MemberBoardLikeDto();
+			likeDto.setMemberId(MemberId);
+			likeDto.setBoardNo(boardNo);
+			model.addAttribute("isLike", likeDao.check(likeDto));
+		}
+		
+		// (추가) 현재 글의 좋아요 갯수를 첨부
 		
 		return "board/detail";
 	}
@@ -213,6 +229,30 @@ public class BoardController {
 		}*/
 		
 		attr.addAttribute("boardNo", replyOrigin);
+		return "redirect:/board/detail";
+	}
+	
+	// 여기서부터는 좋아요
+	@GetMapping("/like")
+	public String boardLike(@RequestParam int boardNo, HttpSession session, RedirectAttributes attr) {
+		
+		String memberId = (String) session.getAttribute("loginId");
+		MemberBoardLikeDto dto = new MemberBoardLikeDto();
+		dto.setMemberId(memberId);
+		dto.setBoardNo(boardNo);
+		
+		// 좋아요 증가 / 감소
+		if(likeDao.check(dto)) {	// 좋아요를 한 상태이면
+			likeDao.delete(dto);
+		}
+		else {	// 좋아요를 한 적이 없는 상태이면
+			likeDao.insert(dto);
+		}
+		
+		// 좋아요 총 갯수 갱신
+		likeDao.refresh(boardNo);
+		
+		attr.addAttribute("boardNo", boardNo);
 		return "redirect:/board/detail";
 	}
 }

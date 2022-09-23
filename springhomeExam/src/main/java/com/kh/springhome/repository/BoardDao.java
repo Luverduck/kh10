@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.springhome.entity.BoardDto;
 import com.kh.springhome.vo.BoardListSearchVO;
+import com.kh.springhome.vo.BoardListVO;
 
 public interface BoardDao {
 
@@ -26,9 +27,9 @@ public interface BoardDao {
 	//List<BoardDto> selectList(String type, String keyword);
 	
 	// 4-1. 통합 검색 메소드
-	List<BoardDto> selectList(BoardListSearchVO vo);
-	List<BoardDto> list(BoardListSearchVO vo);
-	List<BoardDto> search(BoardListSearchVO vo);
+	List<BoardListVO> selectList(BoardListSearchVO vo);
+	List<BoardListVO> list(BoardListSearchVO vo);
+	List<BoardListVO> search(BoardListSearchVO vo);
 	
 	// 검색과 목록의 총 데이터 개수를 구하는 메소드
 	int count(BoardListSearchVO vo);

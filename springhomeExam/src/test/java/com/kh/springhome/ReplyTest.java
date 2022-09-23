@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.kh.springhome.entity.ReplyDto;
 import com.kh.springhome.repository.ReplyDao;
+import com.kh.springhome.vo.ReplyListVO;
 
 @SpringBootTest
 public class ReplyTest {
@@ -31,8 +32,8 @@ public class ReplyTest {
 	@Test
 	public void test() {
 		// replyList()
-		List<ReplyDto> list = replyDao.replyList(1);
-		for(ReplyDto replyDto : list) {
+		List<ReplyListVO> list = replyDao.replyList(1);
+		for(ReplyListVO replyDto : list) {
 			System.out.println(replyDto);
 		}
 	}

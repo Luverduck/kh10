@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.ReplyDto;
+import com.kh.springhome.vo.ReplyListVO;
 
 @Repository
 public class ReplyDaoImpl implements ReplyDao {
@@ -43,13 +44,32 @@ public class ReplyDaoImpl implements ReplyDao {
 			return replyDto;
 		}
 	};
+	
+	// ReplyListVO를 위한 RowMapper
+	private RowMapper<ReplyListVO> listMapper = new RowMapper<>() {
+
+		@Override
+		public ReplyListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ReplyListVO replyListVO = new ReplyListVO();
+			replyListVO.setReplyNo(rs.getInt("reply_no"));
+			replyListVO.setReplyWriter(rs.getString("reply_writer"));
+			replyListVO.setReplyOrigin(rs.getInt("reply_origin"));
+			replyListVO.setReplyWritetime(rs.getDate("reply_writetime"));
+			replyListVO.setReplyContent(rs.getString("reply_content"));
+			// DB의 char(1)을 논리로 변환
+			replyListVO.setReplyBlind(rs.getString("reply_blind") != null);
+			replyListVO.setMemberNick(rs.getString("member_nick"));
+			replyListVO.setMemberGrade(rs.getString("member_grade"));
+			return replyListVO;
+		}
+	};
 
 	// 추상 메소드 오버라이딩 - 댓글 목록
 	@Override
-	public List<ReplyDto> replyList(int replyOrigin) {
-		String sql = "select * from reply where reply_origin = ? order by reply_no asc";
+	public List<ReplyListVO> replyList(int replyOrigin) {
+		String sql = "select R.*, M.member_nick, M.member_grade from reply R left outer join member M on R.reply_writer = M.member_id where R.reply_origin = ? order by reply_no asc";
 		Object[] param = new Object[] {replyOrigin};
-		return jdbcTemplate.query(sql, mapper, param);
+		return jdbcTemplate.query(sql, listMapper, param);
 	}
 
 	// 추상 메소드 오버라이딩 - 댓글 수정

@@ -38,7 +38,23 @@
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td>${boardDto.getBoardTitle()}</td>
+				<td>
+					${boardDto.getBoardTitle()}
+					
+					<%-- 좋아요 하트 --%>
+					<c:if test = "${isLike == null}">
+						<a href = "like?boardNo=${boardDto.getBoardNo()}">♡</a>
+					</c:if>
+					<c:if test = "${isLike == true}">
+						<a href = "like?boardNo=${boardDto.getBoardNo()}">♥</a>
+					</c:if>
+					<c:if test = "${isLike == false}">
+						<a href = "like?boardNo=${boardDto.getBoardNo()}">♡</a>
+					</c:if>
+					
+					<%-- 좋아요 갯수 --%>
+					${likeCount}
+				</td>
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -115,13 +131,15 @@
 					<!-- 작성자 -->
 					${replyDto.getReplyWriter()} 
 					<c:if test = "${boardDto.getBoardWriter() == replyDto.getReplyWriter()}">
-					(작성자)
+					[작성자]
 					</c:if>
-
-					(등급은 table 조인을 배워야 할 수 있는 항목)
+					
+					[${replyDto.getMemberNick()}]
+					[${replyDto.getMemberGrade()}]
+					
 					<pre>${replyDto.getReplyContent()}</pre>
 					<br><br>
-					<fmt:formatDate value="${replyDto.getReplyWritetime()}" pattern = "yyyy-mm-dd HH:mm"/>
+					<fmt:formatDate value="${replyDto.getReplyWritetime()}" pattern = "yyyy-MM-dd HH:mm"/>
 				</td>
 				<th>
 					<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시하기 -->
@@ -129,6 +147,7 @@
 						<a class="edit-btn">수정</a>
 						<br>
 						<a href = "reply/delete?replyNo=${replyDto.getReplyNo()}&replyOrigin=${replyDto.getReplyOrigin()}">삭제</a>
+						<br>
 					</c:if>
 					
 					<c:if test="${admin}">

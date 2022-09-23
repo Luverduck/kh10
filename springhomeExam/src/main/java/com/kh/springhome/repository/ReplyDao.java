@@ -3,6 +3,7 @@ package com.kh.springhome.repository;
 import java.util.List;
 
 import com.kh.springhome.entity.ReplyDto;
+import com.kh.springhome.vo.ReplyListVO;
 
 public interface ReplyDao {
 
@@ -10,7 +11,7 @@ public interface ReplyDao {
 	void replyWrite(ReplyDto replyDto);
 	
 	// 추상 메소드 - 댓글 목록
-	List<ReplyDto> replyList(int replyOrigin);
+	List<ReplyListVO> replyList(int replyOrigin);
 	
 	// 추상 메소드 - 댓글 수정
 	boolean replyUpdate(ReplyDto replyDto);
