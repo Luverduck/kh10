@@ -3,6 +3,7 @@ package com.kh.springhome.repository;
 import java.util.List;
 
 import com.kh.springhome.entity.MusicDto;
+import com.kh.springhome.vo.MusicLatestListVO;
 import com.kh.springhome.vo.MusicYearCountVO;
 
 public interface MusicDao {
@@ -37,4 +38,7 @@ public interface MusicDao {
 	
 	// Dao의 추상 메소드 - 연도별 발매수 + 순위
 	List<MusicYearCountVO> releaseByYearWithRank();
+	
+	// 추상 메소드 - 최근에 등록된 음원
+	List<MusicLatestListVO> musicLatest();
 }

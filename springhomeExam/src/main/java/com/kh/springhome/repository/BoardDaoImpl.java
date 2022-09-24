@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.BoardDto;
+import com.kh.springhome.vo.BoardLatestListVO;
 import com.kh.springhome.vo.BoardListSearchVO;
 import com.kh.springhome.vo.BoardListVO;
 
@@ -34,6 +35,16 @@ public class BoardDaoImpl implements BoardDao {
 	public void write(BoardDto boardDto) {		
 		String sql = "insert into board(board_no, board_title, board_content, board_writer, board_head, board_group, board_parent, board_depth) values(?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] param = {boardDto.getBoardNo(), boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardWriter(), boardDto.getBoardHead(), boardDto.getBoardGroup(), boardDto.getBoardParentInteger(), boardDto.getBoardDepth()};
+		jdbcTemplate.update(sql, param);
+	}
+	
+	// #. 추상 메소드 - 게시글 작성 테스트용
+	@Override
+	public void writeTest(BoardDto boardDto) {		
+		String sql = "select board_seq.nextval from dual";
+		int boardNo = jdbcTemplate.queryForObject(sql, int.class);
+		sql = "insert into board(board_no, board_title, board_content, board_writer, board_head, board_group, board_parent, board_depth) values(?, ?, ?, ?, ?, ?, ?, ?)";
+		Object[] param = {boardNo, boardDto.getBoardTitle(), boardDto.getBoardContent(), boardDto.getBoardWriter(), boardDto.getBoardHead(), boardDto.getBoardGroup(), boardDto.getBoardParentInteger(), boardDto.getBoardDepth()};
 		jdbcTemplate.update(sql, param);
 	}
 	
@@ -80,12 +91,14 @@ public class BoardDaoImpl implements BoardDao {
 		public BoardListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return BoardListVO.builder()
 						.boardNo(rs.getInt("board_no"))
-						.boardTitle(rs.getString("board_title"))
 						.boardWriter(rs.getString("board_writer"))
-						.boardHead(rs.getString("board_head"))
+						.boardTitle(rs.getString("board_title"))
+						.boardContent(rs.getString("board_content"))
+						.boardWritetime(rs.getDate("board_writetime"))
+						.boardUpdatetime(rs.getDate("board_updatetime"))
 						.boardRead(rs.getInt("board_read"))
 						.boardLike(rs.getInt("board_like"))
-						.boardWritetime(rs.getDate("board_writetime"))
+						.boardHead(rs.getString("board_head"))
 						.boardGroup(rs.getInt("board_group"))
 						.boardParent(rs.getInt("board_parent"))
 						.boardDepth(rs.getInt("board_depth"))
@@ -259,5 +272,26 @@ public class BoardDaoImpl implements BoardDao {
 	public void clear() {
 		String sql = "delete board";
 		jdbcTemplate.update(sql);
+	}
+
+	// BoardDto에 대한 RowMapper (계층형 게시판 항목을 위해 수정)
+	private RowMapper<BoardLatestListVO> latestListMapper = new RowMapper<BoardLatestListVO>() {
+		@Override
+		public BoardLatestListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return BoardLatestListVO.builder()
+						.boardNo(rs.getInt("board_no"))
+						.boardWriter(rs.getString("board_writer"))
+						.boardTitle(rs.getString("board_title"))
+						.boardWritetime(rs.getDate("board_writetime"))
+						.boardRead(rs.getInt("board_read"))
+					.build();
+		}
+	};
+	
+	// 추상 메소드 오버라이딩 - 최근에 작성된 게시글
+	@Override
+	public List<BoardLatestListVO> boardLatest() {
+		String sql = "select * from (select TMP.*, rownum rn from (select * from board order by board_writetime desc)TMP) where rn between 1 and 5";
+		return jdbcTemplate.query(sql, latestListMapper);
 	}
 }

@@ -21,4 +21,7 @@ public interface GuestBookDao {
 	
 	// 삭제 (delete)
 	boolean delete(int no);
+	
+	// 추상 메소드 - 최근에 등록된 방명록
+	List<GuestBookDto> guestBookLatest();
 }

@@ -28,12 +28,12 @@ public class BoardTest {
 	
 	@Test
 	public void test() {
-		for(int i = 1 ; i <= 305 ; i ++) {
-			boardDao.write(BoardDto.builder()
+		for(int i = 1 ; i <= 22 ; i ++) {
+			boardDao.writeTest(BoardDto.builder()
 											.boardHead(null)
 											.boardTitle("테스트" + i)
 											.boardContent("테스트" + i)
-											.boardWriter("tester1")
+											.boardWriter("myface")
 										.build());
 		}
 	}

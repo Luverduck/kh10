@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.MemberDto;
+import com.kh.springhome.vo.MemberWriteCountVO;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -175,5 +176,24 @@ public class MemberDaoImpl implements MemberDao {
 		String sql = "update member set member_login = sysdate where member_id = ?";
 		Object[] param = {memberId};
 		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+	// MemberWriteCountVO를 위한 RowMapper
+	private RowMapper<MemberWriteCountVO> countMapper = new RowMapper<>() {
+		@Override
+		public MemberWriteCountVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return MemberWriteCountVO.builder()
+										.memberId(rs.getString("member_id"))
+										.boardCount(rs.getInt("board_count"))
+										.boardRank(rs.getInt("board_rank"))
+										.build();
+		}
+	};
+	
+	// 추상 메소드 오버라이딩 - 글을 가장 많이 쓴 회원
+	@Override
+	public List<MemberWriteCountVO> writeCount() {
+		String sql = "select * from (select TMP.*, rownum board_rank from (select distinct M.member_id, count(B.board_no) over(partition by M.member_id) board_count from member M left outer join board B on M.member_id = B.board_writer order by board_count desc)TMP) where board_rank between 1 and 5";
+		return jdbcTemplate.query(sql, countMapper);
 	}
 }

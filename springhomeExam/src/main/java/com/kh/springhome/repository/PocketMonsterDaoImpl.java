@@ -107,4 +107,11 @@ public class PocketMonsterDaoImpl implements PocketMonsterDao {
 		String sql = "select type, count(*) cnt from pocket_monster group by type";
 		return jdbcTemplate.query(sql, countMapper);
 	}
+
+	// 추상 메소드 오버라이딩 - 최근에 등록된 포켓몬
+	@Override
+	public List<PocketMonsterDto> pocketmonLatest() {
+		String sql = "select no, name, type from (select TMP.*, rownum rn from(select * from pocket_monster order by no desc)TMP) where rn between 1 and 5";
+		return jdbcTemplate.query(sql, mapper);
+	}
 }

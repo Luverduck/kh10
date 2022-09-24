@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.MusicDto;
+import com.kh.springhome.vo.MusicLatestListVO;
 import com.kh.springhome.vo.MusicYearCountVO;
 
 @Repository
@@ -153,5 +154,25 @@ public class MusicDaoImpl implements MusicDao {
 		// extractor(year from release_title)
 		String sql = "select TMP.*, rank() over(order by cnt desc) rank from (select extract(year from release_title) year, count(*) cnt from music group by extract(year from release_title) order by year desc)TMP";
 		return jdbcTemplate.query(sql, countMapper);
+	}
+
+	// MusicLatestListVO를 위한 Mapper
+	private RowMapper<MusicLatestListVO> listMapper = new RowMapper<>() {
+		@Override
+		public MusicLatestListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return MusicLatestListVO.builder()
+					.musicNo(rs.getInt("music_no"))
+					.musicTitle(rs.getString("music_title"))
+					.musicArtist(rs.getString("music_artist"))
+					.releaseTitle(rs.getDate("release_title"))
+					.build();
+		}
+	};
+	
+	// 추상 메소드 오버라이딩 - 최근에 등록된 음원
+	@Override
+	public List<MusicLatestListVO> musicLatest() {
+		String sql = "select music_no, music_title, music_artist, release_title from (select TMP.*, rownum rn from(select * from music order by release_title desc)TMP) where rn between 1 and 5";
+		return jdbcTemplate.query(sql, listMapper);
 	}
 }

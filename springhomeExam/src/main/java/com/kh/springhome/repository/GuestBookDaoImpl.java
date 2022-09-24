@@ -96,4 +96,13 @@ public class GuestBookDaoImpl implements GuestBookDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 
+	// GuestBookLatestListVO를 위한 RowMapper는 그냥 mapper를 사용
+	
+	// 추상 메소드 오버라이딩 - 최근에 등록된 방명록
+	@Override
+	public List<GuestBookDto> guestBookLatest() {
+		String sql = "select no, name, memo from (select TMP.*, rownum rn from(select * from guest_book order by no desc)TMP) where rn between 1 and 5";
+		return jdbcTemplate.query(sql, mapper);
+	}
+
 }

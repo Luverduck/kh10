@@ -3,6 +3,7 @@ package com.kh.springhome.repository;
 import java.util.List;
 
 import com.kh.springhome.entity.MemberDto;
+import com.kh.springhome.vo.MemberWriteCountVO;
 
 public interface MemberDao {
  
@@ -30,4 +31,7 @@ public interface MemberDao {
 	
 	// MemberDao의 추상 메소드 (로그인 시간 갱신)
 	boolean updateLoginTime(String memberId);
+	
+	// 추상 메소드 - 글을 가장 많이 쓴 회원
+	List<MemberWriteCountVO> writeCount();
 }
