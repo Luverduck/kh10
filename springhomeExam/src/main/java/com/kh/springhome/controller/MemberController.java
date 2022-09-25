@@ -178,6 +178,10 @@ public class MemberController {
 		// 1) Model의 변수명과 값 설정 - MemberId와 일치하는 단일 조회 selectOne()의 결과값으로 설정
 		model.addAttribute("memberDto", memberDao.selectOne(memberId));	
 		// 2) Model을 view에 전달 (전달 받은 Model은 mypage.jsp에서 표시 형식을 정의)
+		
+		// ## 내가 작성한 게시글
+		model.addAttribute("myBoardList", memberDao.myBoard(memberId));
+		
 		return "/member/mypage";
 		// (참고) 기존에 만든 detail에 전달
 		// 2) Model을 view에 전달 (전달 받은 Model은 detail.jsp에서 표시 형식을 정의)

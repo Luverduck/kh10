@@ -105,4 +105,11 @@ public class GuestBookDaoImpl implements GuestBookDao {
 		return jdbcTemplate.query(sql, mapper);
 	}
 
+	@Override
+	public List<GuestBookDto> guestBookLatest(Integer boardEnd) {
+		String sql = "select no, name, memo from (select TMP.*, rownum rn from(select * from guest_book order by no desc)TMP) where rn between 1 and ?";
+		Object[] param = new Object[] {boardEnd};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+
 }

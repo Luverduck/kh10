@@ -38,6 +38,38 @@
 				<h3><a href = "/member/goodbye">회원 탈퇴</a></h3>
 			</c:otherwise>
 		</c:choose>
+		
+		<br>
+		
+		<h3>내가 작성한 게시글</h3>
+		<table border = "1" width = 900>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성일</th>
+				<th>조회수</th>
+				<th>좋아요</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var = "boardDto" items = "${myBoardList}">
+			<tr>
+				<td>${boardDto.boardNo}</td>
+				<td>${boardDto.boardTitle}</td>
+				<td>${boardDto.boardWritetime}</td>
+				<td>${boardDto.boardRead}</td>
+				<td>${boardDto.boardLike}</td>
+			</tr>
+			</c:forEach>
+		</tbody>
+		</table>
+		
+		<br>
+		
+		<h3>내가 좋아요한 작성글</h3>
+		
+		<h3>내가 남긴 댓글</h3>
 	</div>
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>

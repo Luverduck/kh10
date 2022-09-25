@@ -27,4 +27,6 @@ public interface PocketMonsterDao {
 	
 	// 추상 메소드 - 최근에 등록된 포켓몬
 	List<PocketMonsterDto> pocketmonLatest();
+	
+	List<PocketMonsterDto> pocketmonLatest(Integer pocketmonEnd);
 }

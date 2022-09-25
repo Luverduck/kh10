@@ -13,7 +13,22 @@
 
 <h1>어서오세요!</h1>
 
-<h3>최근에 작성된 게시글(5~10개)</h3>
+<br>
+<h3>
+<a href = "board/list">최근에 작성된 게시글(5~10개)</a>
+</h3>
+<form action = "/" method = "post">
+	<select name = "boardEnd">
+		<option <c:if test = "${boardDto.boardHead == '정보'}">selected</c:if>value = "5">5개</option>
+		<option value = "6">6개</option>
+		<option value = "7">7개</option>
+		<option value = "8">8개</option>
+		<option value = "9">9개</option>
+		<option value = "10">10개</option>
+	</select>
+	<button type = "submit">검색</button>
+</form>
+
 <table border = "1" width = "500">
 <tbody align = "center">
 	<tr>
@@ -37,7 +52,22 @@
 
 <br>
 
-<h3>최근에 등록된 방명록(5~10개)</h3>
+<h3>
+<a href = "guestbook/list">최근에 등록된 방명록(5~10개)</a>
+</h3>
+
+<form action = "/" method = "post">
+	<select name = "guestbookEnd">
+		<option value = "5">5개</option>
+		<option value = "6">6개</option>
+		<option value = "7">7개</option>
+		<option value = "8">8개</option>
+		<option value = "9">9개</option>
+		<option value = "10">10개</option>
+	</select>
+	<button type = "submit">검색</button>
+</form>
+
 <table border = "1" width = "500">
 <tbody align = "center">
 	<tr>
@@ -57,7 +87,22 @@
 
 <br>
 
-<h3>최근에 등록된 포켓몬(5~10개)</h3>
+<h3>
+<a href = "pocketmon/list">최근에 등록된 포켓몬(5~10개)</a>
+</h3>
+
+<form action = "/" method = "post">
+	<select name = "pocketmonEnd">
+		<option value = "5">5개</option>
+		<option value = "6">6개</option>
+		<option value = "7">7개</option>
+		<option value = "8">8개</option>
+		<option value = "9">9개</option>
+		<option value = "10">10개</option>
+	</select>
+	<button type = "submit">검색</button>
+</form>
+
 <table border = "1" width = "500">
 <tbody align = "center">
 	<tr>
@@ -77,7 +122,22 @@
 
 <br>
 
-<h3>최근에 등록된 음원(5~10개)</h3>
+<h3>
+<a href = "music/list">최근에 등록된 음원(5~10개)</a>
+</h3>
+
+<form action = "/" method = "post">
+	<select name = "musicEnd">
+		<option value = "5">5개</option>
+		<option value = "6">6개</option>
+		<option value = "7">7개</option>
+		<option value = "8">8개</option>
+		<option value = "9">9개</option>
+		<option value = "10">10개</option>
+	</select>
+	<button type = "submit">검색</button>
+</form>
+
 <table border = "1" width = "500">
 <tbody align = "center">
 	<tr>
@@ -99,7 +159,22 @@
 
 <br>
 
-<h3>글을 가장 많이 쓴 회원(5~10개)</h3>
+<h3>
+<a href = "board/list">글을 가장 많이 쓴 회원(5~10개)</a>
+</h3>
+
+<form action = "/" method = "post">
+	<select name = "memberEnd">
+		<option value = "5">5개</option>
+		<option value = "6">6개</option>
+		<option value = "7">7개</option>
+		<option value = "8">8개</option>
+		<option value = "9">9개</option>
+		<option value = "10">10개</option>
+	</select>
+	<button type = "submit">검색</button>
+</form>
+
 <table border = "1" width = "300">
 <tbody align = "center">
 	<tr>

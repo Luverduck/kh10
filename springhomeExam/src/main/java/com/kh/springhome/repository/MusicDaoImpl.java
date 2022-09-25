@@ -175,4 +175,11 @@ public class MusicDaoImpl implements MusicDao {
 		String sql = "select music_no, music_title, music_artist, release_title from (select TMP.*, rownum rn from(select * from music order by release_title desc)TMP) where rn between 1 and 5";
 		return jdbcTemplate.query(sql, listMapper);
 	}
+
+	@Override
+	public List<MusicLatestListVO> musicLatest(Integer musicEnd) {
+		String sql = "select music_no, music_title, music_artist, release_title from (select TMP.*, rownum rn from(select * from music order by release_title desc)TMP) where rn between 1 and ?";
+		Object[] param = new Object[] {musicEnd};
+		return jdbcTemplate.query(sql, listMapper, param);
+	}
 }

@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.MemberDto;
+import com.kh.springhome.vo.MemberMyBoardVO;
 import com.kh.springhome.vo.MemberWriteCountVO;
 
 @Repository
@@ -195,5 +196,34 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MemberWriteCountVO> writeCount() {
 		String sql = "select * from (select TMP.*, rownum board_rank from (select distinct M.member_id, count(B.board_no) over(partition by M.member_id) board_count from member M left outer join board B on M.member_id = B.board_writer order by board_count desc)TMP) where board_rank between 1 and 5";
 		return jdbcTemplate.query(sql, countMapper);
+	}
+
+	@Override
+	public List<MemberWriteCountVO> writeCount(Integer memberEnd) {
+		String sql = "select * from (select TMP.*, rownum board_rank from (select distinct M.member_id, count(B.board_no) over(partition by M.member_id) board_count from member M left outer join board B on M.member_id = B.board_writer order by board_count desc)TMP) where board_rank between 1 and ?";
+		Object[] param = {memberEnd};
+		return jdbcTemplate.query(sql, countMapper, param);
+	}
+
+	// MemberMyBoardVO를 우한 RowMapper
+	private RowMapper<MemberMyBoardVO> myBoardMapper = new RowMapper<>() {
+		@Override
+		public MemberMyBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return MemberMyBoardVO.builder()
+										.boardNo(rs.getInt("board_no"))
+										.memberId(rs.getString("member_id"))
+										.boardTitle(rs.getString("board_title"))
+										.boardWritetime(rs.getDate("board_writetime"))
+										.boardRead(rs.getInt("board_read"))
+										.boardLike(rs.getInt("board_like"))
+										.build();
+		}
+	};
+	
+	@Override
+	public List<MemberMyBoardVO> myBoard(String memberId) {
+		String sql = "select * from (select TMP.*, rownum rn from (select M.member_id, B.board_no, B.board_writer, B.board_title, B.board_writetime, B.board_read, B.board_like from member M left outer join board B on M.member_id = B.board_writer where M.member_id = ? order by B.board_no desc)TMP) where rn between 1 and 5";
+		Object[] param = new Object[] {memberId};
+		return jdbcTemplate.query(sql,myBoardMapper, param);
 	}
 }

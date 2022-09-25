@@ -24,4 +24,6 @@ public interface GuestBookDao {
 	
 	// 추상 메소드 - 최근에 등록된 방명록
 	List<GuestBookDto> guestBookLatest();
+	
+	List<GuestBookDto> guestBookLatest(Integer boardEnd);
 }

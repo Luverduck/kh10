@@ -294,4 +294,12 @@ public class BoardDaoImpl implements BoardDao {
 		String sql = "select * from (select TMP.*, rownum rn from (select * from board order by board_writetime desc)TMP) where rn between 1 and 5";
 		return jdbcTemplate.query(sql, latestListMapper);
 	}
+	
+	// 추상 메소드 오버라이딩 - 최근에 작성된 게시글
+	@Override
+	public List<BoardLatestListVO> boardLatest(Integer boardEnd) {
+		String sql = "select * from (select TMP.*, rownum rn from (select * from board order by board_writetime desc)TMP) where rn between 1 and ?";
+		Object[] param = new Object[] {boardEnd};
+		return jdbcTemplate.query(sql, latestListMapper, param);
+	}
 }

@@ -41,4 +41,6 @@ public interface MusicDao {
 	
 	// 추상 메소드 - 최근에 등록된 음원
 	List<MusicLatestListVO> musicLatest();
+	
+	List<MusicLatestListVO> musicLatest(Integer musicEnd);
 }

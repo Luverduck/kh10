@@ -54,4 +54,7 @@ public interface BoardDao {
 	
 	// 추상 메소드 - 최근에 작성된 게시글
 	List<BoardLatestListVO> boardLatest();
+	
+	// 추상 메소드 - 최근에 작성된 게시글
+	List<BoardLatestListVO> boardLatest(Integer boardEnd);
 }

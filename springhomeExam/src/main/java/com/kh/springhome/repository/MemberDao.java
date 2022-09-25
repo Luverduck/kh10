@@ -3,6 +3,7 @@ package com.kh.springhome.repository;
 import java.util.List;
 
 import com.kh.springhome.entity.MemberDto;
+import com.kh.springhome.vo.MemberMyBoardVO;
 import com.kh.springhome.vo.MemberWriteCountVO;
 
 public interface MemberDao {
@@ -34,4 +35,12 @@ public interface MemberDao {
 	
 	// 추상 메소드 - 글을 가장 많이 쓴 회원
 	List<MemberWriteCountVO> writeCount();
+	
+	List<MemberWriteCountVO> writeCount(Integer memberEnd);
+	
+	// 추상 메소드 - 내가 작성한 게시글
+	List<MemberMyBoardVO> myBoard(String memberId);
+	
+	// 추상 메소드 - 내가 좋아요한 작성글
+	
 }

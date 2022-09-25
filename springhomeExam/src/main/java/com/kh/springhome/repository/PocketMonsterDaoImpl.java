@@ -114,4 +114,11 @@ public class PocketMonsterDaoImpl implements PocketMonsterDao {
 		String sql = "select no, name, type from (select TMP.*, rownum rn from(select * from pocket_monster order by no desc)TMP) where rn between 1 and 5";
 		return jdbcTemplate.query(sql, mapper);
 	}
+
+	@Override
+	public List<PocketMonsterDto> pocketmonLatest(Integer pocketmonEnd) {
+		String sql = "select no, name, type from (select TMP.*, rownum rn from(select * from pocket_monster order by no desc)TMP) where rn between 1 and ?";
+		Object[] param = new Object[] {pocketmonEnd};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
 }
