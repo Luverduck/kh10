@@ -1,5 +1,8 @@
 package com.kh.springhome.controller;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.springhome.entity.MemberDto;
@@ -35,9 +39,19 @@ public class MemberController {
 	// 1-2. 등록 Mapping에 DTO 전달 및 DB 처리
 	// DB에서 등록(insert) 처리 후 등록 완료 Mapping으로 이동
 	@PostMapping("/insert")
-	public String insert(@ModelAttribute MemberDto memberDto) {
+	public String insert(@ModelAttribute MemberDto memberDto, @RequestParam MultipartFile memberProfile) throws IllegalStateException, IOException {
 		// 1) DB에서 등록(insert) 실행
 		memberDao.insert(memberDto);
+		
+		// 첨부 파일 여부에 따라 저장
+		if( ! memberProfile.isEmpty()) {		// 첨부 파일이 없다면 -> .isEmpty() 또는 .size()
+			// (+추가) 첨부 파일을 받아서 저장
+			File directory = new File("C:\\Users\\hyeul\\upload\\member");
+			directory.mkdirs();
+			File target = new File(directory, memberDto.getMemberId());	// 파일명을 회원 아이디로
+			memberProfile.transferTo(target);
+		}
+		
 		// 2) 등록 처리 후 등록 완료(insert_success) Mapping으로 강제이동(redirect) (새로고침 시 데이터 중복 입력하는 것을 방지)
 		return "redirect:insert_success";
 	}
