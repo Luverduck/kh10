@@ -9,6 +9,7 @@
 	- 절취선이 생기면서 파일의 여러 정보가 한의 구역에 담겨 전송
 -->
 
+<h1>DB없이 업로드</h1>
 <!-- <form action="/" method="get"> -->
 <!-- <form action="/" method="post"> -->
 <form action="/" method="post" enctype="multipart/form-data">
@@ -18,5 +19,12 @@
 	<input type="file" name="attachment">
 	<br><br>
 	<button type="submit">업로드</button>
-	
+
+</form>
+
+<h1>DB 사용하는 업로드</h1>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+	<input type="file" name="attachment">
+	<button type="submit">등록</button>
 </form>
