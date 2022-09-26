@@ -14,6 +14,11 @@
 		<table border = "1" width = 400>
 			<tbody>
 				<tr>
+					<th colspan = "2">
+						<img src = "download?memberId=${memberDto.memberId}" width = "100" height = "100">
+					</th>
+				</tr>
+				<tr>
 					<th width = "25%">아이디</th>
 					<td>${memberDto.getMemberId()}</td>
 				</tr>

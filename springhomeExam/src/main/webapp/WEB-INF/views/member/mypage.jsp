@@ -10,6 +10,9 @@
 	<div align = "center">
 		<h1>마이 페이지</h1>
 		
+		<!-- 프로필 이미지를 출력 -->
+		<img src = "download?memberId=${memberDto.memberId}" width = "100" height = "100">
+		
 		<h3>아이디 : "${memberDto.getMemberId()}"</h3>
 		<h3>닉네임 : ${memberDto.getMemberNick()}</h3>
 		<h3>생년월일 : ${memberDto.getMemberBirth()}</h3>
