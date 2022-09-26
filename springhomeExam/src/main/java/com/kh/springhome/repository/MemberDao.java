@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.kh.springhome.entity.MemberDto;
 import com.kh.springhome.vo.MemberMyBoardVO;
+import com.kh.springhome.vo.MemberMyLikeVO;
+import com.kh.springhome.vo.MemberMyReplyVO;
 import com.kh.springhome.vo.MemberWriteCountVO;
 
 public interface MemberDao {
@@ -42,5 +44,8 @@ public interface MemberDao {
 	List<MemberMyBoardVO> myBoard(String memberId);
 	
 	// 추상 메소드 - 내가 좋아요한 작성글
+	List<MemberMyLikeVO> myLike(String memberId);
 	
+	// 추상 메소드 - 내가 작성한 댓글
+	List<MemberMyReplyVO> myReply(String memberId);
 }

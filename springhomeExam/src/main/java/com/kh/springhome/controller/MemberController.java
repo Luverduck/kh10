@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.springhome.entity.MemberBoardLikeDto;
 import com.kh.springhome.entity.MemberDto;
 import com.kh.springhome.entity.PasswordDto;
 import com.kh.springhome.error.TargetNotFoundException;
@@ -200,6 +201,12 @@ public class MemberController {
 		
 		// ## 내가 작성한 게시글
 		model.addAttribute("myBoardList", memberDao.myBoard(memberId));
+		
+		// ## 내가 좋아요한 게시글
+		model.addAttribute("myLikeList", memberDao.myLike(memberId));
+		
+		// ## 내가 쓴 댓글
+		model.addAttribute("myReplyList", memberDao.myReply(memberId));
 		
 		return "/member/mypage";
 		// (참고) 기존에 만든 detail에 전달

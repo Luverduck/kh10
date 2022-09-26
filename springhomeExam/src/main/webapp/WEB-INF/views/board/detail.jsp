@@ -51,9 +51,11 @@
 					<c:if test = "${isLike == false}">
 						<a href = "like?boardNo=${boardDto.getBoardNo()}">♡</a>
 					</c:if>
+					,
 					
 					<%-- 좋아요 갯수 --%>
-					${likeCount}
+					<!-- ${likeCount}, -->
+					${boardDto.boardLike}
 				</td>
 			</tr>
 			<tr>

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.springhome.entity.MemberDto;
 import com.kh.springhome.vo.MemberMyBoardVO;
+import com.kh.springhome.vo.MemberMyLikeVO;
+import com.kh.springhome.vo.MemberMyReplyVO;
 import com.kh.springhome.vo.MemberWriteCountVO;
 
 @Repository
@@ -205,7 +207,7 @@ public class MemberDaoImpl implements MemberDao {
 		return jdbcTemplate.query(sql, countMapper, param);
 	}
 
-	// MemberMyBoardVO를 우한 RowMapper
+	// MemberMyBoardVO를 위한 RowMapper
 	private RowMapper<MemberMyBoardVO> myBoardMapper = new RowMapper<>() {
 		@Override
 		public MemberMyBoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -225,5 +227,59 @@ public class MemberDaoImpl implements MemberDao {
 		String sql = "select * from (select TMP.*, rownum rn from (select M.member_id, B.board_no, B.board_writer, B.board_title, B.board_writetime, B.board_read, B.board_like from member M left outer join board B on M.member_id = B.board_writer where M.member_id = ? order by B.board_no desc)TMP) where rn between 1 and 5";
 		Object[] param = new Object[] {memberId};
 		return jdbcTemplate.query(sql,myBoardMapper, param);
+	}
+	
+	// MemberMyLikeVO를 위한 RowMapper
+	private RowMapper<MemberMyLikeVO> myLikeMapper = new RowMapper<>() {
+		@Override
+		public MemberMyLikeVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return MemberMyLikeVO.builder()
+										.boardNo(rs.getInt("board_no"))
+										.boardHead(rs.getString("board_head"))
+										.boardTitle(rs.getString("board_title"))
+										.boardWritetime(rs.getDate("board_writetime"))
+										.boardRead(rs.getInt("board_read"))
+										.boardLike(rs.getInt("board_like"))
+										.boardGroup(rs.getInt("board_group"))
+										.boardParent(rs.getInt("board_parent"))
+										.boardDepth(rs.getInt("board_depth"))
+										.build();
+		}
+	};
+
+	// 추상 메소드 오버라이딩 - 내가 좋아요한 작성글
+	@Override
+	public List<MemberMyLikeVO> myLike(String memberId) {
+		String sql = "select * from (select TMP.*, rownum rank from (select B.board_no, B.board_head, B.board_title, B.board_writetime, B.board_read, B.board_like, B.board_group, B.board_parent, B.board_depth from member_board_like ML left outer join board B on ML.board_no = B.board_no where ML.member_id = ?)TMP) where rank between 1 and 5";
+		Object[] param = new Object[] {memberId};
+		return jdbcTemplate.query(sql, myLikeMapper, param);
+	}
+
+	// MemberMyLikeVO를 위한 RowMapper
+	private RowMapper<MemberMyReplyVO> myReplyMapper = new RowMapper<>() {
+		@Override
+		public MemberMyReplyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			// TODO Auto-generated method stub
+			return MemberMyReplyVO.builder()
+									.boardNo(rs.getInt("board_no"))
+									.boardHead(rs.getString("board_head"))
+									.boardTitle(rs.getString("board_title"))
+									.boardWriter(rs.getString("board_writer"))
+									.boardWritetime(rs.getDate("board_writetime"))
+									.boardGroup(rs.getInt("board_group"))
+									.boardParent(rs.getInt("board_parent"))
+									.boardDepth(rs.getInt("board_depth"))
+									.replyContent(rs.getString("reply_content"))
+									.replyWritetime(rs.getDate("reply_writetime"))
+								.build();
+		}
+	};
+	
+	// 추상 메소드 오버라이딩 - 내가 작성한 댓글
+	@Override
+	public List<MemberMyReplyVO> myReply(String memberId) {
+		String sql = "select * from (select TMP.*, rownum rn from (select B.board_no, B.board_head, B.board_title, B.board_writer, B.board_writetime, B.board_group, B.board_parent, B.board_depth, R1.reply_content, R1.reply_writetime from (select * from reply R left outer join member M on R.reply_writer = M.member_id where reply_writer = ? order by R.reply_writetime desc) R1 left outer join board B on R1.reply_origin = B.board_no)TMP) where rn between 1 and 5";
+		Object[] param = new Object[] {memberId};
+		return jdbcTemplate.query(sql, myReplyMapper, param);
 	}
 }

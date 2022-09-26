@@ -183,6 +183,7 @@ public class BoardController {
 		}
 		
 		// (추가) 현재 글의 좋아요 갯수를 첨부
+//		model.addAttribute("likeCount", likeDao.count(boardNo));
 		
 		return "board/detail";
 	}
