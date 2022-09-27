@@ -97,12 +97,13 @@
 			<th>첨부파일</th>
 			<td>
 				<ul>
-					<c:forEach var="attachmentDto" items="${attachmentList}">
+					<c:forEach var = "attachmentDto" items = "${attachmentList}">
 					<li>
 						${attachmentDto.attachmentName} 
 						(${attachmentDto.attachmentSize} bytes) 
 						- 
 						[${attachmentDto.attachmentType}]
+						<a href = "/attachment/download/${attachmentDto.attachmentNo}">↓</a>
 					</li>
 					</c:forEach>
 				</ul>
