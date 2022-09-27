@@ -1,8 +1,12 @@
 package com.kh.springhome.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +17,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.springhome.entity.AttachmentDto;
 import com.kh.springhome.entity.BoardDto;
 import com.kh.springhome.entity.MemberBoardLikeDto;
 import com.kh.springhome.entity.ReplyDto;
 import com.kh.springhome.error.TargetNotFoundException;
+import com.kh.springhome.repository.AttachmentDao;
 import com.kh.springhome.repository.BoardDao;
 import com.kh.springhome.repository.MemberBoardLikeDao;
 import com.kh.springhome.repository.ReplyDao;
@@ -37,6 +44,17 @@ public class BoardController {
 	@Autowired
 	private MemberBoardLikeDao likeDao;
 	
+	@Autowired
+	private AttachmentDao attachmentDao;
+	
+	// 파일 업로드를 위한 설정
+	private final File directory = new File("C:\\\\Users\\\\hyeul\\\\upload");
+	
+	@PostConstruct	// 최초 실행 시 딱 한번만 실행되는 메소드를 의미하는 어노테이션
+	public void prepare() {
+		directory.mkdirs();	
+	}
+	
 	// 1. 게시글 작성 (다음 시퀀스 번호를 뽑아서 게시글 작성)
 	// 1) 등록 페이지 Mapping
 	@GetMapping("/write")
@@ -46,7 +64,10 @@ public class BoardController {
 	
 	// 2) 등록 Mapping에 DTO 전달 및 DB 처리 
 	@PostMapping("/write")
-	public String write(HttpSession session, @ModelAttribute BoardDto boardDto, RedirectAttributes attr) {
+	public String write(HttpSession session, 
+						@ModelAttribute BoardDto boardDto, 
+						RedirectAttributes attr, 
+						@RequestParam List<MultipartFile> attachment) throws IllegalStateException, IOException {
 		String boardWriter = (String)session.getAttribute("loginId");
 		boardDto.setBoardWriter(boardWriter);
 		
@@ -67,6 +88,38 @@ public class BoardController {
 		}
 		
 		boardDao.write(boardDto);
+		
+//		(+추가) 게시글이 등록된 다음 파일이 있다면 해당 파일을 등록(attachment) 및 연결(board_attachment)
+		// - 파일을 첨부하지 않았을 때 어떤 값이 들어오는지?
+		System.out.println("첨부파일 수 = " + attachment.size());
+		// - 첨부 파일이 없어도 리스트에는 1개의 객체가 들어있다
+		for(MultipartFile file : attachment) {
+			System.out.println("file = " + file.isEmpty());
+		}
+		
+		for(MultipartFile file : attachment) {
+			if(!file.isEmpty()) {
+				System.out.println("첨부파일 발견");
+				
+				// DB 등록
+				// 1) 다움 시퀀스 번호 반환
+				int attachmentNo = attachmentDao.sequence();
+				attachmentDao.insert(AttachmentDto.builder()
+														.attachmentNo(attachmentNo)
+														.attachmentName(boardWriter)
+														.attachmentType(boardWriter)
+														.attachmentSize(attachmentNo)
+												.build());
+				
+				// 파일 저장
+				File target = new File(directory, String.valueOf(attachmentNo));
+				file.transferTo(target);
+				
+				// + 연결 테이블에 연결 정보를 저장(게시글 번호, 첨부파일 번호)
+				boardDao.connectAttachment(boardNo, attachmentNo);
+			}
+		}
+		
 		attr.addAttribute("boardNo", boardNo);
 		return "redirect:detail";
 	}

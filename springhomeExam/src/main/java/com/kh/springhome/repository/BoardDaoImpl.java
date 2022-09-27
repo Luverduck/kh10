@@ -302,4 +302,12 @@ public class BoardDaoImpl implements BoardDao {
 		Object[] param = new Object[] {boardEnd};
 		return jdbcTemplate.query(sql, latestListMapper, param);
 	}
+
+	// 추상 메소드 오버라이딩 - board_attachment 테이블에 등록하기 위한 메소드
+	@Override
+	public void connectAttachment(int boardNo, int attachmentNo) {
+		String sql = "insert into board_attachment(board_no, attachment_no) values(?, ?)";
+		Object[] param = new Object[] {boardNo, attachmentNo};
+		jdbcTemplate.update(sql, param);
+	}
 }

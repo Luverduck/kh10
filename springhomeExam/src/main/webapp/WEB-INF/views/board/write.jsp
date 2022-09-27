@@ -18,7 +18,8 @@
 		</c:otherwise>
 	</c:choose>
 	
-	<form action = "write" method = "post">
+	<%-- 파일 전송을 위해 enctype 추가 --%>
+	<form action = "write" method = "post" enctype = "multipart/form-data">
 	
 	<%-- 답글이라면 부모글번호를 추가로 전송하도록 처리 --%>
 	<c:if test="${isReply}">
@@ -53,6 +54,15 @@
 					- cols 는 기본 표시 칸 수 
 					-->
 					<textarea name="boardContent" rows="10" cols="50" required></textarea>
+				</td>
+			</tr>
+			
+			<%-- 첨부 파일 --%>
+			<tr>
+				<th>첨부파일</th>
+				<td>
+					<%-- multiple 옵션은 파일을 여러개 선택하도록 한다 --%>
+					<input type = "file" name = "attachment" multiple>
 				</td>
 			</tr>
 		</tbody>

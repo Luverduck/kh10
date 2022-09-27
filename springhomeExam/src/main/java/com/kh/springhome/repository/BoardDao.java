@@ -57,4 +57,7 @@ public interface BoardDao {
 	
 	// 추상 메소드 - 최근에 작성된 게시글
 	List<BoardLatestListVO> boardLatest(Integer boardEnd);
+
+	// 추상 메소드 - board_attachment 테이블에 등록하기 위한 메소드
+	void connectAttachment(int boardNo, int attachmentNo);
 }
