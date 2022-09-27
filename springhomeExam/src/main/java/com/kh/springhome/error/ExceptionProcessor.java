@@ -11,6 +11,7 @@ public class ExceptionProcessor {
 	// 원하는 상황이 발생하면 자동으로 간섭하여 실행할 메소드
 	// - 메소드는 컨트롤러와 동일한 구성이 가능 (+ 예외 객체 선언 가능)
 	// - 반환시 view resolver의 영향을 받는다
+	
 	@ExceptionHandler(Exception.class)	// 모든 예외를 다 처리
 	public String handle(Exception e) {
 		// 컨트롤러에 예외가 발생하면 예외 페이지(exception.jsp)로 이동
