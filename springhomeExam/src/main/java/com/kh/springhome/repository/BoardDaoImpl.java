@@ -303,6 +303,7 @@ public class BoardDaoImpl implements BoardDao {
 		return jdbcTemplate.query(sql, latestListMapper, param);
 	}
 
+	// 첨부파일 관련 기능
 	// 추상 메소드 오버라이딩 - board_attachment 테이블에 등록하기 위한 메소드
 	@Override
 	public void connectAttachment(int boardNo, int attachmentNo) {

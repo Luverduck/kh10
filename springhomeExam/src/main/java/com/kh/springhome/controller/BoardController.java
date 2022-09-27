@@ -48,7 +48,7 @@ public class BoardController {
 	private AttachmentDao attachmentDao;
 	
 	// 파일 업로드를 위한 설정
-	private final File directory = new File("C:\\\\Users\\\\hyeul\\\\upload");
+	private final File directory = new File("C:\\Users\\hyeul\\upload");
 	
 	@PostConstruct	// 최초 실행 시 딱 한번만 실행되는 메소드를 의미하는 어노테이션
 	public void prepare() {
@@ -105,14 +105,15 @@ public class BoardController {
 				// 1) 다움 시퀀스 번호 반환
 				int attachmentNo = attachmentDao.sequence();
 				attachmentDao.insert(AttachmentDto.builder()
-														.attachmentNo(attachmentNo)
-														.attachmentName(boardWriter)
-														.attachmentType(boardWriter)
-														.attachmentSize(attachmentNo)
+													.attachmentNo(attachmentNo)
+													.attachmentName(file.getOriginalFilename())
+													.attachmentType(file.getContentType())
+													.attachmentSize(file.getSize())
 												.build());
 				
 				// 파일 저장
 				File target = new File(directory, String.valueOf(attachmentNo));
+				System.out.println(target.getAbsolutePath());
 				file.transferTo(target);
 				
 				// + 연결 테이블에 연결 정보를 저장(게시글 번호, 첨부파일 번호)
@@ -237,6 +238,9 @@ public class BoardController {
 		
 		// (추가) 현재 글의 좋아요 갯수를 첨부
 //		model.addAttribute("likeCount", likeDao.count(boardNo));
+		
+		// (추가) 게시글에 대한 첨부파일을 조회하여 첨부
+		model.addAttribute("attachmentList", attachmentDao.selectBoardAttachmentList(boardNo));
 		
 		return "board/detail";
 	}

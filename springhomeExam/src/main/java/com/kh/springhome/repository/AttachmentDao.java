@@ -16,4 +16,7 @@ public interface AttachmentDao {
 	AttachmentDto selectOne(int attachmentNo);
 	
 	boolean delete(int attachmentNo);
+	
+	// 추상 메소드 - 해당 게시글의 첨부파일 관련
+	List<AttachmentDto> selectBoardAttachmentList(int boardNo);
 }

@@ -93,4 +93,12 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		Object[] param = new Object[] {attachmentNo};
 		return jdbcTemplate.update(sql, param) > 0;
 	}
+
+	// 추상 메소드 - 해당 게시글의 첨부파일 관련
+	@Override
+	public List<AttachmentDto> selectBoardAttachmentList(int boardNo) {
+		String sql = "select * from board_attachment_view where board_no = ?";
+		Object[] param = {boardNo};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
 }

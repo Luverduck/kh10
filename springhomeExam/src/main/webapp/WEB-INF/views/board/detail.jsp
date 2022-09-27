@@ -90,6 +90,26 @@
 				<th>조회수</th>
 				<td>${boardDto.getBoardRead()}</td>
 			</tr>			
+			
+			
+		<c:if test="${attachmentList != null}">
+		<tr>
+			<th>첨부파일</th>
+			<td>
+				<ul>
+					<c:forEach var="attachmentDto" items="${attachmentList}">
+					<li>
+						${attachmentDto.attachmentName} 
+						(${attachmentDto.attachmentSize} bytes) 
+						- 
+						[${attachmentDto.attachmentType}]
+					</li>
+					</c:forEach>
+				</ul>
+			</td>
+		</tr>
+		</c:if>
+			
 		</tbody>
 		<tfoot>
 			<tr>
@@ -226,5 +246,6 @@
 		
 	</c:choose>	
 </div>
+${attachmentList}
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>
