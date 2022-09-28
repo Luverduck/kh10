@@ -16,6 +16,11 @@
     - CSS에서는 계산식이 모든 브라우저에서 작동하지 않는다
     - 미리 예상 가능한 크기를 준비해두면 편하게 쓸 수 있지 않을까?
 */
+.container-50 {width: 50px; margin: 0 auto;}
+.container-100 {width: 100px; margin: 0 auto;}
+.container-150 {width: 150px; margin: 0 auto;}
+.container-200 {width: 200px; margin: 0 auto;}
+.container-250 {width: 250px; margin: 0 auto;}
 .container-300 {width: 300px; margin: 0 auto;}
 .container-350 {width: 350px; margin: 0 auto;}
 .container-400 {width: 400px; margin: 0 auto;}
