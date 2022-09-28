@@ -13,4 +13,6 @@ public interface BoardService {
 
 	// 추상 메소드 - 게시글 작성 : 메소드 실행 결과로 게시글 번호르 반환하도록
 	int write(BoardDto boardDto, List<MultipartFile> attachment) throws IllegalStateException, IOException;
+
+	boolean remove(int boardNo);
 }

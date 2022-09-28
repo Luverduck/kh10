@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.springhome.entity.AttachmentDto;
 import com.kh.springhome.entity.BoardDto;
 import com.kh.springhome.entity.MemberBoardLikeDto;
 import com.kh.springhome.entity.ReplyDto;
@@ -109,7 +110,10 @@ public class BoardController {
 	// 3. 게시글 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam int boardNo) {
-		boolean result = boardDao.delete(boardNo);
+
+		// 게시글 삭제 + attachment, board_attachment의 데이터가 연쇄 삭제 (on delete cascade 속성 때문)
+		boolean result = boardService.remove(boardNo);
+		
 		if(result) {// 삭제 성공
 			return "redirect:list";	
 		}

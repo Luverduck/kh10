@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.springhome.entity.AttachmentDto;
 import com.kh.springhome.entity.BoardDto;
+import com.kh.springhome.error.TargetNotFoundException;
 import com.kh.springhome.repository.AttachmentDao;
 import com.kh.springhome.repository.BoardDao;
 
@@ -78,6 +79,28 @@ public class BoardServiceImpl implements BoardService {
 			}
 		}
 		return boardNo;
+	}
+
+	@Override
+	public boolean remove(int boardNo) {
+		// 첨부 파일(attachment, board_attachment) 테이블의 기록도 삭제해야 한다
+		// 삭제가 이루어지기 전에 삭제될 게시글의 첨부파일 정보를 조회
+		List<AttachmentDto> attachmentList = attachmentDao.selectBoardAttachmentList(boardNo);
+		
+		// 그 후 삭제 - board_attachment의 데이터가 연쇄 삭제 (on delete cascade 속성 때문)
+		boolean result = boardDao.delete(boardNo);
+		
+		if(result) {// 삭제 성공
+			for(AttachmentDto attachmentDto : attachmentList) {
+				// 첨부 파일(attachment, board_attachment) 테이블 삭제
+				attachmentDao.delete(attachmentDto.getAttachmentNo());
+				// 실제 파일 삭제
+				String filename = String.valueOf(attachmentDto.getAttachmentName());
+				File target = new File(directory, filename);
+				target.delete();
+			}			
+		}
+		return result;	
 	}
 	
 	
