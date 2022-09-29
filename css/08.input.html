@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입력창 디자인</title>
+
+    <link rel = "stylesheet" type = "text/css" href = "commons.css">
+
+    <style>
+        /* 
+            입력창은 버튼과 같이 등장하므로 비율이나 크기 등이 같아야 한다 
+        */
+        .input {
+            font-size: 20px;
+            padding: 0.75em;
+            outline: none;
+            border: 1px solid gray;
+        }
+        .input:focus {
+            border-color: black;
+        }
+        /* 
+            input이라는 클래스가 있으면서 input-underline 클래스가 있다면 (무조건 붙여쓴다)
+            기본 스타일(대분류) : input / 확장 스타일(소분류) : input-underline 
+        */
+        .input.input-underline {
+            border-color: none;
+            border-bottom: 1px solid gray;
+        }
+
+        /* 배경 이미지가 들어가는 입력창 */
+        .input.input-icon {
+            padding-left: 2.5em;
+            /* background-image: url("image/icon_search.png"); */   /* 이미지의 자리만 잡아두고 필요할 때마다 삽입하는 방식으로 한다 */
+            background-size: 1em; /* 글자 크기와 똑같이 */
+            background-repeat: no-repeat;
+            background-position-x: 0.75em;  /* 왼쪽에서 0.75em만큼 띄어라 */
+            background-position-y: center;  /* 가운데 - center 또는 50% */
+        }
+
+        .search-input {
+            background-image: url("image/icon_search.png");
+        }
+
+        /* 
+            textares는 기본적으로 폭 조절이 가능해서 디자인 상 어려움이 많다 
+            - 높이만 조절되게 하던가
+            - 아예 조절이 안되게 하던가
+            - resize 속성(오직 textarea에만 있는 속성)
+        */
+        /* input이 붙어있는 textarea에만 적용해라 */
+        textarea.input {
+            resize:vertical;    /* 상하만 조절되도록 */
+        }
+        textarea.input.fix-size {
+            resize: none;   /* 크기 조절이 불가능하도록 */
+        }
+    </style>
+</head>
+<body>
+    <div class = "container-400">
+        <div class = "row center">
+            <h1>입력창 샘플</h1>
+        </div>
+
+        <div>
+            기본 입력창
+        </div>
+        <div class = "row">
+            <input class = "input w-100" type = "text">
+        </div>
+
+        <div class = "row">
+            밑줄만 있는 입력창
+        </div>
+        <div>
+            <input class = "input input-underline w-100" type = "text">
+        </div>
+
+        <div class = "row">
+            이미지가 들어간 입력창
+        </div>
+        <div>
+            <input class = "input input-icon search-input w-100" type = "text">
+        </div>
+
+        <div class = "row">
+            select
+        </div>
+        <div>
+            <select class = "input w-100">
+                <option>사과</option>
+                <option>포도</option>
+                <option>바나나</option>
+            </select>
+        </div>
+
+        <!-- textarea는 폭을 상하조절만 또는 조절할 수 없도록 만든다 -->
+        <div class = "row">
+            textarea
+        </div>
+        <div>
+            <textarea class = "input w-100 fix-size" rows = "10" ></textarea>
+        </div>
+    </div>
+</body>
+</html>
