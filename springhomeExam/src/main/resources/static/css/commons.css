@@ -1,0 +1,192 @@
+@charset "UTF-8";
+
+/* 
+    전체 스타일
+    - 폭 설정 기준을 테두리(board-box)로 지정
+    - 전체 글꼴 설정
+*/
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* 
+    container는 작은 화면의 외부 영역을 관리하는 도구 
+    - 폭과 가운데 배치를 할 수 있어야 한다
+    - CSS에서는 계산식이 모든 브라우저에서 작동하지 않는다
+    - 미리 예상 가능한 크기를 준비해두면 편하게 쓸 수 있지 않을까?
+*/
+.container-50 {width: 50px; margin: 0 auto;}
+.container-100 {width: 100px; margin: 0 auto;}
+.container-150 {width: 150px; margin: 0 auto;}
+.container-200 {width: 200px; margin: 0 auto;}
+.container-250 {width: 250px; margin: 0 auto;}
+.container-300 {width: 300px; margin: 0 auto;}
+.container-350 {width: 350px; margin: 0 auto;}
+.container-400 {width: 400px; margin: 0 auto;}
+.container-450 {width: 450px; margin: 0 auto;}
+.container-500 {width: 500px; margin: 0 auto;}
+.container-550 {width: 550px; margin: 0 auto;}
+.container-600 {width: 600px; margin: 0 auto;}
+.container-650 {width: 650px; margin: 0 auto;}
+.container-700 {width: 700px; margin: 0 auto;}
+.container-750 {width: 750px; margin: 0 auto;}
+.container-800 {width: 800px; margin: 0 auto;}
+.container-850 {width: 850px; margin: 0 auto;}
+.container-900 {width: 900px; margin: 0 auto;}
+.container-950 {width: 950px; margin: 0 auto;}
+.container-1000 {width: 1000px; margin: 0 auto;}
+.container-1050 {width: 1050px; margin: 0 auto;}
+.container-1100 {width: 1100px; margin: 0 auto;}
+.container-1150 {width: 1150px; margin: 0 auto;}
+.container-1200 {width: 1200px; margin: 0 auto;}
+
+/* 
+    row는 container 내부에 배치될 도구들이 위치할 자리에 해당한다 
+    - 상하 margin만 부여하여 간격을 띄워준다
+*/
+.row {
+    margin: 10px 0px;
+}
+
+/* 
+    row 내부에 위치하는 도구들의 폭을 설정 
+    - 폭을 row에 맞게 100%로 설정하거나(block) 아니면 자신의 폭을 그대로 사용(inline)
+    - 아무 표시도 하지 않으면 폭을 그대로 두고 클래스를 부여하면 100%로 변경
+*/
+.w-100 {
+    width: 100%;
+}
+
+/* 
+    어차피 정렬은 left, center, right 밖에 없다
+    -  
+*/
+.left {text-align : left;}
+.center {text-align : center;}
+.right {text-align : right;}
+
+/* 
+    margin은 간격을 벌리기 위해서 사용한다
+    어떨 때는 12px, 어떨 때는 17px와 같이 부여하면 일관성이 떨어진다
+    표준화된 margin 부여가 가능하도록 스타일을 설정 
+    - mt(margin-top), mb(margin-bottom), ms(margin-start), me(margin-end)    
+*/
+.mt-10 {margin-top: 10px;}
+.mt-20 {margin-top: 20px;}
+.mt-30 {margin-top: 30px;}
+.mt-40 {margin-top: 40px;}
+.mt-50 {margin-top: 50px;}
+
+.mb-10 {margin-bottom: 10px;}
+.mb-20 {margin-bottom: 20px;}
+.mb-30 {margin-bottom: 30px;}
+.mb-40 {margin-bottom: 40px;}
+.mb-50 {margin-bottom: 50px;}
+
+.ms-10 {margin-left: 10px;}
+.ms-20 {margin-left: 20px;}
+.ms-30 {margin-left: 30px;}
+.ms-40 {margin-left: 40px;}
+.ms-50 {margin-left: 50px;}
+
+.me-10 {margin-right: 10px;}
+.me-20 {margin-right: 20px;}
+.me-30 {margin-right: 30px;}
+.me-40 {margin-right: 40px;}
+.me-50 {margin-right: 50px;}
+
+/* 
+    버튼은 3가지 역할이 있다고 보고 디자인한다
+    - 긍정 버튼 : 현재 작업을 완성시키는 버튼
+    - 중립 버튼 : 현재 작업과 상관없는 다른 작업과 연결된 버튼
+    - 부정 버튼 : 현재 작업의 위험함을 알리거나 부정적인 효과를 처리하는 버튼 
+*/
+.btn { 
+    border: none;
+    font-size: 20px;
+    padding: 0.75em;    /* 글자 크기의 0.75배만큼 여백을 준다 */
+    cursor: pointer;
+    /* block은 폭 지정 불가, inline은 폭 지정 가능 */
+    /* a태그를 버튼으로 만들기 위해 추가 */
+    display: inline-block;   
+    text-align: center;     /* 가운데 정렬 */
+    text-decoration: none;  /* 밑줄 제거 */
+}
+/* btn이면서 btn-positive임을 명시할 때 */
+.btn.btn-positive {
+    border: none;
+    background-color: #0984e3;
+    color: white;
+}
+.btn.btn-positive:hover {
+    background-color: #0876cc;
+}
+
+.btn.btn-neutral {
+    border: 1px solid gray;
+    background-color: white;
+    color: gray;
+}
+.btn.btn-neutral:hover {
+    border: 1px solid black;
+    color: black;
+}
+
+.btn.btn-negative {
+    border: none;
+    background-color: #d63031;
+    color: white;
+}
+.btn.btn-negative:hover {
+    background-color: #c42627;
+}
+
+/* 
+    입력창은 버튼과 같이 등장하므로 비율이나 크기 등이 같아야 한다 
+*/
+.input {
+    font-size: 20px;
+    padding: 0.75em;
+    outline: none;
+    border: 1px solid gray;
+}
+.input:focus {
+    border-color: black;
+}
+/* 
+    input이라는 클래스가 있으면서 input-underline 클래스가 있다면 (무조건 붙여쓴다)
+    기본 스타일(대분류) : input / 확장 스타일(소분류) : input-underline 
+*/
+.input.input-underline {
+    border-color: transparent;
+    border-bottom: gray;
+}
+
+/* 배경 이미지가 들어가는 입력창 */
+.input.input-icon {
+    padding-left: 2.5em;
+    /* background-image: url("image/icon_search.png"); */   /* 이미지의 자리만 잡아두고 필요할 때마다 삽입하는 방식으로 한다 */
+    background-size: 1em; /* 글자 크기와 똑같이 */
+    background-repeat: no-repeat;
+    background-position-x: 0.75em;  /* 왼쪽에서 0.75em만큼 띄어라 */
+    background-position-y: center;  /* 가운데 - center 또는 50% */
+}
+
+.search-input {
+    background-image: url("image/icon_search.png");
+}
+
+/* 
+    textares는 기본적으로 폭 조절이 가능해서 디자인 상 어려움이 많다 
+    - 높이만 조절되게 하던가
+    - 아예 조절이 안되게 하던가
+    - resize 속성(오직 textarea에만 있는 속성)
+*/
+/* input이 붙어있는 textarea에만 적용해라 */
+textarea.input {
+    resize:vertical;    /* 상하만 조절되도록 */
+}
+textarea.input.fix-size {
+    resize: none;   /* 크기 조절이 불가능하도록 */
+}

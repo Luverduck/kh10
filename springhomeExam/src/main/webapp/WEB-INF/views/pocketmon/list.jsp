@@ -37,8 +37,8 @@
 			</tbody>
 		</table>
 		
-		<h3><a href = "insert">포켓몬 도감 등록</a></h3>
-		<h3><a href = "/">홈으로 돌아가기</a></h3>
+		<a href = "insert">포켓몬 도감 등록</a>
+		<a href = "/">홈으로 돌아가기</a>
 	</div>
 
 <jsp:include page = "/WEB-INF/views/template/footer.jsp"></jsp:include>
