@@ -65,3 +65,74 @@
 .left {text-align : left;}
 .center {text-align : center;}
 .right {text-align : right;}
+
+/* 
+    margin은 간격을 벌리기 위해서 사용한다
+    어떨 때는 12px, 어떨 때는 17px와 같이 부여하면 일관성이 떨어진다
+    표준화된 margin 부여가 가능하도록 스타일을 설정 
+    - mt(margin-top), mb(margin-bottom), ms(margin-start), me(margin-end)    
+*/
+.mt-10 {margin-top: 10px;}
+.mt-20 {margin-top: 20px;}
+.mt-30 {margin-top: 30px;}
+.mt-40 {margin-top: 40px;}
+.mt-50 {margin-top: 50px;}
+
+.mb-10 {margin-bottom: 10px;}
+.mb-20 {margin-bottom: 20px;}
+.mb-30 {margin-bottom: 30px;}
+.mb-40 {margin-bottom: 40px;}
+.mb-50 {margin-bottom: 50px;}
+
+.ms-10 {margin-left: 10px;}
+.ms-20 {margin-left: 20px;}
+.ms-30 {margin-left: 30px;}
+.ms-40 {margin-left: 40px;}
+.ms-50 {margin-left: 50px;}
+
+.me-10 {margin-right: 10px;}
+.me-20 {margin-right: 20px;}
+.me-30 {margin-right: 30px;}
+.me-40 {margin-right: 40px;}
+.me-50 {margin-right: 50px;}
+
+/* 
+    버튼은 3가지 역할이 있다고 보고 디자인한다
+    - 긍정 버튼 : 현재 작업을 완성시키는 버튼
+    - 중립 버튼 : 현재 작업과 상관없는 다른 작업과 연결된 버튼
+    - 부정 버튼 : 현재 작업의 위험함을 알리거나 부정적인 효과를 처리하는 버튼 
+*/
+.btn {
+    border: none;
+    font-size: 20px;
+    padding: 0.75em;    /* 글자 크기의 0.75배만큼 여백을 준다 */
+    cursor: pointer;
+}
+
+.btn-positive {
+    border: none;
+    background-color: #0984e3;
+    color: white;
+}
+.btn-positive:hover {
+    background-color: #0876cc;
+}
+
+.btn-neutral {
+    border: 1px solid gray;
+    background-color: white;
+    color: gray;
+}
+.btn-neutral:hover {
+    border: 1px solid black;
+    color: black;
+}
+
+.btn-negative {
+    border: none;
+    background-color: #d63031;
+    color: white;
+}
+.btn-negative:hover {
+    background-color: #c42627;
+}
