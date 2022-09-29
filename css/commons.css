@@ -136,3 +136,52 @@
 .btn-negative:hover {
     background-color: #c42627;
 }
+
+/* 
+    입력창은 버튼과 같이 등장하므로 비율이나 크기 등이 같아야 한다 
+*/
+.input {
+    font-size: 20px;
+    padding: 0.75em;
+    outline: none;
+    border: 1px solid gray;
+}
+.input:focus {
+    border-color: black;
+}
+/* 
+    input이라는 클래스가 있으면서 input-underline 클래스가 있다면 (무조건 붙여쓴다)
+    기본 스타일(대분류) : input / 확장 스타일(소분류) : input-underline 
+*/
+.input.input-underline {
+    border-color: transparent;
+    border-bottom: gray;
+}
+
+/* 배경 이미지가 들어가는 입력창 */
+.input.input-icon {
+    padding-left: 2.5em;
+    /* background-image: url("image/icon_search.png"); */   /* 이미지의 자리만 잡아두고 필요할 때마다 삽입하는 방식으로 한다 */
+    background-size: 1em; /* 글자 크기와 똑같이 */
+    background-repeat: no-repeat;
+    background-position-x: 0.75em;  /* 왼쪽에서 0.75em만큼 띄어라 */
+    background-position-y: center;  /* 가운데 - center 또는 50% */
+}
+
+.search-input {
+    background-image: url("image/icon_search.png");
+}
+
+/* 
+    textares는 기본적으로 폭 조절이 가능해서 디자인 상 어려움이 많다 
+    - 높이만 조절되게 하던가
+    - 아예 조절이 안되게 하던가
+    - resize 속성(오직 textarea에만 있는 속성)
+*/
+/* input이 붙어있는 textarea에만 적용해라 */
+textarea.input {
+    resize:vertical;    /* 상하만 조절되도록 */
+}
+textarea.input.fix-size {
+    resize: none;   /* 크기 조절이 불가능하도록 */
+}
