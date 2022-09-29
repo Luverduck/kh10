@@ -102,38 +102,43 @@
     - 중립 버튼 : 현재 작업과 상관없는 다른 작업과 연결된 버튼
     - 부정 버튼 : 현재 작업의 위험함을 알리거나 부정적인 효과를 처리하는 버튼 
 */
-.btn {
+.btn { 
     border: none;
     font-size: 20px;
     padding: 0.75em;    /* 글자 크기의 0.75배만큼 여백을 준다 */
     cursor: pointer;
+    /* block은 폭 지정 불가, inline은 폭 지정 가능 */
+    /* a태그를 버튼으로 만들기 위해 추가 */
+    display: inline-block;   
+    text-align: center;     /* 가운데 정렬 */
+    text-decoration: none;  /* 밑줄 제거 */
 }
-
-.btn-positive {
+/* btn이면서 btn-positive임을 명시할 때 */
+.btn.btn-positive {
     border: none;
     background-color: #0984e3;
     color: white;
 }
-.btn-positive:hover {
+.btn.btn-positive:hover {
     background-color: #0876cc;
 }
 
-.btn-neutral {
+.btn.btn-neutral {
     border: 1px solid gray;
     background-color: white;
     color: gray;
 }
-.btn-neutral:hover {
+.btn.btn-neutral:hover {
     border: 1px solid black;
     color: black;
 }
 
-.btn-negative {
+.btn.btn-negative {
     border: none;
     background-color: #d63031;
     color: white;
 }
-.btn-negative:hover {
+.btn.btn-negative:hover {
     background-color: #c42627;
 }
 
