@@ -37,7 +37,7 @@
 			</tbody>
 		</table>
 		
-		<a href = "insert">포켓몬 도감 등록</a>
+		<a href = "insert">포켓몬 도감 등록</a><br>
 		<a href = "/">홈으로 돌아가기</a>
 	</div>
 
