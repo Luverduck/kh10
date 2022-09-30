@@ -6,6 +6,46 @@
 	<jsp:param name = "title" value = "게시글 작성"></jsp:param>
 </jsp:include>
 
+<div class = "container-800">
+	<div class = "row">
+		<c:set var = "isReply" value = "${param.boardParent != null}"></c:set>
+		<c:choose>
+			<c:when test = "${isReply}">
+				<h1>답글 작성</h1>
+			</c:when>
+			<c:otherwise>
+				<h1>게시글 작성</h1>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	
+	<%-- 파일 전송을 위해 enctype 추가 --%>
+	<form action = "write" method = "post" enctype = "multipart/form-data">
+		<div class = "row">
+			<%-- 답글이라면 부모글번호를 추가로 전송하도록 처리 --%>
+			<c:if test="${isReply}">
+				<input type = "hidden" name = "boardParent" value = "${param.boardParent}">
+			</c:if>
+			
+			<select name = "boardHead">
+				<option value = "">선택</option>
+				<option value = "정보">정보</option>
+				<option value = "유머">유머</option>
+				<c:if test = "${mg == '관리자'}">
+				<option value = "공지">공지</option>
+				</c:if>
+			</select>
+			
+			<input type = "text" name = "boardTitle" placeholder = "제목" required>
+		</div>
+		<div class = "row">
+		
+		</div>
+		<div class = "row">1</div>
+		<div class = "row">1</div>
+	</form>
+</div>
+
 <div align = "center">
 	
 	<c:set var = "isReply" value = "${param.boardParent != null}"></c:set>
