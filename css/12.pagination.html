@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination</title>
+    <link rel = "stylesheet" type = "text/css" href = "commons.css">
+
+    <style>
+        /* 
+            Pagination 디자인
+            - ul 혹은 ol을 개조하여 구조를 설계
+
+        */
+        ul.pagination {
+            list-style : none;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        ul.pagination > li {
+            display: inline-block;
+            border: 1px solid transparent;
+            padding: 0.5em;
+            line-height: 1em; /* 글자의 표시 높이를 강제로 설정*/
+            min-width: 2em;
+            text-align: center;
+            cursor: pointer;
+        }
+        ul.pagination > li.on,  /* class에 on이 붙어있다면 빨간색 테두리가 활성화되도록 */
+        ul.pagination > li:hover {
+            border-color: red;
+            color: red;
+        } 
+
+        ul.pagination > li > a {
+            display: block;
+            width: 100%;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* 확장 스타일 : 글자 크기를 다르게 하여 다양한 크기 옵션을 제공 */
+        ul.pagination.pagination-big {
+            /* font-size: 20px; */
+            font-size: 1.25em;
+        }
+        ul.pagination.pagination-small {
+            font-size: 0.75em;
+        }
+    </style>
+</head>
+<body>
+    <div class = "container-500">
+        <div class = "row center">
+            <h1>Pagenation</h1>
+        </div>
+        <div class = "row">
+            <!-- 
+                inline 과 inline-block의 차이 : 폭을 부여할 수 있는지
+                inline-block이 폭 부여 가능 
+            -->
+            <!--
+                ul, ol과 같은 리스트 태그
+                - 장점 : 구조상 어쩔 수 없이 하나로 묶인다 (계층형 구조를 만들때 좋다)
+                - 단점 : 
+            -->
+            <ul class = "pagination">
+                <li><a href = "#">&laquo;</a></li>
+                <li><a href = "#">&lt;</a></li>
+                <li><a href = "#">1</a></li>
+                <li class = "on"><a href = "#">2</a></li>     <!-- 활성화 되어있다고 가정 -->
+                <li><a href = "#">3</a></li>
+                <li><a href = "#">4</a></li>
+                <li><a href = "#">5</a></li>
+                <li><a href = "#">6</a></li>
+                <li><a href = "#">7</a></li>
+                <li><a href = "#">8</a></li>
+                <li><a href = "#">9</a></li>
+                <li><a href = "#">10</a></li>
+                <li><a href = "#">&gt;</a></li>
+                <li><a href = "#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <div class = "row center">
+            <h1>Pagenation-big</h1>
+        </div>
+        <div class = "row">
+            <ul class = "pagination pagination-big">
+                <li>&laquo;</li>
+                <li>&lt;</li>
+                <li>1</li>
+                <li class = "on">2</li>     <!-- 활성화 되어있다고 가정 -->
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>&gt;</li>
+                <li>&raquo;</li>
+            </ul>
+        </div>
+
+        <div class = "row center">
+            <h1>Pagenation-small</h1>
+        </div>
+        <div class = "row">
+            <ul class = "pagination pagination-small">
+                <li>&laquo;</li>
+                <li>&lt;</li>
+                <li>1</li>
+                <li class = "on">2</li>     <!-- 활성화 되어있다고 가정 -->
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>&gt;</li>
+                <li>&raquo;</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
