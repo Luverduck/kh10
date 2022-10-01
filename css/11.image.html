@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Design</title>
+
+    <style>
+        /* 
+            이미지 디자인 
+        */
+        .image {
+            /* 사전에 폭을 hober시 테두리의 두께와 동일하게 부여하여 hober시에도 이미지의 크기 변화가 없도록 한다 */
+            border: 5px solid transparent;
+        }
+        .image.image-hober:hover {
+            border: 5px solid red;
+        }
+        .image.image-blur {
+            /* opacity는 불투명도이며 0부터 1까지 설정 가능 */
+            opacity: 0.8;
+        }
+        .image.image-blur:hover {
+            opacity: 1;
+        }
+        .image.image-frame {
+            border: 5px solid red;
+        }
+        .image.image-shadow {
+            /* 
+                box-shadow 속성 
+                - 우측 이동 / 하단 이동 / 번짐정도 / 확장정도 (offset-x / offset-y / blur-radius / spread-radius)
+            */
+            box-shadow: 0px 0px 3px 0px black;
+        }
+        .image.image-round {
+            border-radius: 10px;
+        }
+        .image.image-circle {
+            border-radius: 50%;
+        }
+        .image.image-leaf {
+            border-top-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <img class = "image" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-hober" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-blur" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-frame" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-shadow" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-round"  src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-circle" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-circle image-shadow image-blur" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+    <img class = "image image-leaf" src = "./image/image-blackcow.jpg" width = "200" height = "200">
+</body>
+</html>
