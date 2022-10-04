@@ -326,3 +326,43 @@ ul.pagination.pagination-big {
 ul.pagination.pagination-small {
     font-size: 0.75em;
 }
+
+/*
+    사용자가 화면을 클릭할 수 없도록 만드는 도구
+    - position을 fixed로 설정하여 브라우저를 기준으로 위치를 설정
+    - 모든 위치를 0으로 설정하거나 폭 높이를 100%로 설정하여 화면에 가득 채움
+    - 약간 어둡게 하여 뒤가 비치도록 구현하는 방법
+        (1) opacity를 이용 - 내용물까지 투명해짐
+        (2) background color를 rgba로 설정하는 방법 - 내용물에는 영향 없음
+*/
+.fullscreen {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+
+    /*
+    background-color: black;
+    opacity: 0.5;
+    */
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.screen-center {
+    position: absolute;
+
+        /* 중앙에 배치 */
+    top:50%;
+    left:50%;
+
+    /*방법1 : 마진을 이용하여 좌측 상단으로 이동(크기를 알아야 함) */
+    /*
+    margin-left: -200px;
+    margin-top: -200px;
+    */
+
+    /*방법2 : transform 속성을 이용하여 영역을 비율로 이동(크기 몰라도 됨)*/
+    transform: translate(-50%, -50%);
+}
