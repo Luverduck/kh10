@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox의 디자인 활용</title>
+
+    <link rel = "stylesheet" type = "text/css" href = "commons.css">
+
+    <style>
+        /* 
+            + 는 자신의 바로 뒤에 있는 태그를 선택하는 연계 선택자이다
+            ~ 는 자신의 뒤에 있는 모든 태그를 선택하는 연계 선택자이다 
+            (중요) 반드사 같은 영역에 존재하는 태그만 선택 가능하다 (앞은 불가능)
+        */
+        .ck1 {
+            display: none;
+        }
+
+        /* ck1라는 클래스 뒤에 붙은 span의 글씨색을 파랗게 만든다 */
+        .ck1 + span {
+            color : blue;
+        }
+
+        /* ck1이 체크되면 뒤에 붙은 span의 글씨색을 빨갛게 만든다 */
+        .ck1:checked + span {
+            color : red;
+        }
+    </style>
+</head>
+<body>
+    
+<div class = "container-600">
+    <div class = "row center">
+        <h1>체크박스를 이용한 디자인</h1>
+    </div>
+
+    <div class = "row">
+        <label for = "ck-test">라벨(누르면 체크 효과)</label>
+        <input type = "checkbox" class = "ck1" id = "ck-test">
+        <!-- span은 inline div이다 - div의 display를 inline으로 바꾼 것 -->
+        <span>체크하면 빨간색이 됩니다</span>
+    </div>
+</div>
+
+</body>
+</html>
