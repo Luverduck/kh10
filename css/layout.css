@@ -1,41 +1,30 @@
 @charset "UTF-8";
 
-/* 
-    홈페이지 레이아웃을 설정하는 스타일 시트 
+/*
+    홈페이지 레이아웃을 설정하는 스타일시트
 */
-
-main, header, aside, section, footer, nav, div {
-    border: 1px dotted black;;
-}
-
 main {
-    width : 1000px;
-    margin : 0 auto;   
-    /* 상하는 0, 좌우는 가운데 정렬 */
+    width: 1000px;
+    margin:0 auto;
 }
-
 header {
-    padding : 20px;
+    padding: 20px;
 }
-
 nav {
-
+    
 }
-
 aside {
-    padding : 20px;
-    float : left;
-    width : 25%;
+    padding: 20px;
+    float:left;
+    width:25%;
     min-height: 400px;
 }
-
 section {
-    padding : 20px;
-    float : left;
-    width : 75%;
+    padding: 20px;
+    float:left;
+    width:75%;
     min-height: 400px;
 }
-
 footer {
     padding: 20px;
 }
