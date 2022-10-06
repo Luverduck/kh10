@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        // 자바 스크립트 코드
+        // 1. 인터프리터 방식의 언어 - 비교적 느리다 ( <--> 자바 : 컴파일 언어 - 빠름)
+        // 2. 자료형을 크게 구분하지 않는다
+        // 3. 문법이 비교적 자유롭다 (;를 안써도 실행 가능, ""를 ''로 써도 실행 가능)
+
+        // 출력 명령 - 개발자 도구의 console에 출력
+        console.log("Hello JS");
+
+        // 변수 선언 - 자바 스크립트는 변수를 var 키워드로 생성한다 (자료형을 엄격하게 구분할 필요가 없다)
+        var a = 10;
+        var b = "hello";
+        console.log(a);
+        console.log(b);
+        console.log(a + b);
+
+        // 치명적인 오류가 아니면 넘어가며, 이를 표시하기 위한 값들이 존재
+        // - NaN : Not a Number (숫자가 아님)
+        console.log(a * b);  
+        console.log(a / b);
+        console.log(a * b == a / b); // 말이 안되는 식
+
+        // - undefined : 초기화가 이루어지지 않은 상황
+        var c;
+        console.log(c);
+
+        // - null : 참조 대상 없음
+        var d = null;
+        console.log(d);
+
+        // 입력은 사용하지 않는다 (입력창 값을 불러오는 것으로 대체)
+        // var f = prompt("첫 번째 숫자를 입력");
+
+        // (Q) num이 홀수인지 짝수인지 판정해서 출력?
+        var num = 25;
+        if(num % 2 == 0){
+            console.log("짝수");
+        }
+        else{
+            console.log("홀수");
+        }
+
+        // (Q) 1부터 10까지 출력?
+        for(var i = 1 ; i <= 10 ; i ++) {
+            console.log(i);
+        }
+
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+
+</body>
+</html>
