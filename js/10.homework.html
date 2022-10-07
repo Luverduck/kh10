@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        function idCheck() {
+            var inputId = document.querySelector(".input-id");
+            var id = inputId.value;
+            var spanId = document.querySelector(".span-id");
+            if(!id) {
+                spanId.textContent = "";
+            }
+            else {
+                var regexp = /^[a-z](?=.*[a-z])(?=.*[0-9])[a-z0-9]{7,19}$/;
+                if(!regexp.test(id)) {
+                spanId.textContent = "아이디는 영문 소문자로 시작하며 영문 소문자, 숫자 조합 8~20자 이내";
+                spanId.style.color = "red";
+                }
+                else {
+                spanId.textContent = "사용할 수 있는 아이디입니다";
+                spanId.style.color = "green";
+                }
+            }  
+        }
+
+        function pwCheck() {
+            var inputPw = document.querySelector(".input-pw");
+            var pw = inputPw.value;
+            var spanPw = document.querySelector(".span-pw");
+
+            if(!pw) {
+                spanPw.textContent = "";
+            }
+            else {
+                var regexp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,16}$/;
+                if(!regexp.test(pw)) {
+                    spanPw.textContent = "비밀번호는 영문 대, 소문자, 숫자 및 특수문자(!@#$)를 반드시 포함하며 8~16자 이내";
+                    spanPw.style.color = "red";
+                }
+                else {
+                    spanPw.textContent = "사용할 수 있는 비밀번호입니다";
+                    spanPw.style.color = "green";
+                }
+            }
+        }
+
+        function pwckCheck() {
+            var inputPw = document.querySelector(".input-pw");
+            var pw = inputPw.value;
+
+            var inputPwck = document.querySelector(".input-pwck");
+            var pwck = inputPwck.value;
+
+            var btnJoin = document.querySelector(".btn-join");
+            btnJoin.disabled = "true";
+
+            var spanPwck = document.querySelector(".span-pwck");
+
+            if(!pwck) {
+                spanPwck.textContent = "";
+            }
+            else {
+                var regexp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,16}$/;
+                if(!regexp.test(pwck)) {
+                    spanPwck.textContent = "비밀번호는 영문 대, 소문자, 숫자 및 특수문자(!@#$)를 반드시 포함하며 8~16자 이내";
+                    spanPwck.style.color = "red";
+                }
+                else {
+                    if(pw != pwck) {
+                        spanPwck.textContent = "비밀번호가 일치하지 않습니다";
+                        spanPwck.style.color = "red";
+                    }
+                    else {
+                        spanPwck.textContent = "비밀번호 일치";
+                        spanPwck.style.color = "green";
+                        var btnJoin = document.querySelector(".btn-join");
+                        btnJoin.disabled = false;
+                    }
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <div class = "container-800">
+        <div class = "row center">
+            <h1>회원가입</h1>
+        </div>
+        <div class = "row mt-40">
+            <h6>아이디</h6>
+            <input class = "input input-id w-100" onblur = "idCheck();">
+            <span class = "span-id"></span>
+        </div>
+        <div class = "row mt-40">
+            <h6>비밀번호</h6>
+            <input class = "input input-pw w-100" type = "password" onblur = "pwCheck()">
+            <span class = "span-pw"></span>
+        </div>
+        <div class = "row mt-40">
+            <h6>비밀번호 확인</h6>
+            <input class = "input input-pwck w-100" type = "password" onblur = "pwckCheck()">
+            <span class = "span-pwck"></span>
+        </div>
+        <div class = "row right">
+            <button class = "btn-join" disabled = "true">가입</button>
+        </div>
+    </div>
+</body>
+</html>
