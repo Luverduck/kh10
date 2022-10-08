@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+
+    <style>
+        /* 처음에 메세지는 숨김 처리  */
+        .success-message,
+        .fail-message {
+            display : none;
+        }
+
+        .success-message {
+            color : green;
+        }
+        
+        .fail-message {
+            color : red;
+        }
+
+        /* 입력창의 상태에 따라 특정 메세지를 표시 */
+        /* 입력창(input)에 success가 붙어있는 success-message를 보여준다  */
+        .input.success {
+            border: 1px solid green;
+        }
+
+        .input.success ~ .success-message {
+            display : block;
+        }
+
+        /* 입력창(input)에 fail가 붙어있는 fail-message를 보여준다  */
+        .input.fail {
+            border: 1px solid red;
+        }
+
+        .input.fail ~  .fail-message {
+            display : block;
+        }
+
+    </style>
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        function checkId() {
+            var input = document.querySelector("input[name = memberId]");
+
+            // 미입력은 고려하지 않을 예정 (실제로는 해야함)
+            var memberId = input.value;
+            var regexp = /^[a-z][a-z0-9]{7,19}$/;
+            var judge = regexp.test(memberId);
+
+            // 가장 먼저 초기화를 해야 한다
+            input.classList.remove("success", "fail");
+            if(judge) {
+                // 그 다음 클래스를 부여
+                input.classList.add("success");
+                // 조건을 만족하는 경우 true를 반환
+                return true;
+            }
+            else { 
+                input.classList.add("fail");
+                // 조건을 만족하지 않는 경우 false를 반환
+                return false;
+            }
+        }
+        function checkPassword() {
+            var input = document.querySelector("input[name = memberPw]");
+
+            var memberPw = input.value;
+            var regexp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,16}$/;
+            var judge = regexp.test(memberPw);
+
+            input.classList.remove("success", "fail");
+            if(judge) {
+                input.classList.add("success");
+                // 조건을 만족하는 경우 true를 반환
+                return true;
+            }
+            else {
+                input.classList.add("fail");
+                // 조건을 만족하지 않는 경우 false를 반환
+                return false;
+            }
+        }
+        function checkPasswordRe() {
+            var origin = document.querySelector("input[name = memberPw]");
+            var repeat = document.querySelector("#password-check");
+
+            // 입력값 비교
+            var judge = origin.value == repeat.value;
+
+            repeat.classList.remove("success", "fail");
+            if(judge) {
+                repeat.classList.add("success");
+                 // 조건을 만족하는 경우 true를 반환
+                 return true;
+            }
+            else {
+                repeat.classList.add("fail");
+                // 조건을 만족하지 않는 경우 false를 반환
+                return false;
+            }
+        }
+        
+        // form 검사 함수 
+        function formCheck() {
+            // (1) 실행하다가 잘못된 내용이 있으면 더이상 실행을 하지 않음
+            // return checkId() && checkPassword() && checkPasswordRe();
+
+            // (2) 전부다 실행해서 표시한 뒤 검사
+            var result1 = checkId();
+            var result2 = checkPw();
+            var result3 = checkPw
+        }
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <div class = "container-500">
+        <div class = "row center">
+            <h1>회원가입</h1>
+        </div>
+        
+        <form action = "https://www.naver.com" method = "post" autocomplete = "off" onsubmit = "return formCheck();"> <!-- form에서 autocomplete를 off하면 모든 항목의 자동완성을 off할 수 있다 -->
+        <div class = "row">
+            <!-- 입력창은 label - input - span 구조로 할 것 -->
+            <lable>아이디</label>
+            <input type = "text" name = "memberId" class = "input w-100" onblur = "checkId();">
+            <span class = "success-message">멋진 아이디네요!</span>
+            <span class = "fail-message">영문 소문자로 시작하며 숫자가 포함된 8~20자로 작성하세요</span>
+        </div>
+
+        <div class = "row">
+            <label>비밀번호</label>
+            <input type = "password" name = "memberPw" class = "input w-100" onblur = "checkPassword();">
+            <span class = "success-message">올바른 비밀번호 형식입니다</span>
+            <span class = "fail-message">8~16자로 작성하며 반드시 영문 대/소문자, 숫자 및 특수문자(!@#$)가 포함되어야 합니다</span>
+        </div>
+
+        <div class = "row">
+            <label>비밀번호 확인</label>
+            <input type = "password" class = "input w-100" id = "password-check" onblur = "checkPasswordRe();">
+            <span class = "success-message">비밀번호가 일치합니다</span>
+            <span class = "fail-message">비밀번호가 일치하지 않습니다</span>
+        </div>
+
+        <div class = "row right">
+            <button type = "submit" class = "btn btn-positive">가입</button>
+        </div>
+    </form>
+    </div>
+</body>
+</html>
