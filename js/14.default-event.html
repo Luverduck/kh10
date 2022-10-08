@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기본 이벤트 방지</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        // <a>와 <form> 태그처럼 목적이 분명한 태그들은 기본 이벤트가 존재
+        // - onclick과 같은 이벤트 발생시 return 값의 여부에 따라 실행/차단이 결정
+        //   - return false : 차단
+        //   - return true : 허용
+        // - return 함수()로 하면 함수 결과(true/false)에 따라 이벤트 발생 여부 결정 가능
+
+        function checkout() {
+            var choice = confirm("정말 이동하시겠습니까?");
+            console.log(choice);
+            // return true; // 허용
+            // return false; // 차단
+            return choice; 
+        }
+
+        function formCheck() {
+            // 전송을 하고싶은데 유효하지 않은 입력이 있으면 차단
+            // 기본 포멧
+            // if(검사코드) {
+            //     return false;
+            // }
+            // return true;
+            var keyword = document.querySelector("input[name = keyword]");
+            if(!keyword.value) { // 미입력 검사 (복잡한 조건은 정규표현식으로 검사)
+                alert("키워드를 작성하세요"); // 고전적인 방법 (보통 브라우저에서 차단되므로 거의 사용하지 않음)
+                keyword.focus(); // 자동으로 미입력된 입력창으로 커서가 가도록한다
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <!-- 하이퍼링크로 이동 전 다시한번 확인(예/아니오) -->
+    <div class = "container-400">
+        <div class = "row center">
+            <h1>기본 이벤트 방지</h1>
+        </div>
+
+        <div class = "row">
+            <a href = "https://www.google.com/" onclick = "return checkout();">구글로 이동</a>
+        </div>
+
+        <div class = "row center">
+            <h1>form 이벤트 방지</h1>
+        </div>
+
+        <div class = "row">
+            <!-- form은 onsubmit으로 '전송할 때'에 대한 이벤트 설정 -->
+            <form action = "https://naver.com" method = "get" onsubmit = "return formCheck();">
+                <input type = "text" name = "keyword">
+                <button type = "submit">전송</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
