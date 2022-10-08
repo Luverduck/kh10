@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this의 사용</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        // this는 함수를 실핼한 주체(주인공)을 의미한다
+        function changeColor(tag) {
+            // console.log(tag);
+            var h1 = document.querySelector("h1");
+            h1.style.color = tag.textContent;
+        }
+
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <!-- inline-script에서 this라고 하면 자신(주인공)을 의미한다 -->
+    <!-- script 안에서의 this는 윈도우를 의미 -->
+    <button onclick = "changeColor(this);">red</button>
+    <button onclick = "changeColor(this);">green</button>
+    <button onclick = "changeColor(this);">blue</button>
+
+    <hr>
+
+    <h1>Hello World</h1>
+</body>
+</html>
