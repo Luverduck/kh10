@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <style>
+        /* 버튼이 disabled 상태이면 */
+        .btn.btn-positive[disabled],
+        .btn.btn-positive[disabled]:hover {
+            /* 색 연하게 */
+            background-color: #74b9ff;
+            /* hover시 pointer가 아닌 다른 표시가 되도록 */
+            cursor: not-allowed;
+        }
+
+        .fullscreen {
+            background-color: white;
+        }
+    </style>
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        // 전체 선택 처리
+        function checkAll() {
+            var checkedItem = document.querySelector(".ck-all");
+            var checkboxList = document.querySelectorAll(".ck");
+            for(var i = 0 ; i < checkboxList.length ; i ++){
+                checkboxList[i].checked = checkedItem.checked;
+            }
+
+            checkAgree();
+        }
+
+
+        // 필수 동의 항목에 대한 체크 여부 검사 및 버튼 비활성화 처리
+        function checkAgree() {
+            var agreeBoxList = document.querySelectorAll(".ck-required");
+
+            var count = 0;
+            for(var i = 0 ; i < agreeBoxList.length ; i ++) {
+                if(agreeBoxList[i].checked) {
+                    count ++;
+                }
+            }
+
+            var button = document.querySelectorAll(".btn-positive");
+            // 전체 선택이 아닌 경우(count가 agreeBoxList의 길이와 같지 않으면) 버튼 비활성화 
+            // if(count == agreeBoxList.length) { // 전체 체크가 되어 있는 경우
+            //     button.disabled = false;
+            // }
+            // else { // 전체 체크가 되어 있지 않은 경우
+            //     button.enabled = true;
+            // }
+            
+            button.disabled = count != agreeBoxList.length;
+        }
+
+        function fullScreen3(){
+            var textarea = document.querySelector(".textarea3");
+            textarea.classList.add("fullscreen");
+
+            return false;//기본이벤트 실행 방지
+        }
+
+        function closeScreen3(e){
+        if(e.keyCode == 27){
+            var textarea = document.querySelector(".textarea3");
+            textarea.classList.remove("fullscreen");
+        }
+        }
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <div class = "container-500">
+        <div class = "row center">
+            <h1>이용약관</h1>            
+        </div>        
+
+        <div class = "row mt-30">
+            <label>
+                <input type = "checkbox" class = "ck ck-all" oninput = "checkAll();">
+                <span>전체 선택</span>
+            </label>
+        </div>
+
+        <div class = "row mt-30">
+            <h2>제목 자리</h2>
+        </div>
+        <div class = "row">
+            <textarea class = "input w-100 fix-size" rows = "6" readonly>어쩌구저쩌구</textarea>
+        </div>
+        <div class = "row float-container">
+
+            <label class = "float-left w-50">
+                <input oninput = "checkAgree();" class = "ck ck-required" type = "checkbox" name = "agree" value = "type1">
+                <span>동의합니다</span>
+                <span>*</span>
+            </label>
+
+            <div class = "float-left w-50 right">
+                <a href = "#">전문 보기</a>
+            </div>
+
+        </div>
+
+        <div class="row mt-30">
+            <h2>제목 자리</h2>
+        </div>
+        <div class = "row">
+            <textarea class = "input w-100 fix-size" rows = "6" readonly>어쩌구저쩌구</textarea>
+        </div>
+        <div class = "row float-container">
+
+            <label class = "float-left w-50">
+                <input oninput = "checkAgree();" class = "ck ck-required" type = "checkbox" name = "agree" value = "type2">
+                <span>동의합니다</span>
+                <span>*</span>
+            </label>
+
+            <div class = "float-left w-50 right">
+                <a href = "#">전문 보기</a>
+            </div>
+
+        </div>
+
+        <div class = "row mt-30">
+            <h2>제목 자리</h2>
+        </div>
+        <div class = "row">
+            <textarea onkeydown = "closeScreen3(event);" class = "input w-100 fix-size textarea3" rows = "6" readonly>어쩌구저쩌구</textarea>
+        </div>
+        <div class = "row float-container">
+
+            <label class = "float-left w-50">
+                <input class = "ck" type = "checkbox" name = "agree" value = "type3">
+                <span>동의합니다</span>
+            </label>
+
+            <div class = "float-left w-50 right">
+                <a href = "#" onclick = "return fullScreen3();">전문 보기</a>
+            </div>
+
+        </div>
+
+        <div class = "row mt-50 mb-50">
+            <button class = "btn btn-positive w-100" disabled>다음 단계로 이동</button>
+        </div>
+    </div>
+
+</body>
+</html>
