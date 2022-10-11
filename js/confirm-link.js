@@ -10,7 +10,7 @@ window.addEventListener("load", function(){
         linkList[i].addEventListener("click", function(e){
             var choice = window.confirm("정말 이동하시겠습니까?");
             if(choice == false) {
-                // return false; 로 기본 이벤트 차단 불가능
+                // return false; 로 기본 이벤트 차단 불가능  
                 e.preventDefault(); // 기본 이벤트 차단 명령
             }
         })
