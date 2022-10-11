@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>독립형 자바 스크립트(최종)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        // window.onload의 문제점 : 단 하나의 함수만 설정할 수 있다 (덮어쓰기)
+        // // window.onload = function() {
+        // //     console.log("load1");
+        // // };
+        // window.onload = function() {
+        //     console.log("load2");
+        // };
+
+        // 해결책 : addEventListener 사용
+        window.addEventListener("load", function(){
+            // console.log("load1");
+            document.querySelector("button").addEventListener("click", function(){
+                var h1 = document.querySelector("h1");
+                h1.style.color = "red";
+            })
+        });
+
+        window.addEventListener("load", function(){
+            // console.log("load2");
+            document.querySelector("button").addEventListener("click", function(){
+                alert("클릭!");
+            })
+        });
+
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <button>클릭</button>
+    <h1>Hello Javascript</h1>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        
+        window.onload = function() {
+
+            // 각각의 버튼에 클릭 이벤트를 설정
+            var btnSmall = document.querySelector(".btn-small");
+            var btnMiddle = document.querySelector(".btn-middle");
+            var btnLarge = document.querySelector(".btn-large");
+
+            btnSmall.addEventListener("click", function(){
+                var image = document.querySelector(".display");
+                image.width = 400;
+                image.height = 300;
+            });
+
+            btnMiddle.addEventListener("click", function(){
+                var image = document.querySelector(".display");
+                image.width = 800;
+                image.height = 600;
+            });
+
+            btnLarge.addEventListener("click", function(){
+                var image = document.querySelector(".display");
+                image.width = "100%";
+
+            });
+        };
+
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <!-- 버튼 -->
+    <button class = "btn-small">작게</button>
+    <button class = "btn-middle">기본</button>
+    <button class = "btn-large">크게</button>
+    
+    <hr>
+
+    <!-- 이미지 -->
+    <img src = "image/image-blackcow.jpg" class = "display" width = "800" height = "600">
+</body>
+</html>
