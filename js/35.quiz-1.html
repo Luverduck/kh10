@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <style>
+        .danger {
+            color: red;
+        }
+    </style>
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            $(".q1-input").on("input", function(){
+
+                // this == 입력이 발생한 textarea
+                var text = $(this).val(); // jQuery 스타일
+
+                // textarea의 글자 수(길이)를 반환
+                var textCount = text.length;
+
+                if(textCount >= 1000) { // 글자 수가 1000 이상이라면
+                    // textarea의 글자를 빨간색으로
+                    // style 대신 클래스 제어
+                    // $(this).next().css("color", "red");
+                    $(this).next().addClass("danger");
+                }
+                else { // 그렇지 않다면
+                    // textarea의 글자를 검정색으로
+                    // style 대신 클래스 제어
+                    // $(this).next().css("color", "black");
+                    $(this).next().removeClass("danger");
+                }
+
+                // 글자 수가 1000 이하가 될 때까지 반복
+                while(textCount > 1000) {
+                    // textarea의 마지막 글자를 자른다
+                    text = text.substring(0, textCount - 1);
+                    textCount --;
+                }
+
+                // 글자 수를 1000으로 제한한 text의 값을 textarea의 값으로 설정
+                $(this).val(text);
+                
+                // 이 때의 글자 수를 span의 textContent 값으로 설정
+                // $(".q1-input-length").text(text.length); // 모든 span이 선택된다 (비추천)
+                $(this).next().text(textCount);   // 바로 뒤 태그 선택 <-> 앞 태그 선택 : .prev()
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-600">
+    <div class = "row center">
+        <h1>자기소개서</h1>
+    </div>
+
+    <div class = "row mt-40">
+        <h3>(Q) 우리 회사에 지원한 동기를 작성하세요</h3>
+    </div>
+
+    <div class = "row right">
+        <textarea class="input w-100 fix-size q1-input" rows="10"></textarea>
+        <span class = "q1-input-length">0</span> / 1000
+    </div>
+
+    <div class = "row mt-40">
+        <h3>(Q) 우리 회사에 지원한 동기를 작성하세요</h3>
+    </div>
+
+    <div class = "row right">
+        <textarea class="input w-100 fix-size q1-input" rows="10"></textarea>
+        <span class = "q1-input-length">0</span> / 1000
+    </div>
+
+    <div class = "row mt-40">
+        <h3>(Q) 우리 회사에 지원한 동기를 작성하세요</h3>
+    </div>
+
+    <div class = "row right">
+        <textarea class="input w-100 fix-size q1-input" rows="10"></textarea>
+        <span class = "q1-input-length">0</span> / 1000
+    </div>
+</div>
+
+</body>
+</html>
