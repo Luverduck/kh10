@@ -38,11 +38,10 @@
             var checkboxItems = document.querySelectorAll(".check-item:checked");
             var text = "";
             for(var i = 0 ; i < checkboxItems.length ; i ++) {
-            //     text += checkboxItems[i].value;
-            //     text += ",";
-            // }
-            // alert(text);
+                text += checkboxItems[i].value;
+                text += ",";
             }
+            alert(text);
         }
     </script>
 </head>
