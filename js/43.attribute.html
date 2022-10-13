@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            $("select[name = item]").on("input", function(){
+                var name = $(this).val();
+
+                // find()로 select 안의 option 중 price의 값을 가져오기  // 숫자를 문자열 형태로 가져옴
+                // 사용자 속성의 값을 불러오는 것이므로 attr만 가능한 경우
+                // var price = $(this).find("option:selected").attr("price"); 
+
+                // (주의) 사용자 속성을 만들 때 속성 이름을 'data-이름'으로 하는 것을 권장(이지만 반드시 그렇게 하자)
+                // var price = $(this).find("option:selected").attr("data-price"); 
+
+                // data- 접두사가 붙은 값을 가져올 때 data()를 사용한다면 data- 접두사를 붙이지 않고도 가져올 수 있다
+                var price = $(this).find("option:selected").data("price"); 
+
+                $(".name").text(name);
+                $(".price").text(price);
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-500">
+        <div class = "row">
+            <h1>attr()의 활용</h1>
+        </div>
+
+        <div class = "row">
+            <select name = "item">
+                <option value = "">선택</option>
+                <option value = "노트북" data-price = "1000000">노트북(100만원)</option>
+                <option value = "노트북+가방" data-price = "1050000">노트북+가방(105만원)</option>
+                <option value = "노트북+가방+마우스" data-price = "1080000">노트북+가방+마우스(108만원)</option>
+            </select>
+        </div>
+
+        <div class = "row">
+            상품 : <span class = "name"></span>, 
+            가격 : <span class = "price"></span>
+        </div>
+    </div>
+</body>
+</html>
