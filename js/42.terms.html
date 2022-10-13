@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <style>
+        /* 버튼이 disabled 상태이면 */
+        .btn.btn-positive[disabled],
+        .btn.btn-positive[disabled]:hover {
+            /* 색 연하게 */
+            background-color: #74b9ff;
+            /* hover시 pointer가 아닌 다른 표시가 되도록 */
+            cursor: not-allowed;
+        }
+
+        .fullscreen {
+            background-color: white;
+        }
+    </style>
+    
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+
+            // 전체선택/해제 이벤트
+            $(".ck-all").on("input", function(){
+
+                $(".ck-required").prop("checked", $(this).prop("checked"));
+
+                // 아래 필수 선택 이벤트를 불러오기 -> change로 해야함
+                $(".ck-required").change();
+            });
+
+            // 필수선택 이벤트 -> 필수선택이 모두 선택되면 전체선택에 체크
+            $(".ck-required").change(function(){
+
+                var count = 0;
+
+                $(".ck-required").each(function(){
+                    if($(this).prop("checked")){
+                        count ++;
+                    }
+                });
+
+                var judge = $(".ck-required").length == count;
+                if(judge) { // 필수요소 모두 체크 -> 버튼 비활성화 해제
+                    $(".btn-next").prop("disabled", false);
+                }
+                else {
+                    $(".btn-next").prop("disabled", true);
+                }
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-500">
+        <div class = "row center">
+            <h1>이용약관</h1>            
+        </div>        
+
+        <div class = "row mt-30">
+            <label>
+                <input type = "checkbox" class = "ck ck-all">
+                <span>전체 선택</span>
+            </label>
+        </div>
+
+        <div class = "row mt-30">
+            <h2>제목 자리</h2>
+        </div>
+        <div class = "row">
+            <textarea class = "input w-100 fix-size" rows = "6" readonly>어쩌구저쩌구</textarea>
+        </div>
+        <div class="row">
+            <label>
+                <input class = "ck ck-required" type = "checkbox" name = "agree" value = "type1">
+                <span>동의합니다</span>
+                <span>*</span>
+            </label>
+        </div>
+
+        <div class = "row mt-30">
+            <h2>제목 자리</h2>
+        </div>
+        <div class = "row">
+            <textarea class = "input w-100 fix-size" rows = "6" readonly>어쩌구저쩌구</textarea>
+        </div>
+        <div class="row">
+            <label>
+                <input class = "ck ck-required" type = "checkbox" name = "agree" value = "type2">
+                <span>동의합니다</span>
+                <span>*</span>
+            </label>
+        </div>
+
+        <div class = "row mt-30">
+            <h2>제목 자리</h2>
+        </div>
+        <div class = "row">
+            <textarea class = "input w-100 fix-size" rows = "6" readonly>어쩌구저쩌구</textarea>
+        </div>
+        <div class="row">
+            <label>
+                <input class = "ck ck-required" type = "checkbox" name = "agree" value = "type3">
+                <span>동의합니다</span>
+            </label>
+        </div>
+
+        <div class = "row mt-50 mb-50">
+            <button class = "btn btn-positive btn-next" disabled>다음 단계로 이동</button>
+        </div>
+    </div>
+
+</body>
+</html>
