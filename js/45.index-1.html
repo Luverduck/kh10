@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+
+            // .accordion안에 있는 a태그 클릭하면 뒤에 있는 ul을 토글
+            // $(".accordion a").click(function(){      // CSS를 이용한 선택
+            $(".accordion").find("a").click(function(){    // jQuery를 이용한 선택
+                // this == 클릭한 a태그
+                $(this).next().toggle();
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-800">
+        
+        <div class = "row">
+            <h1>목차</h1>
+        </div>
+
+        <div class = "row">
+            <ul class = "accordion">
+                <li class = "menu-1">
+                    <a>Spring</a>
+                    <ul class = "menu-1">
+                        <li><a href = "#">Controller</a></li>
+                        <li><a href = "#">Service</a></li>
+                        <li><a href = "#">Component</a></li>
+                        <li><a href = "#">Repository</a></li>
+                        <li><a href = "#">DTO</a></li>
+                    </ul>
+                </li>
+
+                <li class = "menu-2">
+                    <a>Javascript</a>
+                    <ul class = "menu-2">
+                        <li><a href = "#">Event 처리</a></li>
+                        <li><a href = "#">정규표현식 검사</a></li>
+                    </ul>
+                </li>
+
+                <li class = "menu-3">
+                    <a>jQuery</a>
+                    <ul class = "menu-3">
+                        <li><a href = "#">선택자</a></li>
+                        <li><a href = "#">CSS 제어</a></li>
+                        <li><a href = "#">클래스 제어</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
