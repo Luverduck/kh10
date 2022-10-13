@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 제어</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+    $(function(){
+        
+        // 3. show(), hide(), toggle()로 제어하는 방법
+        $(".hide").click(function(){
+            $("h2").hide();
+        });
+
+        $(".show").click(function(){
+            $("h2").show();
+        });
+
+        $(".toggle").click(function(){
+            $("h2").toggle();
+        });
+    });        
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-500">
+        <div class = "row">
+            <h1>display 제어</h1>
+        </div>
+
+        <div class = "row">
+            <button class = "hide">숨김</button>
+            <button class = "show">표시</button>
+            <button class = "toggle">토글</button>
+        </div>
+
+        <div class = "row">
+            <h2 class = "display">Hello jQeury</h2>
+        </div>
+    </div>
+
+</body>
+</html>
