@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+
+    <style>
+        /* red 클래스 */
+        .red {
+            color: red;
+        }
+
+        /* green 클래스 */
+        .green {
+            color: green;
+        }
+
+        /* blue 클래스 */
+        .blue {
+            color:blue;
+        }
+    </style>
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        function red() {
+            var h1 = document.querySelector("h1");
+            // h1.style.color = "red";
+
+            // 전체 클래스를 설정 (기존에 설정해둔 클래스가 제거됨)
+            // - className 속성은 전체 클래스를 설정할 수 있다
+            // h1.className = "red";
+
+            // 클래스의 리스트 생성
+            // - classList 속성은 여러 클래스를 목록 형태로 제어할 수 있다 (cf : ArrayList)
+            // 기존에 추가한 클래스를 지우고 다시 추가한다
+            h1.classList.remove("red", "green", "blue");
+            h1.classList.add("red");
+        }
+
+        function green() {
+            var h1 = document.querySelector("h1");
+            // h1.className = "green";
+
+            h1.classList.remove("red", "green", "blue");
+            h1.classList.add("green");
+        }
+
+        function blue() {
+            var h1 = document.querySelector("h1");
+            // h1.className = "blue";
+
+            h1.classList.remove("red", "green", "blue");
+            h1.classList.add("blue");
+        }
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <button onclick = "red();">red</button>
+    <button onclick = "green();">green</button>
+    <button onclick = "blue();">blue</button>
+
+    <hr>
+    
+    <h1 class = "dummy">Hello Javascript!</h1>
+
+</body>
+</html>

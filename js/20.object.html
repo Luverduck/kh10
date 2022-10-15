@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        // 자바 스크립트 내장 객체
+        // - 자바 스크립트에서 기본적으로 제공하는 도구들
+        // - 브라우저를 제어하기 위한 각종 객체들이 존재
+
+        // - window : 자바 스크립트의 루트 객체
+        // (중요) window는 생략이 가능하다
+        function window1() {
+            console.log(window);
+            // 메세지 띄우기
+            // alert("hello");
+            window.alert("hello");
+            // alert()는 반환값이 없다
+        }
+
+        function window2() {
+            // 선택창 띄우기
+            var choice = window.confirm("질문");
+            console.log(choice);
+            // confirm()의 반환값은 true/false
+
+        }
+
+        function window3() {
+            // 새 탭 띄우기
+            // window.open("https://www.naver.com");
+
+            // 새 탭 띄우기 + target 설정 -> 해당 target에 새 탭을 띄운다
+            // window.open("https://www.naver.com", "custom");
+
+            // 새 창 띄우기 (target이 없으므로 계속 새 창이 열림)
+            // window.open("https://www.naver.com", "", "width=400,height=400");
+
+            // 새 창 띄우기 + target 설정
+            window.open("https://www.naver.com", "custom", "width=400,height=400");
+        }
+
+        // - location : 주소창을 제어
+        function location1() {
+            // console.log(window.location);
+            console.log(location);
+            // 페이지 이동
+            location.href = "https://www.google.com";
+        }
+
+        function location2() {
+            // 새로고침
+            location.reload();
+        }
+
+        // - history : 이력을 제어
+        function history1() {
+            // console.log(window.history);
+            console.log(history);
+            history.back();
+        }
+
+        function history2() {
+            // history.go(숫자);
+            // 뒤로 가기 할 떄 숫자는 음수
+            // 앞으로 가기 할 때 숫자는 양수
+            history.go(-1); // back()과 같은 효과
+        }
+
+        function document1() {
+            // console.log(window.document)
+            console.log(document)
+            // class가 test인 요소 중 첫 번째를 찾음
+            var targetOne = document.querySelector(".test");
+            targetOne.style.color = "red"
+        }
+
+        function document2() {
+            // class가 test인 모든 요소를 찾음 
+            var targetList = document.querySelectorAll(".test");
+            // 요소가 여러 개이므로 반복문으로 처리해야 한다
+            for(var i = 0 ; i < targetList.length ; i ++) {
+                targetList[i].style.color = "blue";
+            }
+        } 
+
+        function document3() {
+            var target = document.getElementById("tmp-2");
+            target.style.color = "green";
+            console.log(target);
+        }
+
+        function document4() {
+            var targetList = document.getElementsByClassName("test");
+            for(var i = 0 ; i < targetList.length ; i ++) {
+                targetList[i].style.color = "green";
+            }
+        }
+
+        function document5() {
+            var targetList = document.getElementsByTagName("h2");
+            for(var i = 0 ; i < targetList.length ; i ++) {
+                targetList[i].style.color = "purple";
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <div class = "container-600">
+        <div class = "row">
+            <h1>Window 객체</h1>
+        </div>
+
+        <div class = "row">
+            <button onclick = "window1();">alert()</button>
+            <button onclick = "window2();">cinfirm()</button>
+            <button onclick = "window3()">open()</button>
+        </div>
+
+        <div class = "row">
+            <h1>Location 객체</h1>
+        </div>
+        <div class = "row">
+            <button onclick = "location1();">href</button>
+            <button onclick = "location2();">reload()</button>
+        </div>
+        
+        <div class = "row">
+            <h1>History 객체</h1>
+        </div>
+        <div class = "row">
+            <button onclick = "history1();">back()</button>
+            <button onclick = "history2()">go()</button>
+        </div>
+
+        <div class = "row">
+            <h1>Document 객체</h1>
+        </div>
+        <div class = "row"> 
+            <button onclick = "document1();">querySelector()</button>
+            <button onclick = "document2()">querySelectorAll()</button>
+            <button onclick = "document3()">getElementById()</button>
+            <button onclick = "document4()">getElementsByClassName()</button>
+            <button onclick = "document5()">getElementsByTagName()</button>
+        </div>
+
+        <div class = "row">
+            <h2 id = "tmp-1" class = "test test-1">Hello Javascript</h2>
+            <h2 id = "tmp-2" class = "test test-2">Hello Javascript</h2>
+            <h2 id = "tmp-3" class = "test test-3">Hello Javascript</h2>
+            <h2 id = "tmp-4" class = "test test-4">Hello Javascript</h2>
+            <h2 id = "tmp-5" class = "test test-5">Hello Javascript</h2>
+        </div>
+    </div>
+
+</body>
+</html>

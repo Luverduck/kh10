@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            // 1. 첫 번째 이전 버튼과 마지막 다음 버튼을 삭제
+            // - first() : prev 클래스명을 가진 것 중 가장 첫 번째 (또는 eq(0)도 가능)
+            $(".prev").first().remove();
+            // - last() : next 클래스명을 가진 것 중 가장 마지막
+            $(".next").last().remove();
+
+            // 2. 1페이지만 남기고 다 숨김처리
+            $(".page").hide();
+            $(".page").first().show();
+
+            // 3. 남은 버튼에 클릭 이벤트 설정
+            // - 다음 버튼을 누르면 해당 페이지의 뒷 페이지 표시 및 나머지 숨김
+            // - 이전 버튼을 누르면 해당 페이지의 앞 페이지 표시 및 나머지 숨김
+            // - 해당 이전(.prev)/다음(.next) 버튼의 부모(.page)를 찾아 그 다음(.page)을 표시
+            $(".next").click(function(){
+                // this == 클릭한 다음 버튼
+
+                // 다음 페이지(target)
+                // var target = $(this).parent().parent().parent().next();
+                var target = $(this).parents(".page").next();
+
+                // 모든 페이지 숨기고 target만 표시
+                $(".page").hide();
+                target.show();
+            });
+        
+            $(".prev").click(function(){
+                var target = $(this).parents(".page").prev();
+                $(".page").hide();
+                target.show();
+            });
+        });        
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "page">
+        <div class = "container-600">
+            <div class = "row">
+                <h1>1페이지</h1>
+            </div>
+            <div class = "row">
+                <button class = "prev">이전</button>
+                <button class = "next">다음</button>
+            </div>
+        </div>
+    </div>
+
+    <div class = "page">
+        <div class = "container-600">
+            <div class = "row">
+                <h1>2페이지</h1>
+            </div>
+            <div class = "row">
+                <button class = "prev">이전</button>
+                <button class = "next">다음</button>
+            </div>
+        </div>
+    </div>
+
+    <div class = "page">
+        <div class = "container-600">
+            <div class = "row">
+                <h1>3페이지</h1>
+            </div>
+            <div class = "row">
+                <button class = "prev">이전</button>
+                <button class = "next">다음</button>
+            </div>
+        </div>
+    </div>
+
+    <div class = "page">
+        <div class = "container-600">
+            <div class = "row">
+                <h1>4페이지</h1>
+            </div>
+            <div class = "row">
+                <button class = "prev">이전</button>
+                <button class = "next">다음</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

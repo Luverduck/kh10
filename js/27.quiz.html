@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+        
+        // 전체선택 체크박스 선택시 모든 항목 체크
+        window.addEventListener("load", function(){
+
+            // 전체선택 체크박스 지정
+            var checkboxAllList = document.querySelectorAll(".check-all");
+
+            if(checkboxAllList.length == 0) {return};
+
+            for(var i = 0 ; i < checkboxAllList.length ; i ++) {
+                
+                // 전체선택에 체크하면
+                checkboxAllList[i].addEventListener("input", function(){
+
+                    // 전체선택 중 하나 체크시 방금 체크된 전체선택 체크박스의 값을 저장
+                    var isChecked = this.checked;
+
+                    // 저장한 값을 다른 전체선택에 설정
+                    for(var j = 0 ; j < checkboxAllList.length ; j ++) {
+                        checkboxAllList[j].checked = isChecked;
+                    }
+
+                    // 모든 항목 지정
+                    var checkboxItems = document.querySelectorAll(".check-item");
+
+                    // 모든 항목의 체크 상태가 전체선택 체크박스의 상태가 되도록 설정
+                    for(var k = 0 ; k < checkboxItems.length ; k ++){
+                        checkboxItems[k].checked = isChecked;
+                    }
+                });
+            }
+        });
+
+
+        // 모든 항목 선택시 전체선택 체크박스 선택
+        window.addEventListener("load", function(){
+
+            // 모든 체크박스 지정
+            var checkboxItems = document.querySelectorAll(".check-item");
+
+            for(var i = 0 ; i < checkboxItems.length ; i ++) {
+
+                // 체크박스에 체크할 때
+                checkboxItems[i].addEventListener("input", function(){
+                    
+                    // 체크된 체크박스의 수
+                    var checkboxChecked = document.querySelectorAll(".check-item:checked");
+
+                    // 전체체크인지 판정 (전체 체크박스의 수 = 체크된 체크박스의 수)
+                    var isAllChecked = checkboxItems.length == checkboxChecked.length;
+
+                    console.log(isAllChecked);
+
+                    // 전체선택 체크박스 지정
+                    var checkboxAllList = document.querySelectorAll(".check-all");
+
+                    // 판정값에 따라 전체선택 체크박스의 상태 변경
+                    for(var j = 0 ; j < checkboxAllList.length ; j ++) {
+                        checkboxAllList[j].checked = isAllChecked;
+                    }
+                });
+            }
+        });
+
+        // 구매 버튼을 누를 때 체크된 모든 항목을 출력
+        window.addEventListener("load", function(){
+            
+            // 구매 버튼 지정
+            var btnPurchase = document.querySelector(".btn-purchase");
+
+            // 구매 버튼을 클릭하면
+            btnPurchase.addEventListener("click", function(){
+                // 체크되어있는 모든 항목 지정 
+                var checkboxItems = document.querySelectorAll(".check-item:checked");
+
+                // 빈 문자열 생성
+                var text = "";
+
+                // 빈 문자열에 체크된 항목의 값(문자열)을 붙여넣기
+                for(var i = 0 ; i < checkboxItems.length ; i ++) {
+                    text += checkboxItems[i].value;
+                    text += ", ";
+                }
+
+                alert(text);
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <div class = "container-400">
+        <div class = "row center">
+            <h1>상품 구매</h1>
+        </div>
+        <div class = "row">
+            <label><input type = "checkbox" class = "check-all">전체선택</label>
+        </div>
+        <hr>
+        <div class = "row">
+            <label><input type = "checkbox" class = "check-item" name = "item" value = "컴퓨터">컴퓨터</label><br>
+            <label><input type = "checkbox" class = "check-item" name = "item" value = "모니터">모니터</label><br>
+            <label><input type = "checkbox" class = "check-item" name = "item" value = "키보드">키보드</label><br>
+            <label><input type = "checkbox" class = "check-item" name = "item" value = "마우스">마우스</label><br>
+            <label><input type = "checkbox" class = "check-item" name = "item" value = "스피커">스피커</label><br>
+        </div>
+        <hr>
+        <div class = "row">
+            <label><input type = "checkbox" class = "check-all">전체선택</label>
+        </div>
+        <div class = "row right">
+            <button class = "btn-purchase">구매</button>
+        </div>
+    </div>
+
+</body>
+</html>

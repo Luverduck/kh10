@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        // jQuery 기본이벤트 제어
+        // - jQuery는 다음 두 가지 방식으로 기본 이벤트 차단이 가능하다
+        // - (1) 이벤트 객체를 사용한 e.preventDefault()
+        // - (2) return false를 사용한 차단
+        $(function(){
+            $(".confirm-link").click(function(e){
+                // (1) 이벤트 객체를 사용한 차단
+                var choice = confirm("정말 이동하시겠습니까?");
+                if(choice) {
+                    return true;    // 통과
+                }
+                else {
+                    return false;   // 차단
+                }
+
+                // (2) return false를 이용한 차단
+                // return false;
+            });
+
+            $(".confirm-form").submit(function(e){
+                // return false;
+                // e.preventDefault();
+
+                var choice = confirm("정말 검색하시겠습니까?");
+                if(!choice) {
+                    return false; // 차단
+                    // e.preventDefault();
+                }
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-400">
+        <div class = "row">
+            <h1>기본 이벤트 제어</h1>
+        </div>
+
+        <div class = "row">
+            <a href = "https://google.com" class = "confirm-link">구글로 이동</a>
+        </div>
+
+        <div class = "row">
+            <form class = "confirm-form" action = "https://search.naver.com/search.naver" method = "get">
+                <input type = "text" name = "query">
+                <button type = "submit">검색</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

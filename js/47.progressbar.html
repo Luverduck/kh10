@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진행바</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <style>
+        .progressbar {
+            position: relative;
+            border: 1px solid black;
+            height: 10px;
+        }
+
+        .progressbar > .inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 50%; /* width를 jQuery에서 제어 */
+            background: rgb(131,58,180);
+            background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+            transition: width 0.5s linear;
+        }
+    </style>
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            $(".percent").on("input", function(){
+                $(".progressbar > .inner").css("width", $(this).val() + "%");
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-400">
+        <div class = "row">
+            진행 상태바 만들기
+        </div>
+
+        <div class = "row">
+            <div class = "progressbar">
+                <div class = "inner"></div>
+            </div>
+        </div>
+    
+        <div class = "row">
+            <input type = "number" class = "percent input w-100" min="0" max="100">
+        </div>
+    </div>
+
+</body>
+</html>

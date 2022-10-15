@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        // 체크박스 이용시 주의사항
+        // - 체크박스도 입력 태그이므로 click이 아니라 input을 사용(과거에는 change를 사용)
+        function check1() {
+            var checkbox = document.querySelector("input[name = test");
+            console.log(checkbox.checked);
+        }
+
+        function checkAll() {
+            // document.querySelector()는 태그를 최초 1개만 불러온다
+            // var checkbox = document.querySelector("input[name = fruit");
+            // document.querySelectorAll()는 태그를 모두 불러온다
+            var checkboxes = document.querySelectorAll("input[name = fruit");
+            // 체크 상태 확인 (값을 확인)
+            // console.log(checkboxes[0].checked);
+            // console.log(checkboxes[1].checked);
+            // console.log(checkboxes[2].checked);
+            // console.log(checkboxes[3].checked);
+            // console.log(checkboxes[4].checked);
+            // 모든 항목이 체크되도록
+            for(var i = 0 ; i < checkboxes.length ; i ++) {
+                checkboxes[i].checked = true;
+            }
+        }
+
+        // 모두 선택 해제
+        function uncheckAll() {
+            var checkboxes = document.querySelectorAll("input[name = fruit");
+            for(var i = 0 ; i < checkboxes.length ; i ++) {
+                checkboxes[i].checked = false;
+            }
+        }
+
+        // 모두 선택 반전(선택/해제)
+        function reverseAll() {
+            var checkboxes = document.querySelectorAll("input[name = fruit");
+            for(var i = 0 ; i < checkboxes.length ; i ++) {
+                checkboxes[i].checked = !checkboxes[i].checked;
+            }
+        }
+
+    </script>
+</head>
+<body>0
+    <!-- HTML 화면 -->
+    <div class = "container-400">
+        <div class = "row center">
+            <h1>체크박스</h1>
+        </div>
+
+        <div class = "row">
+            <input type = "checkbox" name = "test" value = "1234" onchange = "check1();" checked>
+        </div>
+
+        <div class = "row">
+            <label>
+                <input type = "checkbox" name = "fruit" value = "apple">사과
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "banana">바나나
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "pineapple">파인애플
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "pear">배
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "peach">복숭아
+            </label>
+        </div>
+
+        <div class = "row">
+            <button onclick = "checkAll();">전체선택</button>
+            <button onclick = "uncheckAll();">선택해제</button>
+            <button onclick = "reverseAll();">선택반전</button>
+        </div>
+    </div>
+
+</body>
+</html>

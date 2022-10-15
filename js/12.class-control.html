@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래스에 따른 태그 표시</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+
+    <style>
+        /* 초기에 표시를 안하기 위함 */
+        .two, .three {
+            display : none;
+        }
+        
+        .one.test1 {
+            color : green;
+        }
+
+        /* 
+            더하기(+) : 바로 뒤에 오는 클래스를 지칭
+            물결표(~) : 뒤에 오는 클래스 중에서 선택 
+        */
+        .one.test1 ~ .two {
+            display : block;
+        }
+
+        .one.test2 {
+            color : red;
+        }
+
+        .one.test2 ~ .three {
+            display : block;
+        }
+    </style>
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+    </script>
+</head>
+<body>
+    <!-- HTML 화면 -->
+    <!-- 
+        <목표>
+        - one에 test1 클래스가 부여되면 two를 표시 
+        - one에 test2 클래스가 부여되면 three를 표시
+    -->
+    <h1 class = "one">입력창</h1>
+    <h1 class = "two">성공메세지</h1>
+    <h1 class = "three">실패메세지</h1>
+</body>
+</html>

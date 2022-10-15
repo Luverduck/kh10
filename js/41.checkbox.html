@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 체크박스 제어</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
+    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+
+            // 전체선택 버튼 이벤트
+            $(".btn1").click(function(){
+                // 속성의 이름과 값이 같은 경우 prop이 더 유리하다
+                // prop으로 할 경우
+                $("input[name = fruit]").prop("checked", true);
+
+                // attr로 할 경우
+                // $("input[name = fruit]").attr("checked", "checked");
+            });
+
+            // 전체해제 버튼 이벤트
+            $(".btn2").click(function(){
+                $("input[name = fruit]").prop("checked", false);
+            });
+
+            // 선택반전 버튼 이벤트
+            // - 전체가 동일하게 처리되는 것이 아니라 각각 따져봐야 한다면 반복문 등장
+            // - jQuery 반복문 사용 : each
+            $(".btn3").click(function(){
+                // 여기서 this == 버튼(.btn3)
+
+                // $(대상).each(함수) - 해당 함수를 대상의 갯수에 맞게 순차적으로 실행
+                $("input[name = fruit]").each(function(){
+                    // 여기서 this == 현재 차례의 체크박스
+                    // console.log(this);
+
+                    // this.checked = !this.checked;    // Javascript 방식
+                    $(this).prop("checked", !$(this).prop("checked"));  // jQuery 방식
+                });
+            });
+
+            // 전체선택/해제 버튼 이벤트 ()
+            $(".check-all").click(function(){
+
+                // 전체선택의 상태를 변수에 저장
+                var checkAll = $(this).prop("checked");
+
+                // 해당 함수를 각각의 체크박스에 적용
+                // - 전체선택의 상태를 각각의 체크박스의 체크값으로 한다
+                $("input[name = fruit]").prop("checked", checkAll);
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-400">
+        <div class = "row center">
+            <h1>체크박스</h1>
+        </div>
+
+        <div class = "row">
+            <input type = "checkbox" name = "test" value = "1234" class = "check-all">전체선택
+        </div>
+
+        <div class = "row">
+            <label>
+                <input type = "checkbox" name = "fruit" value = "apple">사과
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "banana">바나나
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "pineapple">파인애플
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "pear">배
+            </label>
+            <label>
+                <input type = "checkbox" name = "fruit" value = "peach">복숭아
+            </label>
+        </div>
+
+        <div class = "row">
+            <button class = "btn1">전체선택</button>
+            <button class = "btn2">선택해제</button>
+            <button class = "btn3">선택반전</button>
+        </div>
+    </div>
+
+</body>
+</html>
