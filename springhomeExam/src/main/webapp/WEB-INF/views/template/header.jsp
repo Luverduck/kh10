@@ -18,6 +18,9 @@
 	
 	<link rel="stylesheet" type="text/css" href="/css/commons.css">
 	
+	<!-- 체크박스 모듈에 대한 js -->
+    <script src = "checkbox.js"></script>
+	
 </head>
 
 <body>
@@ -47,7 +50,7 @@
 		<a href = "/">홈</a>
 		<a href = "/board/list">게시판</a>
 		<a href = "/guestbook/list">방명록</a>
-		<a href = "/member/join">회원가입</a>
+		<a href = "/member/insert">회원가입</a>
 		<a href = "/member/login">로그인</a>
 	</c:otherwise>	
 </c:choose>

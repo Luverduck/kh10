@@ -75,16 +75,16 @@
 		
 		<c:choose>
 			<c:when test="${mg == '관리자'}">
-			<!-- 관리자용 메뉴 -->
+			<%-- 관리자용 메뉴 --%>
 				<h3><a href="list">목록 보기</a></h3>
-				<h3><a href="change?memberId=${memberDto.memberId}">정보 변경</a></h3>
+				<h3><a href="edit?memberId=${memberDto.memberId}">정보 변경</a></h3>
 				<h3><a href="exit?memberId=${memberDto.memberId}">회원 탈퇴</a></h3>
 			</c:when>
-			<!-- 회원용 메뉴 -->
+			<%-- 회원용 메뉴 --%>
 			<c:otherwise>
 				<h3><a href = "/member/password">비밀번호 변경</a></h3>
-				<h3><a href = "#">개인정보 변경</a></h3>
-				<h3><a href = "#">회원 탈퇴</a></h3>
+				<h3><a href = "/member/information?memberId=${memberDto.memberId}">개인정보 변경</a></h3>
+				<h3><a href = "/member/goodbye">회원 탈퇴</a></h3>
 			</c:otherwise>
 		</c:choose>
 		<h3><a href = "edit?memberId=${memberDto.getMemberId()}">회원 정보 변경</a></h3>

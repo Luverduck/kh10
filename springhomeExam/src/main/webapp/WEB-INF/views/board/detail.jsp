@@ -149,7 +149,7 @@
 		<!-- 댓글 목록 -->
 		<tbody>
 			<c:forEach var = "replyDto" items = "${replyList}">
-			<tr class="view">
+			<tr class = "view">
 				<td width = "90%">		
 					<!-- 작성자 -->
 					${replyDto.getReplyWriter()} 
@@ -190,8 +190,8 @@
 			</tr>
 			
 			<!-- 수정하기 위한 화면 : 댓글 작성자 본인에게만 출력 -->
-			<c:if test="${loginId ==  replyDto.replyWriter}">
-			<tr class="editor">
+			<c:if test = "${loginId ==  replyDto.replyWriter}">
+			<tr class = "editor">
 				<th colspan="2">
 					<form action="reply/edit" method="post">
 						<input type="hidden" name="replyNo" value="${replyDto.replyNo}">
