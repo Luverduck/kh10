@@ -54,8 +54,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 																	"/board/**"			// 게시판 전체
 																	)
 													.excludePathPatterns(	// 위 주소에서 제외할 주소
-																	"/member/insert",			// 회원 가입
-																	"/member/insert_success",	// 회원 가입 완료
+																	"/member/insert*",			// 회원 가입 관련
 																	"/member/login",			// 로그인
 																	"/member/goodbye_result",	// 탈퇴 완료
 																	"/board/list",				// 게시판 목록

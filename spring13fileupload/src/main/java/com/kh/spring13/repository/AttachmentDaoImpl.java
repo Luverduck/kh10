@@ -20,7 +20,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	// RowMapper
+	// AttachmentDto에 대한 RowMapper
 	private RowMapper<AttachmentDto> mapper = new RowMapper<>() {
 		@Override
 		public AttachmentDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -34,7 +34,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		}
 	};
 	
-	// ResultSetExtractor
+	// AttachmentDto에 대한 ResultSetExtractor
 	private ResultSetExtractor<AttachmentDto> extractor = new ResultSetExtractor<>() {
 		@Override
 		public AttachmentDto extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -53,12 +53,14 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		}
 	};
 
+	// 추상 메소드 오버라이딩 - 첨부파일 번호를 위한 다음 시퀀스 번호 반환
 	@Override
 	public int sequence() {
 		String sql = "select attachment_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}	
 	
+	// 추상 메소드 오버라이딩 - 첨부파일 업로드 기록 등록
 	@Override
 	public void insert(AttachmentDto attachmentDto) {
 		String sql = "insert into attachment("
@@ -74,12 +76,14 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		jdbcTemplate.update(sql, param);
 	}
 
+	// 추상 메소드 - 첨부파일 업로드 기록 전체조회
 	@Override
 	public List<AttachmentDto> selectList() {
 		String sql = "select * from attachment";
 		return jdbcTemplate.query(sql, mapper);
 	}
 
+	// 추상 메소드 - 첨부파일 업로드 기록 단일조회
 	@Override
 	public AttachmentDto selectOne(int attachmentNo) {
 		String sql = "select * from attachment where attachment_no = ?";
@@ -87,6 +91,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		return jdbcTemplate.query(sql, extractor, param);
 	}
 
+	// 추상 메소드 - 첨부파일 업로드 기록 삭제
 	@Override
 	public boolean delete(int attachmentNo) {
 		String sql = "delete attachment where attachment_no = ?";

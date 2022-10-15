@@ -20,6 +20,12 @@
 	<table border = "1" width = 900>
 		<thead>
 			<tr>
+			<!-- 관리자일 때만 체크박스란 추가 -->
+			<c:if test = "${mg == '관리자'}">
+			<th>
+				<input type = "checkbox" class = "check-all">
+			</th>
+				</c:if>
 				<th>번호</th>
 				<th width = "45%">제목</th>
 				<th>글쓴이</th>
@@ -35,6 +41,13 @@
 		<tbody align = "center">
 			<c:forEach var = "boardDto" items = "${list}">
 				<tr>
+				<!-- 관리자일 때만 체크박스란 추가 -->
+				<c:if test = "${mg == '관리자'}">
+					<th>
+						<input type = "checkbox" class = "check-item">
+					</th>
+				</c:if>
+					
 					<td>${boardDto.getBoardNo()}</td>					
 					<td align = "left">
 						<!-- 차수만큼 띄어쓰기를 반복 -->

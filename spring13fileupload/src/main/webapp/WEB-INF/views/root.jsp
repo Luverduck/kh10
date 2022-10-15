@@ -12,14 +12,12 @@
 <h1>DB없이 업로드</h1>
 <!-- <form action="/" method="get"> -->
 <!-- <form action="/" method="post"> -->
-<form action="/" method="post" enctype="multipart/form-data">
-	
-	<input type="text" name="uploader">
+<form action = "/" method = "post" enctype = "multipart/form-data">
+	<input type = "text" name = "uploader">
 	<br><br>
-	<input type="file" name="attachment">
+	<input type = "file" name = "attachment">
 	<br><br>
-	<button type="submit">업로드</button>
-
+	<button type = "submit">업로드</button>
 </form>
 
 <h1>DB 사용하는 업로드</h1>
@@ -28,3 +26,5 @@
 	<input type="file" name="attachment">
 	<button type="submit">등록</button>
 </form>
+
+<h1><a href="list">파일목록 보기</a></h1>

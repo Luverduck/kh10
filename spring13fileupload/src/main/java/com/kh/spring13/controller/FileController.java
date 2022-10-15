@@ -63,37 +63,61 @@ public class FileController {
 		return "redirect:/";
 	}
 	
+	// 의존성 주입
 	@Autowired
 	private AttachmentDao attachmentDao;
 	
+	// 파일 업로드 Mapping
+	// 파일 업로드 Mapping에 DTO 전달 및 DB 처리 후 파일 저장
 	@PostMapping("/upload")
 	public String upload(@RequestParam MultipartFile attachment) throws IllegalStateException, IOException {
-		//DB 저장
-		int attachmentNo = attachmentDao.sequence();
-		attachmentDao.insert(AttachmentDto.builder()
-							.attachmentNo(attachmentNo)
-							.attachmentName(attachment.getOriginalFilename())
-							.attachmentType(attachment.getContentType())
-							.attachmentSize(attachment.getSize())
-						.build());
 		
-		//파일 저장
+		// 첨부파일 업로드 기록 등록
+		// 파일 업로드 기록 등록을 위해 다음 시퀀스 번호 반환
+		int attachmentNo = attachmentDao.sequence();
+		
+		// AttachmentDto의 인스턴스 생성
+		// - 첨부파일 번호(attachmentNo)는 반환한 다음 시퀀스 번호
+		// - 첨부파일 이름(attachmentName)은 전달받은 MultipartFile의 원본 파일 이름
+		// - 첨부파일 종류(attachmentType)는 전달받은 MultipartFile의 파일 종류
+		// - 첨부파일 크기(attachmentSize)는 전달받은 MultipartFile의 파일 크기
+		// 생성한 AttachmentDto의 인스턴스로 첨부파일 업로드 기록 등록(INSERT) 
+		attachmentDao.insert(AttachmentDto.builder()
+											.attachmentNo(attachmentNo)
+											.attachmentName(attachment.getOriginalFilename())
+											.attachmentType(attachment.getContentType())
+											.attachmentSize(attachment.getSize())
+										.build());
+		
+		// 실제 첨부파일을 특정 경로에 저장
+		// 추상경로에 대한 File의 인스턴스 생성
 		File dir = new File("C:\\\\Users\\\\hyeul\\\\upload");
+		
+		// 해당 추상경로의 디렉토리 생성 (폴더가 없으면 자동으로 생성)
 		dir.mkdirs();
+		
+		// 해당 디렉토리에 해당 파일의 시퀀스 번호를 파일명으로 하여 파일을 저장하도록 하는 File의 인스턴스 생성
 		File target = new File(dir, String.valueOf(attachmentNo));
+		
+		// View에서 전달받은 MultipartFile을 해당 디렉토리로 보내서 시퀀스 번호를 파일명으로 바꿔서 저장
 		attachment.transferTo(target);
 		return "redirect:/";
 	}
 	
+	// 파일 업로드 기록 전체조회 Mapping
 	@GetMapping("/list")
 	public String list(Model model) {
+		
+		// model에 전체조회 결과를 첨부
 		model.addAttribute("list", attachmentDao.selectList());
 		return "list";
 	}
 	
+	// 파일 다운로드 Mapping
+	// - 
 	@GetMapping("/download")
 	public ResponseEntity<ByteArrayResource> download(@RequestParam int attachmentNo) throws IOException{
-		// 1. 파일 탐색(DB)
+		// 입력받은 첨부파일 번호(attachmentNo)로 단일 조회 실행
 		AttachmentDto dto = attachmentDao.selectOne(attachmentNo);
 		if(dto == null) {	// 찾으려는 파일이 없으면 null
 			return ResponseEntity.notFound().build();	// 404 error

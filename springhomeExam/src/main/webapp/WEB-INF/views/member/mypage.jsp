@@ -31,7 +31,7 @@
 		<c:choose>
 			<c:when test="${mg == '관리자'}">
 				<!-- 관리자용 메뉴 -->
-				<h2><a href = "member/list">목록 보기</a></h2>
+				<h2><a href = "list">목록 보기</a></h2>
 				<h3><a href = "edit?memberId=${memberDto.getMemberId()}">회원 정보 변경</a></h3>
 			</c:when>
 			<c:otherwise>
