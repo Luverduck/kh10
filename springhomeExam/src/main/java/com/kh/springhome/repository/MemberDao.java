@@ -48,4 +48,7 @@ public interface MemberDao {
 	
 	// 추상 메소드 - 내가 작성한 댓글
 	List<MemberMyReplyVO> myReply(String memberId);
+	
+	// 추상 메소드 - 닉네임을 이용한 단일 조회 (닉네임 검사용)
+	MemberDto findByNickname(String memberNick);
 }

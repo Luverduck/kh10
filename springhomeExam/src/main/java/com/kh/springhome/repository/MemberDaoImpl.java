@@ -282,4 +282,12 @@ public class MemberDaoImpl implements MemberDao {
 		Object[] param = new Object[] {memberId};
 		return jdbcTemplate.query(sql, myReplyMapper, param);
 	}
+
+	// 추상 메소드 오버라이딩 - 닉네임을 이용한 단일 조회 (닉네임 검사용)
+	@Override
+	public MemberDto findByNickname(String memberNick) {
+		String sql = "select * from member where member_nick = ?";
+		Object[] param = {memberNick};
+		return jdbcTemplate.query(sql, extractor, param);
+	}
 }
