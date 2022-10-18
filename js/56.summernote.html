@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/layout.css"> -->
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- summernote 라이브러리(jQuery보다 뒤에 나와야함) -->
+    <link rel = "stylesheet" type="text/css" href="summernote/summernote-lite.css">
+    <script src="summernote/summernote-lite.js"></script>
+
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            $("[name = content]").summernote({
+
+                height:300, // 높이
+                minHeight:300, // 최소높이
+                placeholder:"내용을 작성하세요", // 도움말
+
+            });
+
+            $(".btn-remove").click(function(){
+                $("[name = content]").summernote("destroy");
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-800">
+        <div class = "row center">
+            <h1>Rich text editor</h1>
+        </div>
+
+        <!-- summernote에 입력된 값을 <form>으로 보낼 때 태그가 포함된 html 문서가 전송되므로 jsp에서 <pre> 태그를 쓸 필요가 없다 -->
+        <form>
+        <div class = "row">
+            <!-- <textarea name = "content">최초에 작성된 텍스트</textarea> -->
+            <textarea name = "content"></textarea>
+        </div>
+
+        <div class = "row">
+            <button class = "btn-remove">제거</button>
+        </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/layout.css"> -->
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- lightpick 사용을 위한 CDN 추가 -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.css">
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+    
+    <!-- Lodash를 사용하기 위해 라이브러리 js 파일을 불러온다 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            var picker1 = new Lightpick({
+                // field는 datepicker 적용 대상을 설정
+                field:document.querySelector(".single-date-picker"),
+
+                // format은 선택한 날짜의 표시 형식을 설정
+                format:"YYYY-MM-DD",
+
+                // (선택사항) 과거 또는 미래를 선택하지 못하도록 설정
+                // minDate:"1900-01-01",
+                maxDate:moment(), // moment()는 오늘을 나타냄 <-> moment("특정 날자")
+
+                // (선택사항) 선택창에 표시되는 달의 갯수
+                numberOfMonths:2,
+            });
+
+            var picker2 = new Lightpick({
+                field:document.querySelector("[name=begin]"),
+                secondField:document.querySelector("[name=end]"),
+                format:"YYYY-MM-DD",
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+     <!-- HTML 화면 -->
+     <div class="container-500">
+        <div class="row center">
+            <h1>Date Picker</h1>
+        </div>
+
+        <div class="row">
+            <h2>날짜 하나 선택</h2>
+        </div>
+        <div class="row">
+            <input type="date" class="input w-100">
+        </div>
+
+        <div class="row">
+            <input type="text" class="input w-100 single-date-picker">
+        </div>
+
+        <div class="row">
+            <h2>날짜 범위 선택</h2>
+        </div>
+
+        <div class="row float-container">
+            <div class="float-left w-50">
+                <input type="text" name="begin" class="input w-100">
+            </div>
+            <div class="float-left w-50">
+                <input type="text" name="end" class="input w-100">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
