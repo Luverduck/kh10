@@ -61,50 +61,79 @@
 			$.ajax({
 				url:"http://localhost:8888/rest/reply/insert",
 				method:"post",
-				data:{
-					replyOrigin:$(this).find("[name=replyOrigin]").val(),
-					replyContent:text
-				},
+				//data:{
+				//	replyOrigin:$(this).find("[name=replyOrigin]").val(),
+				//	replyContent:text
+				//},
+				data:$(form).serialize(),//form을 전송 가능한 형태의 문자로 변환한다
 				success:function(resp){
-					//console.log(resp);
+					listHandler(resp);
 					
-					//원래 있던 댓글 삭제
-					//$(".table-reply-list").children("thead").remove();
-					//$(".table-reply-list").children("tbody").remove();
-					$(".table-reply-list").empty();//태그는 유지하고 내부를 삭제
-					
-					// 헤더 생성
-					var header = $("#reply-list-header").html();
-					header = header.replace("{{size}}", resp.length);
-					$(".table-reply-list").append(header);
-					
-					// 바디 생성
-					$(".table-reply-list").appned("<tbody>");
-					
-					//현재 resp는 배열이다.
-					//미리 댓글 형식을 만들어두고 값만 바꿔치기해서 댓글 목록에 추가하도록 구현
-					for(var i=0; i < resp.length; i++){
-						//console.log(resp[i]);
-						var item = $("#reply-list-item").text();
-						item = item.replace("{{memberNick}}", resp[i].memberNick);
-						item = item.replace("{{replyWriter}}", resp[i].replyWriter);
-						item = item.replace("{{memberGrade}}", resp[i].memberGrade);
-						item = item.replace("{{replyContent}}", resp[i].replyContent);
-						item = item.replace("{{replyWritetime}}", resp[i].replyWritetime);
-						$(".table-reply-list").children("tbody").append(item);
-					}
-					
-					// 입력창 초기화(= 폼 초기화)
-					$(form).reset();
+					//입력창 초기화(= 폼 초기화) - 자바스크립트로 처리
+					form.reset();
 				}
 			});
 		});
+		
+		//댓글 삭제버튼을 누르면 삭제 후 목록 갱신
+		$(".delete-btn").click(deleteHandler);
+		
+		function deleteHandler(e){
+			e.preventDefault();
+			
+			console.log(this);
+			
+			$.ajax({
+				url:"/rest/reply/delete",
+				method:"post",
+				data:{
+					replyOrigin:$(this).data("reply-origin"),
+					replyNo:$(this).data("reply-no")
+				},
+				success:function(resp){
+					listHandler(resp);
+				}
+// 				success:listHandler
+			});
+		}
+		
+		// 목록 갱신
+		function listHandler(resp){
+			//원래 있던 댓글 삭제
+			$(".table-reply-list").empty();//태그는 유지하고 내부를 삭제
+			
+			//헤더 생성
+			var header = $("#reply-list-header").text();
+			header = header.replace("{{size}}", resp.length);
+			$(".table-reply-list").append(header);
+			
+			//바디 생성
+			$(".table-reply-list").append("<tbody>");
+			
+			//현재 resp는 배열이다.
+			//미리 댓글 형식을 만들어두고 값만 바꿔치기해서 댓글 목록에 추가하도록 구현
+			for(var i=0; i < resp.length; i++){
+				//console.log(resp[i]);
+				var item = $("#reply-list-item").text();
+				item = item.replace("{{memberNick}}", resp[i].memberNick);
+				item = item.replace("{{replyWriter}}", resp[i].replyWriter);
+				item = item.replace("{{memberGrade}}", resp[i].memberGrade);
+				item = item.replace("{{replyContent}}", resp[i].replyContent);
+				item = item.replace("{{replyWritetime}}", resp[i].replyWritetime);
+				item = item.replace("{{replyNo}}", resp[i].replyNo);
+				item = item.replace("{{replyOrigin}}", resp[i].replyOrigin);
+				var result  = $(item);
+				result.find(".delete-btn").click(deleteHandler);//개별 추가
+				console.log("result", result.find(".delete-btn"));
+				$(".table-reply-list").children("tbody").append(result);
+			}
+			
+		}
 	});
 </script>
 
-<%-- 자바 스크립트 템플릿 생성 --%>
-<script type = "text/template" id = "reply-list-header">
-
+<!-- 자바스크립트 템플릿 생성 -->
+<script type="text/template" id="reply-list-header">
 	<thead>
 		<tr>
 			<td colspan="2">
@@ -112,32 +141,31 @@
 			</td>
 		</tr>
 	</thead>
-
 </script>
 
-<script type = "text/template" id = "reply-list-item">
-	<tr class="view">
-		<td width="90%">
-			<!-- 작성자 -->
-			{{memberNick}}
-			({{replyWriter}})
-			
-			(작성자)
-			
-			({{memberGrade}})
-			<br>
-			
-			<pre>{{replyContent}}</pre>
-			
-			<br><br>
-			{{replyWritetime}}
-		</td>
-		<th>
-			<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
-			<a style="display:block; margin:10px 0px;" class="edit-btn">수정</a>
-			<a style="display:block; margin:10px 0px;" href="reply/delete?replyNo=${replyDto.replyNo}&replyOrigin=${replyDto.replyOrigin}">삭제</a>
-		</th>
-	</tr>
+<script type="text/template" id="reply-list-item">
+				<tr class="view">
+					<td width="90%">
+						<!-- 작성자 -->
+						{{memberNick}}
+						({{replyWriter}})
+						(작성자)
+						
+						({{memberGrade}}) 
+						<br>
+						
+						<pre>{{replyContent}}</pre>
+						
+						<br><br>
+						{{replyWritetime}}
+
+					</td>
+					<th>
+						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
+						<a style="display:block; margin:10px 0px;" class="edit-btn">수정</a>
+						<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-origin="{{replyOrigin}}" data-reply-no="{{replyNo}}">삭제</a>
+					</th>
+				</tr>	
 </script>
 
 <div class="container-800 mt-40 mb-40">
@@ -302,7 +330,7 @@
 						<!-- 수정과 삭제는 현재 사용자가 남긴 댓글에만 표시 -->
 						<c:if test="${loginId == replyDto.replyWriter}">
 							<a style="display:block; margin:10px 0px;" class="edit-btn">수정</a>
-							<a style="display:block; margin:10px 0px;" href="reply/delete?replyNo=${replyDto.replyNo}&replyOrigin=${replyDto.replyOrigin}">삭제</a>
+							<a style="display:block; margin:10px 0px;" class="delete-btn" data-reply-origin="${replyDto.replyOrigin}" data-reply_no="${replyDto.replyNo}">삭제</a>
 						</c:if>
 						
 						<c:if test="${admin}">
