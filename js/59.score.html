@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>평점 표시</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <link rel = "stylesheet" text = "text/css" href = "./css/reset.css">
+    <link rel = "stylesheet" text = "text/css" href = "./css/commons.css">
+    <link rel = "stylesheet" type = "text/css" href = "./css/layout.css">
+    <!-- <link rel = "stylesheet" type = "text/css" href = "./css/test.css"> -->
+
+    <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <!-- 평점을 위한 라이브러리 불러오기 -->
+    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
+
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            $(".star-score").score({
+                starColor:"red", // 별 색상 (기본 : 금색)
+                integerOnly:true, // 반올림
+                display:{
+                    showNumber:true, // 숫자 표시
+                    placeLimit:2, // 소수점 자릿수
+                    textColor:"red", // 숫자 색상 (기본 : 금색)
+                }
+            });
+
+            $(".star-score-edit").score({
+                editable:true,  // 수정 가능
+                integerOnly:true,   // 반올림
+                
+                display:{ 
+                    showNumber:true, // 숫자 표시
+                },
+
+                send:{
+                    sendable:true, // 전송 가능 여부
+                    name:"reviewScore", // 전송 파라미터명
+                }
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <!-- HTML 화면 -->
+    <div class = "container-400">
+        <div class = "row center">
+            <h1>평점 라이브러리</h1>
+        </div>
+        <div class = "row">
+            <div class = "star-score" data-max="5" data-rate="5"></div>
+        </div>
+
+        <div class = "row">
+            <div class = "star-score" data-max="5" data-rate="3"></div>
+        </div>
+
+        <form>
+        <div class = "row">
+            <label>(Q) 영화는 어떠셨어요?</label>
+            <div class = "star-score-edit" data-max="5"></div>
+            <textarea name = "reviewContent" class = "input w-100" rows = "5"></textarea>
+        </div>
+        <div class = "row">
+            <button class = "btn btn-positive w-100">리뷰 작성</button>
+        </div>
+        </form>
+    </div>
+
+</body>
+</html>
