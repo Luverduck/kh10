@@ -90,13 +90,13 @@ public class FileController {
 										.build());
 		
 		// 실제 첨부파일을 특정 경로에 저장
-		// 추상경로에 대한 File의 인스턴스 생성
+		// 해당 문자열을 추상 경로로 변환하여 File 클래스의 인스턴스 생성
 		File dir = new File("C:\\\\Users\\\\hyeul\\\\upload");
 		
-		// 해당 추상경로의 디렉토리 생성 (폴더가 없으면 자동으로 생성)
+		// 해당 추상 경로의 디렉토리 생성 (폴더가 없으면 자동으로 생성)
 		dir.mkdirs();
 		
-		// 해당 디렉토리에 해당 파일의 시퀀스 번호를 파일명으로 하여 파일을 저장하도록 하는 File의 인스턴스 생성
+		// dir의 추상 경로를 상위 경로, 해당 파일의 시퀀스 번호를 하위 경로로 하는 File의 인스턴스 생성
 		File target = new File(dir, String.valueOf(attachmentNo));
 		
 		// View에서 전달받은 MultipartFile을 해당 디렉토리로 보내서 시퀀스 번호를 파일명으로 바꿔서 저장
@@ -117,26 +117,36 @@ public class FileController {
 	// - 
 	@GetMapping("/download")
 	public ResponseEntity<ByteArrayResource> download(@RequestParam int attachmentNo) throws IOException{
+		
 		// 입력받은 첨부파일 번호(attachmentNo)로 단일 조회 실행
-		AttachmentDto dto = attachmentDao.selectOne(attachmentNo);
-		if(dto == null) {	// 찾으려는 파일이 없으면 null
+		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
+		
+		// 해당 첨부파일 번호(attachmentNo)의 첨부파일이 존재하지 않을 경우
+		if(attachmentDto == null) {
 			return ResponseEntity.notFound().build();	// 404 error
 		}
 		
-		// 찾으려는 파일이 있으면
-		// 2. 파일 불러오기
-		File dir = new File("C:\\\\Users\\\\hyeul\\\\upload");
-		File target = new File(dir, String.valueOf(attachmentNo));
+		// 해당 첨부파일 번호(attachmentNo)의 첨부파일이 존재할 경우
+		// 해당 문자열을 추상 경로로 변환하여 File 클래스의 인스턴스 생성
+		File directory = new File("C:\\\\Users\\\\hyeul\\\\upload");
+		
+		// dir의 추상 경로를 상위 경로, 해당 파일의 시퀀스 번호를 하위 경로로 하는 File의 인스턴스 생성
+		File target = new File(directory, String.valueOf(attachmentNo));
+		
+		// target의 내용을 byte 배열로 변환
 		byte[] data = FileUtils.readFileToByteArray(target);
+		
+		// byte 배열인 data를 이용하여 ByteArrayResource의 인스턴스 생성
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
-		// 3. 응답 객체를 만들어 데이터를 전송
+		// HTTP Response Header에 내용의 인코딩 방식, 길이, 배치 방식, resource의 형식 정보를 반환
+		// HTTP Response Body에 ByteArrayResource를 포함하는 ResponseEntity 반환
 /*		// 원형
 		return ResponseEntity.ok()
 			.header("Content-Encoding", "UTF-8")
-			.header("Content-Length", String.valueOf(dto.getAttachmentSize()))	// DB에 있는 size 정보로
-			.header("Content-Disposition", "attachment; filename=" + dto.getAttachmentName())	// DB의 첨부파일명으로
-			.header("Content-Type", dto.getAttachmentType())	// DB에 있는 type 정보로
+			.header("Content-Length", String.valueOf(attachmentDto.getAttachmentSize()))	// DB에 있는 size 정보로
+			.header("Content-Disposition", "attachment; filename=" + attachmentDto.getAttachmentName())	// DB의 첨부파일명으로
+			.header("Content-Type", attachmentDto.getAttachmentType())	// DB에 있는 type 정보로
 			.body(resource);
 */
 		// 개선 - 상수를 이용한다
@@ -145,15 +155,16 @@ public class FileController {
 			.header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
 			
 //			.header("Content-Length", String.valueOf(dto.getAttachmentSize()))
-			.contentLength(dto.getAttachmentSize())	// .header()와는 전혀 다른 메소드인 .contentLength() 사용
+			.contentLength(attachmentDto.getAttachmentSize())	// .header()와는 전혀 다른 메소드인 .contentLength() 사용
 			
 //			.header("Content-Type", dto.getAttachmentType())
 			.contentType(MediaType.APPLICATION_OCTET_STREAM)	// 형태를 고정할 때만 유용하고 나머지는 header를 사용하는 것이 좋음
 			
 //			.header("Content-Disposition", "attachment; filename=" + dto.getAttachmentName())
-			.header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-																					.filename(dto.getAttachmentName(), StandardCharsets.UTF_8)
-																		.build().toString())
+			.header(HttpHeaders.CONTENT_DISPOSITION, 
+					ContentDisposition.attachment().filename(attachmentDto.getAttachmentName(), 
+					StandardCharsets.UTF_8)
+					.build().toString())
 			.body(resource);			
 	}
 }
