@@ -17,7 +17,7 @@ import com.kh.springhome.vo.ReplyListVO;
 @RestController
 @RequestMapping("/rest/reply")
 public class ReplyRestController {
-
+ 
 	// 의존성 주입
 	@Autowired
 	private ReplyDao replyDao;
