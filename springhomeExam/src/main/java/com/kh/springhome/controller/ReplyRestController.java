@@ -1,4 +1,4 @@
-package com.kh.springhome.repository;
+package com.kh.springhome.controller;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.springhome.entity.ReplyDto;
+import com.kh.springhome.repository.ReplyDao;
 import com.kh.springhome.vo.ReplyListVO;
 
 @RestController
@@ -31,6 +32,13 @@ public class ReplyRestController {
 		replyDto.setReplyWriter(memberId);
 		replyDao.replyWrite(replyDto);
 		
+		return replyDao.replyList(replyDto.getReplyOrigin());
+	}
+	
+	//삭제(delete)
+	@PostMapping("/delete")
+	public List<ReplyListVO> delete(@ModelAttribute ReplyDto replyDto) {
+		replyDao.replyDelete(replyDto.getReplyNo());
 		return replyDao.replyList(replyDto.getReplyOrigin());
 	}
 }
