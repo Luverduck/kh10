@@ -18,16 +18,26 @@
     <!-- jQuery를 사용하기 위하여 라이브러리 js 파일을 불러온다 - CDN -->
     <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
 
-    <!-- 배포시에는 min이 붙은 것을 사용 (slim이 붙은 것은 사용하지 않는다)-->
-    <!-- <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
-    
-    <!-- Lodash를 사용하기 위해 라이브러리 js 파일을 불러온다 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- summernote 라이브러리(jQuery보다 뒤에 나와야함) -->
+    <link rel = "stylesheet" type="text/css" href="summernote/summernote-lite.css">
+    <script src="summernote/summernote-lite.js"></script>
 
     <!-- 자바 스크립트 코드 -->
     <script type = "text/javascript">
 
-        
+        $(function(){
+            $("[name = content]").summernote({
+
+                height:300, // 높이
+                minHeight:300, // 최소높이
+                placeholder:"내용을 작성하세요", // 도움말
+
+            });
+
+            $(".btn-remove").click(function(){
+                $("[name = content]").summernote("destroy");
+            });
+        });
 
     </script>
 
@@ -35,7 +45,23 @@
 <body>
 
     <!-- HTML 화면 -->
+    <div class = "container-800">
+        <div class = "row center">
+            <h1>Rich text editor</h1>
+        </div>
 
+        <!-- summernote에 입력된 값을 <form>으로 보낼 때 태그가 포함된 html 문서가 전송되므로 jsp에서 <pre> 태그를 쓸 필요가 없다 -->
+        <form>
+        <div class = "row">
+            <!-- <textarea name = "content">최초에 작성된 텍스트</textarea> -->
+            <textarea name = "content"></textarea>
+        </div>
+
+        <div class = "row">
+            <button class = "btn-remove">제거</button>
+        </div>
+        </form>
+    </div>
 
 </body>
 </html>
