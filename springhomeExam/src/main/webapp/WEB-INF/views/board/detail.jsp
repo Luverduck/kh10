@@ -132,6 +132,7 @@
 	});
 </script>
 
+
 <!-- 자바스크립트 템플릿 생성 -->
 <script type="text/template" id="reply-list-header">
 	<thead>

@@ -47,7 +47,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		boardDao.write(boardDto);
 		
-//				(+추가) 게시글이 등록된 다음 파일이 있다면 해당 파일을 등록(attachment) 및 연결(board_attachment)
+		// (+추가) 게시글이 등록된 다음 파일이 있다면 해당 파일을 등록(attachment) 및 연결(board_attachment)
 		// - 파일을 첨부하지 않았을 때 어떤 값이 들어오는지?
 		System.out.println("첨부파일 수 = " + attachment.size());
 		// - 첨부 파일이 없어도 리스트에는 1개의 객체가 들어있다
