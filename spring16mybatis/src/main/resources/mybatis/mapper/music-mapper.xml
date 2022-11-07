@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="music">
+
+	<insert id = "insert" parameterType = "MusicDto">
+		insert into music(music_no, music_title, music_artist, music_album, music_play, release_title) 
+					values(music_seq.nextval, #{musicTitle}, #{musicArtist}, #{musicAlbum}, #{musicPlay}, #{releaseTitle})
+	</insert>
+
+	<select id = "list" resultType = "MusicDto">
+		select * from music
+	</select>
+
+	<select id = "one" resultType = "MusicDto" parameterType = "int">
+		select * from music where music_no = #{musicNo}
+	</select>
+	
+	<update id = "edit" parameterType = "MusicDto">
+		update music 
+			set 
+				music_title = #{musicTitle}, music_artist = #{musicArtist}, music_album = #{musicAlbum}, music_play = #{musicPlay}
+			where 
+				music_no = #{musicNo}
+	</update>
+	
+	<delete id = "delete" parameterType = "int">
+		delete music where music_no = #{musicNo}
+	</delete>
+	
+	<!--  
+		type, keyword 검색
+		- mybatis는 이름에 기반한 구문 생성을 하므로 클래스 or Map 사용을 권장
+		- Map은 클래스에 비해 자유롭지만 오타의 위험이 있어 복잡할 수록 권장하지 않음
+		- ${type}은 type의 값을 있는 그대로 설정하는 정적 할당 문법
+		- #{keyword}는 keyword의 값을 자료형에 맞게 처리하여 설정하는 동적 할당 문법
+	-->
+	<select id = "search" parameterType = "map" resultType = "MusicDto">
+		select * from music where instr(${type}, #{keyword}) > 0 order by ${type} asc
+	</select>
+	
+</mapper>
