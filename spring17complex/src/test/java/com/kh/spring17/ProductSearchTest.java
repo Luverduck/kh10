@@ -17,7 +17,7 @@ public class ProductSearchTest {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Test
+//	@Test
 	public void test() {
 		// 목록
 		//List<ProductDto> list = sqlSession.selectList("product.complex1");
@@ -43,6 +43,16 @@ public class ProductSearchTest {
 		List<ProductDto> list = sqlSession.selectList("product.complex4", param);
 		
 		for(ProductDto dto : list) {
+			System.out.println(dto);
+		}
+	}
+	
+	@Test
+	public void test2() {
+		Map<String, Object> param = new HashMap<>();
+		param.put("sort", List.of("price desc", "no asc"));
+ 		List<ProductDto> list = sqlSession.selectList("product.complex6", param);
+ 		for(ProductDto dto : list) {
 			System.out.println(dto);
 		}
 	}

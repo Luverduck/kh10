@@ -236,4 +236,87 @@
 		</where>
 	</select>
 	
+	<!-- 
+		정렬 
+		- 데이터를 여러 개 조회하면 반드시 정렬이 필요
+		- 정렬은 한 가지일 수도, 여러 가지일 수도, 없을 수도 있다
+		- 조건에서 체크박스와 동일하게 foreach 사용
+		- 구문 형태 : select * from product order by 항목1 asc/desc, 항목2 asc/desc, ...
+	-->
+	<select id = "complex6" parameterType = "map" resultType = "ProductDto">
+		select * from product
+		<!-- 정렬할 내용이 있다면 -->
+		<if test = "sort != null">
+			order by
+			<foreach collection = "sort" item = "s" separator = ",">
+				${s}
+			</foreach>
+		</if>
+	</select>
+	
+	<!-- 최종 구문 -->
+	<select id = "complex7" parameterType = "ProductSearchVO" resultType = "ProductDto">
+		select * from product
+		<where>
+			<!-- 번호는 일치하는 대상만 검색 -->
+			<if test = "no != null">
+				and no = #{no}
+			</if>	
+			
+			<if test = "name != null">
+				and instr(name, #{name}) > 0
+			</if>
+			
+			<choose>
+				
+				<when test = "minPrice != null and maxPrice != null">
+					and price between #{minPrice} and #{maxPrice}
+				</when>
+				
+				<when test = "minPrice != null">
+					<!-- xml에서 사용할 수 없는 기호를 사용할 경우 <![CDATA[]]> 안에 입력하면 해결 -->
+					<![CDATA[and price >= #{minPrice}]]>
+				</when>
+				
+				<when test = "maxPrice != null">
+					<![CDATA[and price <= #{maxPrice}]]>
+				</when>
+				
+			</choose>
+			 
+			 <choose>
+			 
+			 	<when test = "beginMade != null and endMade != null"> <!-- 시작일과 종료일이 모두 있으면 -->
+			 		and made between 
+			 					to_date(#{beginMade}||''||'00:00:00', 'YYYY-MM-DD HH24:MI:SS') 
+		 					and
+			 					to_date(#{endMade}||''||'23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+			 	</when>
+			 	
+			 	<when test = "beginMade != null"> <!-- 시작일이 있으면 -->
+			 		<![CDATA[and made >= to_date(#{beginMade}||''||'00:00:00', 'YYYY-MM-DD HH24:MI:SS')]]>
+			 	</when>
+			 	
+			 	<when test = "endMade != null"> <!-- 종료일이 있으면 -->
+			 		<![CDATA[and made <= to_date(#{endMade}||''||'23:59:59', 'YYYY-MM-DD HH24:MI:SS')]]>
+			 	</when>
+			 	
+			 </choose>
+			 
+			  <if test = "type != null">
+					and type in (
+						<foreach collection = "type" separator = "," item = "t">#{t}</foreach>
+					)
+			  </if>
+			 
+		</where>
+		
+		<!-- 정렬할 내용이 있다면 -->
+		<if test = "sort != null">
+			order by
+			<foreach collection = "sort" item = "s" separator = ",">
+				${s}
+			</foreach>
+		</if>
+	</select>
 </mapper>
