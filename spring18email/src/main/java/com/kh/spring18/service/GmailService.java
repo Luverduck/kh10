@@ -1,41 +1,32 @@
-package com.kh.spring18;
+package com.kh.spring18.service;
 
-import org.apache.ibatis.session.SqlSession;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 import com.kh.spring18.component.RandomGenerator;
 import com.kh.spring18.entity.CertDto;
 import com.kh.spring18.repository.CertDao;
 
-@SpringBootTest
-public class CreateCertTest {
+@Service
+public class GmailService implements EmailService {
 
-	// DB 접근을 위한 SqlSession 의존성 주입
-	@Autowired
-	private SqlSession sqlSession;
-	
-	// 이메일 전송을 위한 JavaMailSender 의존성 주입
-	@Autowired
-	private JavaMailSender javaMailSender;
-	
-	// 난수 발생을 위한 의존성 주입
+	// 의존성 주입 - 인증번호 생성
 	@Autowired
 	private RandomGenerator randomGenerator;
 	
-	// 인증번호 등록을 위한 의존성 주입
+	// 의존성 주입 - 발급한 인증번호 등록/삭제/조회
 	@Autowired
 	private CertDao certDao;
 	
-	// 테스트용 이메일
-	String email = "eomhyunyoung@gmail.com";
-	
-	@Test
-	public void test() {
-		// 목표 : 랜덤인증번호 생성 -> 이메일 발송 -> 데이터베이스 등록
+	// 의존성 주입 - 이메일 전송
+	@Autowired
+	private JavaMailSender javaMailSender;
+
+	// 추상 메소드 오버라이딩 - 인증번호 전송
+	@Override
+	public void sendCertMail(String email) {
 		
 		// (1) 6자리 랜덤인증번호 생성 -> @Component로 모듈화
 		String serial = randomGenerator.generateSerial(6);
