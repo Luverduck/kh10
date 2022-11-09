@@ -52,7 +52,7 @@
 		where 조건이 2개일 때 (개선된 방식)
 	-->
 	<!-- where 태그는 조건이 있을 경우 where 1=1을 생성하주는 태그(구문 실행을 위한 코드) -->
-	<select id = "complex4" parameterType = "map" resultType = "ProductDto">
+		<select id = "complex4" parameterType = "map" resultType = "ProductDto">
 		select * from product
 		<where>
 			<!-- 번호는 일치하는 대상만 검색 -->
