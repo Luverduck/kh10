@@ -46,4 +46,14 @@ public class GmailService implements EmailService {
 		CertDto certDto = CertDto.builder().who(email).serial(serial).build();
 		certDao.insert(certDto);
 	}
+
+	// 추상 메소드 오버라이딩 - 
+	@Override
+	public boolean checkCert(CertDto certDto) {
+		if(certDao.check(certDto)) { // 인증 성공
+			certDao.delete(certDto.getWho()); // certDto에서 who를 반환하여 인증번호 삭제
+			return true;
+		}
+		return false;
+	}
 }
