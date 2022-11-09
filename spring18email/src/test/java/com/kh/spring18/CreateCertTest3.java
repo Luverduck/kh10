@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.kh.spring18.service.EmailService;
 
 @SpringBootTest
-public class CreateTest3 {
+public class CreateCertTest3 {
 
 	@Autowired
 	private EmailService emailService;
