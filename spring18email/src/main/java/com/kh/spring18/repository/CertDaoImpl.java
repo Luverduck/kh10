@@ -32,4 +32,10 @@ public class CertDaoImpl implements CertDao {
 		int count = sqlSession.delete("cert.delete", who);
 		return count > 0;
 	}
+
+	// 추상 메소드 오버라이딩
+	@Override
+	public void clear() {
+		sqlSession.delete("cert.clear");
+	}
 }

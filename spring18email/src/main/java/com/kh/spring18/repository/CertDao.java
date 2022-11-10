@@ -12,4 +12,7 @@ public interface CertDao {
 	
 	// 추상 메소드 - 인증번호 삭제
 	boolean delete(String who);
+	
+	// 추상 메소드 - 
+	void clear();
 }
