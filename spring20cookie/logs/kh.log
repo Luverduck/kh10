@@ -1,0 +1,36 @@
+2022-11-10 15:01:05.862 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:01:05.865 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:01:05.865 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:01:06.495 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.661 seconds (JVM running for 2880.058) 
+2022-11-10 15:01:58.172 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:01:58.181 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:01:58.181 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:01:58.868 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.728 seconds (JVM running for 2932.431) 
+2022-11-10 15:02:29.154 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:02:29.154 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:02:29.154 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:02:29.755 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.633 seconds (JVM running for 2963.318) 
+2022-11-10 15:11:20.14 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:11:20.14 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:11:20.14 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:11:20.727 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.742 seconds (JVM running for 3494.29) 
+2022-11-10 15:11:23.609 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:11:23.609 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:11:23.609 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:11:24.289 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.706 seconds (JVM running for 3497.852) 
+2022-11-10 15:14:28.191 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:14:28.192 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:14:28.192 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:14:28.765 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.603 seconds (JVM running for 3682.328) 
+2022-11-10 15:15:26.642 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:15:26.642 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:15:26.643 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:15:27.291 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.678 seconds (JVM running for 3740.855) 
+2022-11-10 15:19:09.26 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:19:09.26 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:19:09.26 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:19:09.575 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.575 seconds (JVM running for 3963.138) 
+2022-11-10 15:19:14.470 [INFO ] [com.kh.spring20.Spring20cookieApplication] Starting Spring20cookieApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 9088 (C:\Users\hyeul\git\kh10\spring20cookie\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring20cookie) 
+2022-11-10 15:19:14.470 [DEBUG] [com.kh.spring20.Spring20cookieApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:19:14.470 [INFO ] [com.kh.spring20.Spring20cookieApplication] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:19:15.96 [INFO ] [com.kh.spring20.Spring20cookieApplication] Started Spring20cookieApplication in 0.653 seconds (JVM running for 3968.659) 
