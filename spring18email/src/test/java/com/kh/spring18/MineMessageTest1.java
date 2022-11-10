@@ -20,7 +20,7 @@ public class MineMessageTest1 {
 		// 1. 메세지 생성
 		MimeMessage message = javaMailSender.createMimeMessage();
 				
-		// 2. 헬퍼퍼 생성
+		// 2. 헬퍼 생성
 		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 		
 		// 3. 정보 설정
