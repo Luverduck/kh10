@@ -100,6 +100,15 @@
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-core</artifactId>
 		</dependency>
+		
+		<!-- REST API 문서화를 위한 의존성 -->
+		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+		<dependency>
+		    <groupId>org.springdoc</groupId>
+		    <artifactId>springdoc-openapi-ui</artifactId>
+		    <version>1.6.12</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
