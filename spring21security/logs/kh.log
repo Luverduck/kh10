@@ -1,0 +1,40 @@
+2022-11-10 17:00:13.738 [INFO ] [com.kh.spring21.SecurityTest4] Starting SecurityTest4 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 18240 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 17:00:13.748 [DEBUG] [com.kh.spring21.SecurityTest4] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 17:00:13.749 [INFO ] [com.kh.spring21.SecurityTest4] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 17:00:17.286 [INFO ] [com.kh.spring21.SecurityTest4] Started SecurityTest4 in 4.055 seconds (JVM running for 5.21) 
+2022-11-10 17:00:18.266 [DEBUG] [com.kh.spring21.SecurityTest4] origin = hello everyone 
+2022-11-10 17:00:18.268 [DEBUG] [com.kh.spring21.SecurityTest4] encrypt = a56bcb16853aedb77041616c57f303c179f12a00c965001250745e86525a2e0e05023c1f2d65e239 
+2022-11-10 17:05:48.661 [INFO ] [com.kh.spring21.SecurityTest4] Starting SecurityTest4 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 14060 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 17:05:48.662 [DEBUG] [com.kh.spring21.SecurityTest4] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 17:05:48.663 [INFO ] [com.kh.spring21.SecurityTest4] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 17:05:52.215 [INFO ] [com.kh.spring21.SecurityTest4] Started SecurityTest4 in 3.989 seconds (JVM running for 5.244) 
+2022-11-10 17:05:53.166 [DEBUG] [com.kh.spring21.SecurityTest4] origin = hello everyone 
+2022-11-10 17:05:53.169 [DEBUG] [com.kh.spring21.SecurityTest4] encrypt = 2f0254e09fc83f5ac1d9bc9a590b3618306f32e75452c4459f42169dbb634e44969b32a3e5b28bb4 
+2022-11-10 17:05:53.254 [DEBUG] [com.kh.spring21.SecurityTest4] origin = hello everyone 
+2022-11-10 17:05:53.254 [DEBUG] [com.kh.spring21.SecurityTest4] encrypt = $2a$10$VHsqUd00ghy23jK7EanH2u6mj3uHiG57lQttq99i6nUZa8yk0r2GC 
+2022-11-10 17:09:12.578 [INFO ] [com.kh.spring21.SecurityTest4] Starting SecurityTest4 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 7052 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 17:09:12.579 [DEBUG] [com.kh.spring21.SecurityTest4] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 17:09:12.580 [INFO ] [com.kh.spring21.SecurityTest4] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 17:09:16.69 [INFO ] [com.kh.spring21.SecurityTest4] Started SecurityTest4 in 3.945 seconds (JVM running for 5.393) 
+2022-11-10 17:09:17.12 [DEBUG] [com.kh.spring21.SecurityTest4] origin = hello everyone 
+2022-11-10 17:09:17.15 [DEBUG] [com.kh.spring21.SecurityTest4] encrypt = 4d0d95ee982e9a617691f1e7e773d7e69eee2026df97fe532d070be286e8050be1dc777d48d76899 
+2022-11-10 17:09:17.103 [DEBUG] [com.kh.spring21.SecurityTest4] origin = hello everyone 
+2022-11-10 17:09:17.104 [DEBUG] [com.kh.spring21.SecurityTest4] encrypt = $2a$10$pod92QBFXber1Du5g046heKke4wmVqGwRVtAug2ozj2xiTCClpque 
+2022-11-10 17:09:17.169 [DEBUG] [com.kh.spring21.SecurityTest4] 판정 = true 
+2022-11-10 17:54:16.615 [INFO ] [com.kh.spring21.SecurityTest5] Starting SecurityTest5 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 11232 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 17:54:16.616 [DEBUG] [com.kh.spring21.SecurityTest5] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 17:54:16.616 [INFO ] [com.kh.spring21.SecurityTest5] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 17:54:20.289 [INFO ] [com.kh.spring21.SecurityTest5] Started SecurityTest5 in 4.095 seconds (JVM running for 5.189) 
+2022-11-10 17:56:44.946 [INFO ] [com.kh.spring21.SecurityTest5] Starting SecurityTest5 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 2768 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 17:56:44.947 [DEBUG] [com.kh.spring21.SecurityTest5] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 17:56:44.948 [INFO ] [com.kh.spring21.SecurityTest5] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 17:56:48.872 [INFO ] [com.kh.spring21.SecurityTest5] Started SecurityTest5 in 4.361 seconds (JVM running for 5.518) 
+2022-11-10 17:56:50.2 [DEBUG] [com.kh.spring21.SecurityTest5] login = false 
+2022-11-10 17:57:01.410 [INFO ] [com.kh.spring21.SecurityTest5] Starting SecurityTest5 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 12640 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 17:57:01.412 [DEBUG] [com.kh.spring21.SecurityTest5] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 17:57:01.413 [INFO ] [com.kh.spring21.SecurityTest5] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 17:57:05.28 [INFO ] [com.kh.spring21.SecurityTest5] Started SecurityTest5 in 4.048 seconds (JVM running for 5.136) 
+2022-11-10 17:57:56.573 [INFO ] [com.kh.spring21.SecurityTest5] Starting SecurityTest5 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 16572 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 17:57:56.574 [DEBUG] [com.kh.spring21.SecurityTest5] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 17:57:56.575 [INFO ] [com.kh.spring21.SecurityTest5] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 17:58:00.465 [INFO ] [com.kh.spring21.SecurityTest5] Started SecurityTest5 in 4.35 seconds (JVM running for 5.511) 

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kh</groupId>
-	<artifactId>spring21security</artifactId>
+	<artifactId>spring22rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>spring21security</name>
+	<name>spring22rest</name>
 	<description>study</description>
 	<properties>
 		<java.version>11</java.version>
@@ -100,7 +100,6 @@
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-core</artifactId>
 		</dependency>
-				
 	</dependencies>
 
 	<build>

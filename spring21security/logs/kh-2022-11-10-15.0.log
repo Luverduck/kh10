@@ -1,0 +1,7 @@
+2022-11-10 15:59:00.563 [INFO ] [com.kh.spring21.SecurityTest1] Starting SecurityTest1 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 27768 (started by hyeul in C:\Users\hyeul\git\kh10\spring21security) 
+2022-11-10 15:59:00.564 [DEBUG] [com.kh.spring21.SecurityTest1] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 15:59:00.565 [INFO ] [com.kh.spring21.SecurityTest1] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 15:59:04.151 [INFO ] [com.kh.spring21.SecurityTest1] Started SecurityTest1 in 4.221 seconds (JVM running for 5.458) 
+2022-11-10 15:59:04.738 [DEBUG] [com.kh.spring21.SecurityTest1] ch = d 
+2022-11-10 15:59:04.741 [DEBUG] [com.kh.spring21.SecurityTest1] ch = a 
+2022-11-10 15:59:04.762 [DEBUG] [com.kh.spring21.SecurityTest1] encrypt = khoor#hyhu|rqh 

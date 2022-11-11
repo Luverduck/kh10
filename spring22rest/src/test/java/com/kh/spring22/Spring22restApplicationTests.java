@@ -1,10 +1,10 @@
-package com.kh.spring21;
+package com.kh.spring22;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Spring21securityApplicationTests {
+class Spring22restApplicationTests {
 
 	@Test
 	void contextLoads() {
