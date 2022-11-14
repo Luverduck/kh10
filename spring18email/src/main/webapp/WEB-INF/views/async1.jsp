@@ -5,43 +5,57 @@
 
 <script>
 	$(function(){
-		// 판정 객체
+		// 판정 객체 - 인증이 성공할 경우에만 true로 변경
 		var judge = {
 			emailValid : false,
-			
 		};
 		
-		// 목표 : 확인 버튼을 누르면 이메일 발송 컨트롤러로 비동기 요청
+		// 확인 버튼에 대한 click 이벤트 설정
 		$(".send-btn").click(function(){
 			
+			// memberEmail이라는 name을 가진 요소의 value를 변수 email로 지정
 			var email = $("[name=memberEmail]").val();
 			
+			// email의 길이가 0이면(입력되지 않았으면) return
 			if(email.length == 0) return;
 			
+			// 확인 버튼을 변수 btn으로 지정
 			var btn = $(this);
-			btn.prop("disabled", true); // 신호를 보낼 때 중복입력 방지
 			
+			// 확인 버튼을 누르면 중복입력을 방지하기 위해 비활성화 설정
+			btn.prop("disabled", true);
+			
+			// 화인 버튼을 클릭할 때 발급된 인증 번호를 등록하기 위한 비동기 통신
 			$.ajax({
-				url:"${pageContext.request.contextPath}/async2", // 비동기 통신시 절대경로 권장
+				url:"${pageContext.request.contextPath}/async2", 
 				method : "post",
 				data : {who : email},
 				success : function(){
 					// 성공했다면 메일은 전송되었다고 볼 수 있다
-					console.log("메일 전송 완료");
 					btn.prop("disabled", false);
 					
-					// 인증번호 입력창을 사용자에게 보여줘야 한다
-					// (1) 새로 구성 (2) 만들어진 태그 숨김 -> 숨김해제
-					
+					// 인증번호 입력창 태그 재구성을 위한 변수 지정
+					// <div> 태그를 변수 div로 지정
 					var div = $("<div>");
+					// <input> 태그를 변수 input으로 지정
 					var input = $("<input>");
+					// <button> 태그를 변수 button으로 지정
+					// - type을 "button"으로, 태그 사이의 text를 "검사"로 지정
 					var button = $("<button>").attr("type", "button").text("검사");
 					
-					// button을 클릭하면 input에 있는 인증번호와 이메일을 사용해서 검사요청
+					// div에 input와 button 추가
+					div.append(input).append(button);
+					
+					// 클래스명이 cert인 <div> 태그 안에 html(innerHtml)로 태그 생성
+					$(".cert").html(div);
+					
+					// 검사 버튼에 대한 click 이벤트 설정
 					button.click(function(){
-						// input 태그에 입력되어있는 값 지정 = serial 
+						// input 태그에 입력되어있는 값을 변수 serial로 지정 
 						var serial = input.val();
-						if(serial.length != 6) return; // serial이 6글자가 아니면 return
+						
+						// 만약 serial의 길이가 6이 아니라면(비정상 입력) return
+						if(serial.length != 6) return;
 						
 						// 인증번호 확인에 대한 ajax
 						$.ajax({
@@ -49,18 +63,15 @@
 							method:"post",
 							data : {who : email, serial : serial},
 							success:function(resp){
-								// console.log(resp);
-								// resp가 true이면 이메일 인증이 성공한 것
+								// checkCert(CertDto certDto)의 결과를 
+								// judge의 emailValid 값으로 저장 
 								judge.emailValid = resp;
-								// 결과를 외부에 저장하고 더이상 인증버튼을 누르지 못하도록 설정
+								// 더이상 인증메일을 보내지 못하도록 
+								// 확인 버튼(인증메일 전송 버튼)을 비활성화
 								btn.prop("disabled", true);	
 							}
 						});
 					});
-					
-					// div에 input와 button 추가
-					div.append(input).append(button);
-					$(".cert").html(div);
 				}
 			});
 		});
@@ -75,7 +86,6 @@
 
 <h1>회원가입</h1>
 
-<!-- 이 form은 회원가입을 위한 폼이다 -->
 <form class = "join-form">
 	이메일 : <input type = "text" name = "memberEmail">
 	<button class = "send-btn">확인</button>

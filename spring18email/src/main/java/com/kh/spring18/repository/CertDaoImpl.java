@@ -13,17 +13,10 @@ public class CertDaoImpl implements CertDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// 추상 메소드 - 인증번호 발급시 해당 번호 등록
+	// 추상 메소드 - 인증번호 등록
 	@Override
 	public void insert(CertDto certDto) {
 		sqlSession.insert("cert.insert", certDto);
-	}
-
-	// 추상 메소드 - 5분 이내 발급된 인증번호 조회
-	@Override
-	public boolean check(CertDto certDto) {
-		CertDto result = sqlSession.selectOne("cert.check", certDto);
-		return result != null;
 	}
 
 	// 추상 메소드 - 인증번호 삭제
@@ -31,6 +24,13 @@ public class CertDaoImpl implements CertDao {
 	public boolean delete(String who) {
 		int count = sqlSession.delete("cert.delete", who);
 		return count > 0;
+	}
+	
+	// 추상 메소드 - 인증번호 조회(5분 이내 발급된 인증번호인지)
+	@Override
+	public boolean check(CertDto certDto) {
+		CertDto result = sqlSession.selectOne("cert.check", certDto);
+		return result != null;
 	}
 
 	// 추상 메소드 오버라이딩

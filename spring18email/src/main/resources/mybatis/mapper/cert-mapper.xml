@@ -6,16 +6,17 @@
 
 <mapper namespace="cert">
 
-	<!-- 인증번호 등록 기능 -->
+	<!-- 인증번호 등록 -->
 	<insert id = "insert" parameterType = "CertDto">
 		insert into cert(who, serial) values(#{who}, #{serial})
 	</insert>
 
+	<!-- 인증번호 삭제 -->
 	<delete id = "delete" parameterType = "String">
 		delete cert where who = #{who}
 	</delete>
 	
-	<!-- 인증번호 검사 기능 -->
+	<!-- 인증번호 조회 -->
 	<select id = "check" parameterType = "CertDto" resultType = "CertDto">
 		select * from cert 
 			where 
