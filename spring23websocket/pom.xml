@@ -66,6 +66,48 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- JSP를 사용하기 위한 의존성 -->
+		<dependency>
+   			 <groupId>javax.servlet</groupId>
+   			 <artifactId>jstl</artifactId>
+		</dependency>
+		
+		<!-- 내장 서버에 JSP 처리 관련 규칙을 알려주는 의존성 -->
+		<dependency>
+    		<groupId>org.apache.tomcat.embed</groupId>
+    		<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+		
+		<!-- EmailProperties와 application.properties에 대한 설정 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- jsoup에 대한 의존성 -->
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.15.3</version>
+		</dependency>
+		
+		<!-- 암호화를 위한 spring security 의존성 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		</dependency>
+		
+		<!-- REST API 문서화를 위한 의존성 -->
+		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+		<dependency>
+		    <groupId>org.springdoc</groupId>
+		    <artifactId>springdoc-openapi-ui</artifactId>
+		    <version>1.6.12</version>
+		</dependency>
 	</dependencies>
 
 	<build>
