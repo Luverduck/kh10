@@ -30,4 +30,4 @@
 <h2><a href = "json">JSON 메시지</a></h2>
 <h2><a href = "sockjs">SockJS</a></h2>
 <h2><a href = "member">회원전용</a></h2>
-<h2><a href = "">그룹채팅</a></h2>
+<h2><a href = "group">그룹채팅</a></h2>

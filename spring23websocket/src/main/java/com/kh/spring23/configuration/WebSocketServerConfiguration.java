@@ -9,6 +9,7 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 
 import com.kh.spring23.websocket.BasicWebsocketServer;
 import com.kh.spring23.websocket.JsonWebsocketServer;
+import com.kh.spring23.websocket.MemberGroupChatServer;
 import com.kh.spring23.websocket.MemberWebsocketServer;
 import com.kh.spring23.websocket.MessageWebsocketServer;
 import com.kh.spring23.websocket.MultipleUserWebsocketServer;
@@ -42,6 +43,10 @@ public class WebSocketServerConfiguration implements WebSocketConfigurer {
 	@Autowired
 	private MemberWebsocketServer memberWebsocketServer;
 	
+	// 의존성 주입
+	@Autowired
+	private MemberGroupChatServer memberGroupChatServer;
+	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		// 등록시 주의사항
@@ -57,6 +62,7 @@ public class WebSocketServerConfiguration implements WebSocketConfigurer {
 		
 		// HttpSessionHandshakeInterceptor는 HttpSession을 WebSocketSession으로 넘겨준다
 		registry.addHandler(memberWebsocketServer, "/ws/member")
+				.addHandler(memberGroupChatServer, "/ws/group")
 				.addInterceptors(new HttpSessionHandshakeInterceptor())
 				.withSockJS();
 	}	
