@@ -22,4 +22,9 @@ public class MessageVO {
 	
 	private String text; // 클라이언트가 보내는 정보
 	private Date time; // 서버가 추가해야 할 정보
+	
+	// 로그인 정보
+	private String id;
+	private String nickname;
+	private String auth;
 }
