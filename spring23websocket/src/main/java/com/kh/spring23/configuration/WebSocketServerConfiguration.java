@@ -7,8 +7,10 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import com.kh.spring23.websocket.BasicWebsocketServer;
+import com.kh.spring23.websocket.JsonWebsocketServer;
 import com.kh.spring23.websocket.MessageWebsocketServer;
 import com.kh.spring23.websocket.MultipleUserWebsocketServer;
+import com.kh.spring23.websocket.SockJSWebsocketServer;
 
 @Configuration
 @EnableWebSocket // 웹소켓 활성화
@@ -26,6 +28,14 @@ public class WebSocketServerConfiguration implements WebSocketConfigurer {
 	@Autowired
 	private MessageWebsocketServer messageWebsocketServer;
 	
+	// 의존성 주입
+	@Autowired
+	private JsonWebsocketServer jsonWebsocketServer;
+	
+	// 의존성 주입
+	@Autowired
+	private SockJSWebsocketServer sockJSWebsocketServer;
+	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		// 등록시 주의사항
@@ -33,6 +43,10 @@ public class WebSocketServerConfiguration implements WebSocketConfigurer {
 		// - HTTP가 사용중이면 웹소켓 서버는 정상 작동하지 않는다
 		registry.addHandler(basicWebsocketServer, "/ws/basic")
 				.addHandler(multipleUserWebsocketServer, "/ws/multiple")
-				.addHandler(messageWebsocketServer, "/ws/message");
+				.addHandler(messageWebsocketServer, "/ws/message")
+				.addHandler(jsonWebsocketServer, "/ws/json");
+		
+		registry.addHandler(sockJSWebsocketServer, "ws/sockjs")
+				.withSockJS(); // 추가 코드
 	}	
 }

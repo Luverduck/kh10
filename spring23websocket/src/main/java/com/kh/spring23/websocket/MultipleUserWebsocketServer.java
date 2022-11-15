@@ -11,7 +11,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /*
-	
+	여러 명의 사용자를 기억하기 위한 코드가 구현된 서버
+	- 아직 메세지는 처리하지 않음 
 */
 
 @Slf4j
