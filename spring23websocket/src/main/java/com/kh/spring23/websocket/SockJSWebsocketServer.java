@@ -34,6 +34,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class SockJSWebsocketServer extends TextWebSocketHandler {
 	
+	// 웹소켓 사용자 저장소 - Set(혹시 모를 중복 방지)
+	//private Set<WebSocketSession> users = new HashSet<>(); // HashSet은 동기화가 안되므로 X
 	private Set<WebSocketSession> users = new CopyOnWriteArraySet<>();
 	
 	@Override
@@ -50,29 +52,28 @@ public class SockJSWebsocketServer extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		log.debug("메시지 - {}", message.getPayload());
-		// (주의)
-		// - 웹소켓 서버는 JSON을 자동으로 변환해주지 않는다
-		// - jackson-databind를 통해 수동 변환해야 한다
-		// (1) Map으로 바꾸는 방법
-		// (2) 클래스의 객체로 바꾸는 방법
 		
-		// 변환 도구 생성
+		// ObjectMapper의 인스턴스 생성 
 		ObjectMapper mapper = new ObjectMapper();
+		
+		// 1. JSON을 Java Object로 변환 - readValue()
+		// 1) JSON을 Map 형태로 변환
 		//Map json = mapper.readValue(message.getPayload(), Map.class);
 		//log.debug("json = {}", json);
 		
-		String str = message.getPayload();
+		// 2) JSON을 클래스의 인스턴스 형태로 변환
 		MessageVO json = mapper.readValue(message.getPayload(), MessageVO.class);
 		log.debug("json = {}", json);
 		
-		// json에 시간을 추가
+		// 인스턴스에 시간 설정
 		json.setTime(new Date());
 		
-		// 바뀐 정보를 이용하여 신규 메시지 생성
+		// 2. Java Object를 JSON 형태로 변환 - writeValue()
+		// - 클래스의 인스턴스를 JSON 형태로 변환 
 		String payload = mapper.writeValueAsString(json);
 		TextMessage jsonMessage = new TextMessage(payload);
 		
-		// 모두에게 발송(broadcast)
+		// 웹소켓에 연결된 모든 사용자에게 메시지 전송
 		for(WebSocketSession user : users) {
 			user.sendMessage(jsonMessage);
 		}
