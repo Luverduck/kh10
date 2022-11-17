@@ -21,34 +21,47 @@ import com.kh.spring23.entity.MemberDto;
 @RequestMapping("/page")
 public class PageController {
 	
+	// 의존성 주입
 	@Autowired
 	private SqlSession sqlSession;
 	
+	// 홈 Mapping
 	@GetMapping("/home")
 	public String home() {
 		return "home";
 	}
 	
+	// 로그인 Mapping
 	@PostMapping("/login")
 	public String login(@ModelAttribute MemberDto memberDto, HttpSession session) {
-		
+		// 입력받은 회원 아아디로 단일 조회
 		MemberDto findDto = sqlSession.selectOne("member.get", memberDto.getMemberId());
+		// 입력한 아이디를 갖는 회원이 없을 경우
+		if(findDto == null) {
+			// 홈 Mapping으로 강제 이동(redirect)
+			return "redirect:home";
+		}
 		
-		if(findDto == null) return "redirect:home";
-		
+		// 입력한 비밀번호가 조회한 회원 정보의 비밀번호와 일치하는지 여부
 		boolean judge = memberDto.getMemberPw().equals(findDto.getMemberPw());
 		
+		// 입력한 비밀번호가 조회한 회원 정보의 비밀번호와 일치한다면
 		if(judge) {
+			// HttpSession에 해당 회원의 아이디, 닉네임, 회원등급 저장
 			session.setAttribute("loginId", findDto.getMemberId());
 			session.setAttribute("loginNick", findDto.getMemberNick());
 			session.setAttribute("loginAuth", findDto.getMemberGrade());
 		}
+		// 홈 Mapping으로 강제 이동(redirect)
 		return "redirect:home";
 	}
 	
+	// 로그아웃 Mapping
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
+		// 세션 무효화
 		session.invalidate();
+		// 홈 페이지(home.jsp)로 연결
 		return "redirect:home";
 	}
 
