@@ -27,5 +27,22 @@
 		insert into payment_detail(payment_detail_no, payment_no, product_no, product_name, qty, product_price, payment_detail_status)
 							values(#{paymentDetailNo}, #{paymentNo}, #{productNo}, #{productName}, #{qty}, #{productPrice}, '승인')
 	</insert>
+	
+	<!-- 로그인한 회원의 결제내역을 조회하는 기능 -->
+	<select id="paymentHistory" resultType="PaymentDto" parameterType="String">
+		select * from payment 
+		where member_id = #{memberId}
+		order by payment_no desc
+	</select>
+	
+	<!-- 결제 대표정보 단일 조회 -->
+	<select id = "findPayment" resultType = "PaymentDto" parameterType = "int">
+		select * from payment where payment_no = #{paymentNo}
+	</select>
+	
+	<!-- 결제 상세내역 조회 -->
+	<select id = "findPaymentDetail" resultType = "PaymentDetailDto" parameterType = "int">
+		select * from payment_detail where payment_no = #{paymentNo} order by payment_detail_no asc
+	</select>
 
 </mapper>

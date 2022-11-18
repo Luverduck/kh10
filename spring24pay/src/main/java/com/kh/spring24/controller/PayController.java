@@ -220,10 +220,25 @@ public class PayController {
 	
 	//주문 조회 페이지
 	@GetMapping("/detail")
-	public String detail(@RequestParam String tid, Model model) throws URISyntaxException {
-		KakaoPayOrderRequestVO vo = KakaoPayOrderRequestVO
-				.builder().tid(tid).build();
+	public String detail(@RequestParam int paymentNo, Model model) throws URISyntaxException {
+		
+		PaymentDto paymentDto = paymentDao.findPayment(paymentNo);
+		
+		KakaoPayOrderRequestVO vo = KakaoPayOrderRequestVO.builder().tid(paymentDto.getTid()).build();
+		
 		model.addAttribute("info", kakaoPayService.order(vo));
+		model.addAttribute("paymentDto", paymentDto);
+		model.addAttribute("paymentDetailList", paymentDao.findPaymentDetail(paymentNo));
+		
 		return "detail";
+	}
+	
+	//주문 내역 목록 페이지
+	@GetMapping("/list")
+	public String list(HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("loginId");
+		List<PaymentDto> list = paymentDao.paymentHistory(memberId);
+		model.addAttribute("list", list);
+		return "list";
 	}
 }

@@ -1,5 +1,7 @@
 package com.kh.spring24.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,6 +38,21 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public void paymentDetailInsert(PaymentDetailDto paymentDetailDto) {
 		sqlSession.insert("payment.paymentDetailInsert", paymentDetailDto);
+	}
+	
+	@Override
+	public List<PaymentDto> paymentHistory(String memberId) {
+		return sqlSession.selectList("payment.paymentHistory", memberId);
+	}
+
+	@Override
+	public PaymentDto findPayment(int paymentNo) {
+		return sqlSession.selectOne("payment.findPayment", paymentNo);
+	}
+
+	@Override
+	public List<PaymentDetailDto> findPaymentDetail(int paymentNo) {
+		return sqlSession.selectList("payment.findPaymentDetail", paymentNo);
 	}
 	
 	

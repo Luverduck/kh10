@@ -28,3 +28,8 @@
 
 <h2><a href = "pay1">1번 방식 결제</a></h2>
 <h2><a href = "pay2">2번 방식 결제</a></h2>
+
+<c:if test="${loginId != null}">
+	<h2><a href="pay2">구매하기</a></h2>
+	<h2><a href="list">구매이력</a></h2>
+</c:if>
