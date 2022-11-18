@@ -198,13 +198,14 @@ public class PayController {
 		}
 		
 		int paymentNo = paymentDao.paymentSequence();
-		KakaoPayReadyRequestVO vo = KakaoPayReadyRequestVO.builder()
-																.partner_order_id(UUID.randomUUID().toString())
-																.partner_order_id(String.valueOf(paymentNo))
-																.partner_user_id((String)session.getAttribute("loginId"))
-																.item_name(item_name)
-																.total_amount(total_amount)
-															.build();
+		KakaoPayReadyRequestVO vo = KakaoPayReadyRequestVO
+				.builder()
+				//.partner_order_id(UUID.randomUUID().toString())
+				.partner_order_id(String.valueOf(paymentNo))
+				.partner_user_id((String)session.getAttribute("loginId"))
+				.item_name(item_name)
+				.total_amount(total_amount)
+				.build();
 		
 		KakaoPayReadyResponseVO response = kakaoPayService.ready(vo); // 3
 		
@@ -212,8 +213,8 @@ public class PayController {
 		session.setAttribute("tid", response.getTid());
 		session.setAttribute("partner_order_id", vo.getPartner_order_id());
 		session.setAttribute("partner_user_id", vo.getPartner_user_id());
-		session.setAttribute("list", list); // 상품 목록
-		session.setAttribute("data", purchaseVO.getData()); // 상품 수량 목록
+		session.setAttribute("list", list);//상품목록
+		session.setAttribute("data", purchaseVO.getData());//상품수량목록
 		
 		return "redirect:" + response.getNext_redirect_pc_url();
 	}
@@ -224,12 +225,12 @@ public class PayController {
 		
 		PaymentDto paymentDto = paymentDao.findPayment(paymentNo);
 		
-		KakaoPayOrderRequestVO vo = KakaoPayOrderRequestVO.builder().tid(paymentDto.getTid()).build();
-		
+		KakaoPayOrderRequestVO vo = KakaoPayOrderRequestVO
+				.builder().tid(paymentDto.getTid()).build();
 		model.addAttribute("info", kakaoPayService.order(vo));
 		model.addAttribute("paymentDto", paymentDto);
-		model.addAttribute("paymentDetailList", paymentDao.findPaymentDetail(paymentNo));
-		
+		model.addAttribute("paymentDetailList", 
+								paymentDao.findPaymentDetail(paymentNo));
 		return "detail";
 	}
 	

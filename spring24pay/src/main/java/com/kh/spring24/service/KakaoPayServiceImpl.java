@@ -2,6 +2,7 @@ package com.kh.spring24.service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,12 +13,19 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.kh.spring24.configuration.KakaoPayProperties;
+import com.kh.spring24.entity.PaymentDetailDto;
+import com.kh.spring24.entity.PaymentDto;
+import com.kh.spring24.entity.ProductDto;
+import com.kh.spring24.repository.PaymentDao;
 import com.kh.spring24.vo.KakaoPayApproveRequestVO;
 import com.kh.spring24.vo.KakaoPayApproveResponseVO;
+import com.kh.spring24.vo.KakaoPayCancelRequestVO;
+import com.kh.spring24.vo.KakaoPayCancelResponseVO;
 import com.kh.spring24.vo.KakaoPayOrderRequestVO;
 import com.kh.spring24.vo.KakaoPayOrderResponseVO;
 import com.kh.spring24.vo.KakaoPayReadyRequestVO;
 import com.kh.spring24.vo.KakaoPayReadyResponseVO;
+import com.kh.spring24.vo.PurchaseItemVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -118,6 +126,58 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		//요청
 		KakaoPayOrderResponseVO response = 
 				template.postForObject(uri, entity, KakaoPayOrderResponseVO.class);
+		return response;
+	}
+	
+	@Autowired
+	private PaymentDao paymentDao;
+
+	@Override
+	public void insertPayment(PaymentDto paymentDto, List<ProductDto> list, List<PurchaseItemVO> data) {
+		//- 결제가 완료되었으니까
+		//(1) 대표정보 insert 후 (2) 상세정보 상품 개수만큼 insert
+		paymentDao.paymentInsert(paymentDto);
+		
+		for(int i=0; i < list.size(); i++) {
+			ProductDto productDto = list.get(i);
+			PurchaseItemVO itemVO = data.get(i);
+			int paymentDetailNo = paymentDao.paymentDetailSequence();
+			paymentDao.paymentDetailInsert(
+					PaymentDetailDto.builder()
+						.paymentDetailNo(paymentDetailNo)
+						.paymentNo(paymentDto.getPaymentNo())
+						.productNo(productDto.getNo())
+						.productName(productDto.getName())
+						.qty(itemVO.getQty())
+						.productPrice(productDto.getPrice() * itemVO.getQty())
+					.build());
+		}
+	}
+	
+	@Override
+	public KakaoPayCancelResponseVO cancel(KakaoPayCancelRequestVO vo) throws URISyntaxException {
+		//주소 설정
+		URI uri = new URI("https://kapi.kakao.com/v1/payment/cancel");
+		
+		//헤더 설정
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "KakaoAK "+kakaoPayProperties.getKey());
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		//바디 설정
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+		body.add("cid", kakaoPayProperties.getCid());//가맹점번호(테스트용)
+		body.add("tid", vo.getTid());//거래번호
+		body.add("cancel_amount", String.valueOf(vo.getCancel_amount()));//취소 금액
+		body.add("cancel_tax_free_amount", "0");//취소 비과세액
+		
+		//보낼 내용 합체
+		HttpEntity<MultiValueMap<String, String>> entity = 
+											new HttpEntity<>(body, headers);
+		
+		//요청
+		KakaoPayCancelResponseVO response = 
+				template.postForObject(uri, entity, KakaoPayCancelResponseVO.class);
 		return response;
 	}
 }
