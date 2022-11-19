@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring24.entity.MemberDto;
 import com.kh.spring24.entity.PaymentDetailDto;
@@ -26,6 +27,8 @@ import com.kh.spring24.repository.ProductDao;
 import com.kh.spring24.service.KakaoPayService;
 import com.kh.spring24.vo.KakaoPayApproveRequestVO;
 import com.kh.spring24.vo.KakaoPayApproveResponseVO;
+import com.kh.spring24.vo.KakaoPayCancelRequestVO;
+import com.kh.spring24.vo.KakaoPayCancelResponseVO;
 import com.kh.spring24.vo.KakaoPayOrderRequestVO;
 import com.kh.spring24.vo.KakaoPayReadyRequestVO;
 import com.kh.spring24.vo.KakaoPayReadyResponseVO;
@@ -242,4 +245,54 @@ public class PayController {
 		model.addAttribute("list", list);
 		return "list";
 	}
+	
+	@GetMapping("/cancel_all")
+	public String cancelAll(@RequestParam int paymentNo,
+			RedirectAttributes attr) throws URISyntaxException {
+//		금액과 거래번호를 구해야 한다
+		PaymentDto paymentDto = paymentDao.findPayment(paymentNo);
+
+		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO
+				.builder()
+					.tid(paymentDto.getTid())
+					.cancel_amount(paymentDto.getTotalAmount())
+				.build();
+		KakaoPayCancelResponseVO response = 
+								kakaoPayService.cancel(request);
+
+//		payment + payment_detail 취소
+		paymentDao.cancelPayment(paymentNo);
+		paymentDao.cancelPaymentDetail(paymentNo);
+
+//		return "redirect:detail?paymentNo="+paymentNo;
+		attr.addAttribute("paymentNo", paymentNo);
+		return "redirect:detail";
+	}
+
+	@GetMapping("/cancel_item")
+	public String cancelItem(@RequestParam int paymentDetailNo,
+			RedirectAttributes attr) throws URISyntaxException {
+		PaymentDetailDto paymentDetailDto = 
+				paymentDao.findPaymentDetailItem(paymentDetailNo);
+		PaymentDto paymentDto = 
+				paymentDao.findPayment(paymentDetailDto.getPaymentNo());
+
+		//카카오페이 취소
+		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO
+				.builder()
+					.tid(paymentDto.getTid())
+					.cancel_amount(paymentDetailDto.getProductPrice())
+				.build();
+		KakaoPayCancelResponseVO response = 
+								kakaoPayService.cancel(request);
+
+//		payment와 payment_detail 상태를 갱신
+		paymentDao.cancelPaymentDetailItem(paymentDetailNo);
+		paymentDao.refreshPayment(paymentDto.getPaymentNo());
+
+//		return "redirect:detail?paymentNo="+paymentNo;
+		attr.addAttribute("paymentNo", paymentDto.getPaymentNo());
+		return "redirect:detail";
+	}
+
 }

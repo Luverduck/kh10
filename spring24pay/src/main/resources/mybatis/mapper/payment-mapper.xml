@@ -44,5 +44,100 @@
 	<select id = "findPaymentDetail" resultType = "PaymentDetailDto" parameterType = "int">
 		select * from payment_detail where payment_no = #{paymentNo} order by payment_detail_no asc
 	</select>
+	
+	<!-- 결제 취소 처리 -->
+	<update id="cancelPayment" parameterType="int">
+		update payment
+			set payment_status = '취소'
+			where payment_no = #{paymentNo}
+	</update>
+	<update id="cancelPaymentDetail" parameterType="int">
+		update payment_detail
+			set payment_detail_status = '취소'
+			where payment_no = #{paymentNo}
+	</update>
+
+	<select id="findPaymentDetailItem" resultType="PaymentDetailDto" 
+																				parameterType="int">
+		select * from payment_detail 
+		where payment_detail_no = #{paymentDetailNo}
+	</select>
+
+	<!-- 개별 취소 -->
+	<update id="cancelPaymentDetailItem" parameterType="int">
+		update payment_detail
+			set payment_detail_status = '취소'
+			where payment_detail_no = #{paymentDetailNo}
+	</update>
+
+	<!-- 개별 취소 결과에 따라 전체 결제의 상태를 '취소' 또는 '부분취소'로 변경 -->
+	<update id="refreshPayment" parameterType="int">
+		update payment set payment_status=(
+		    select 
+		        case
+		            when "전체"="취소" then '취소'
+		            when "취소"=0 then '승인'
+		            else '부분취소'
+		        end
+		    from
+		    (
+		        select 
+		            (select count(*) from payment_detail where payment_no = #{paymentNo}) "전체",
+		            (select count(*) from payment_detail where payment_no = #{paymentNo} and payment_detail_status='취소') "취소" from dual
+		    )
+		)
+		where payment_no = #{paymentNo}
+	</update>
+	
+	<!-- 
+		계츻형 조회 
+		- 외래키로 연결된 상하관계의 테이블을 상위 테이블 항목 기준으로 조회
+		- 상위 테이블 요소 1개와 하위 테이블 요소 여러개가 합쳐져서 조회
+		- 구조화된 데이터를 출력할 때 좋다
+		- MyBatis에게 형태를 알려줄 필요가 있다
+		
+		<RESULTmAP>
+		- type : 자료형
+		- id : 별칭(구문에서 resultMap으로 선언할 이름)
+		
+		- <association>은 객체가 존재함을 알려주는 태그
+		- property : 객체가 선언된 이름
+		- <result>를 통해 DB 컬럼(column)과 객체 필드(property)를 매핑
+		
+		- <collection>은 객체 목록이 존재함을 알려주는 태그
+		- javaType : 저장소 형태
+		- ofType : 내용물 형태
+		- select : 값을 채우기 위해 실행해야 할 구문
+		- column : select를 실행하기 위해 필요한 컬럼값
+	-->
+	
+	<resultMap type="PaymentVO" id="vo">
+		<association property="paymentDto">
+			<result column="payment_no" property="paymentNo"/>
+			<result column="member_id" property="memberId"/>
+			<result column="item_name" property="itemName"/>
+			<result column="total_amount" property="totalAmount"/>
+			<result column="approve_at" property="approveAt" javaType="java.sql.Date"/>
+			<result column="payment_status" property="paymentStatus"/>
+			<result column="tid" property="tid"/>
+		</association>
+		
+		<collection property="paymentDetailList"
+			javaType="java.util.List" ofType="PaymentDetailDto"
+			select="findPaymentDetail" column="payment_no">
+			<result column="payment_detail_no" property="paymentDetailNo"/>
+			<result column="payment_no" property="paymentNo"/>
+			<result column="product_no" property="productNo"/>
+			<result column="product_name" property="productName"/>
+			<result column="qty" property="qty"/>
+			<result column="product_price" property="productPrice"/>
+			<result column="payment_detail_status" property="paymentDetailStatus"/>
+		</collection>
+	</resultMap>
+	
+	
+	<select id="paymentGroupList" resultMap="vo" parameterType="String">
+		select * from payment
+	</select>
 
 </mapper>

@@ -16,7 +16,10 @@
 		<li>paymentStatus : ${paymentDto.paymentStatus}</li>
 		<li>tid : ${paymentDto.tid}</li>
 	</ul>
-	<h2><a href="">취소</a></h2>
+	<!-- 전체 취소 버튼 -->
+	<c:if test="${paymentDto.paymentStatus != '취소'}">
+		<h2><a href="cancel_all?paymentNo=${paymentDto.paymentNo}">취소</a></h2>
+	</c:if>
 </div>
 
 <div>
@@ -29,7 +32,10 @@
 			-
 			${paymentDetailDto.productPrice}원
 			[${paymentDetailDto.paymentDetailStatus}]
-			<a href="">취소</a>
+			
+			<c:if test="${paymentDetailDto.paymentDetailStatus != '취소'}">
+				<a href="cancel_item?paymentDetailNo=${paymentDetailDto.paymentDetailNo}">취소</a>
+			</c:if>
 		</li>
 		</c:forEach>
 	</ul>

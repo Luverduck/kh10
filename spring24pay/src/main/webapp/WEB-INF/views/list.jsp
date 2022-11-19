@@ -13,6 +13,7 @@
 	결제시각 : <fmt:formatDate value="${paymentDto.approveAt}" 
 						pattern="y년 M월 d일 E H시 m분 s초"/> 
 	<br>
+	상태 : ${paymentDto.paymentStatus}<br>
 	<a href="detail?paymentNo=${paymentDto.paymentNo}">더보기</a>
 </div>
 </c:forEach>

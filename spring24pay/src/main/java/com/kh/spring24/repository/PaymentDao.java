@@ -7,21 +7,22 @@ import com.kh.spring24.entity.PaymentDto;
 
 public interface PaymentDao {
 
-	// 추상 메소드 - 결제 번호 반환
 	int paymentSequence();
-	
-	// 추상 메소드 - 결제 상세 번호 반환
-	int paymentDetailSequence();
-	
-	// 추상 메소드 - 결제 테이블에 등록
 	void paymentInsert(PaymentDto paymentDto);
 	
-	// 추상 메소드 - 결제 상세 테이블에 등록
+	int paymentDetailSequence();
 	void paymentDetailInsert(PaymentDetailDto paymentDetailDto);
 	
 	List<PaymentDto> paymentHistory(String memberId);
 	
-	public PaymentDto findPayment(int paymentNo);
+	PaymentDto findPayment(int paymentNo);
+	List<PaymentDetailDto> findPaymentDetail(int paymentNo);
 	
-	public List<PaymentDetailDto> findPaymentDetail(int paymentNo);
+	void cancelPayment(int paymentNo);
+	void cancelPaymentDetail(int paymentNo);
+	
+	PaymentDetailDto findPaymentDetailItem(int paymentDetailNo);
+	
+	void cancelPaymentDetailItem(int paymentDetailNo);
+	void refreshPayment(int paymentNo);
 }
