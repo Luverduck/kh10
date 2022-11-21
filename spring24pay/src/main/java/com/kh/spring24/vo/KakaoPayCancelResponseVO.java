@@ -7,9 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data 
+@NoArgsConstructor 
+@AllArgsConstructor 
+@Builder
 public class KakaoPayCancelResponseVO {
-
 	private String aid; // 요청 고유번호
 	private String tid; // 결제 고유번호
 	private String cid; // 가맹점 코드
@@ -27,5 +29,4 @@ public class KakaoPayCancelResponseVO {
 	private Date approved_at; // 승인 시각
 	private Date canceled_at; // 취소 시각
 	private String payload; // 취소 요청시 전달한 값
-	
 }

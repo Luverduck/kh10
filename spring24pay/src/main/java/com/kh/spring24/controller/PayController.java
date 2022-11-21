@@ -30,6 +30,7 @@ import com.kh.spring24.vo.KakaoPayApproveResponseVO;
 import com.kh.spring24.vo.KakaoPayCancelRequestVO;
 import com.kh.spring24.vo.KakaoPayCancelResponseVO;
 import com.kh.spring24.vo.KakaoPayOrderRequestVO;
+import com.kh.spring24.vo.KakaoPayOrderResponseVO;
 import com.kh.spring24.vo.KakaoPayReadyRequestVO;
 import com.kh.spring24.vo.KakaoPayReadyResponseVO;
 import com.kh.spring24.vo.PurchaseItemVO;
@@ -104,20 +105,20 @@ public class PayController {
 	
 	// 카카오페이 결제 준비 Mapping
 	@PostMapping("/pay1")
-	public String pay1(@ModelAttribute KakaoPayReadyRequestVO vo, HttpSession session) throws URISyntaxException {
+	public String pay1(@ModelAttribute KakaoPayReadyRequestVO request, HttpSession session) throws URISyntaxException {
 		
 		// 결제 준비 요청을 위한 VO에 정보 설정
-		vo.setPartner_order_id(UUID.randomUUID().toString()); // 가맹점 주문 번호 설정
+		request.setPartner_order_id(UUID.randomUUID().toString()); // 가맹점 주문 번호 설정
 		String memberId = (String)session.getAttribute("loginId"); // HttpSession에서 회원 아이디 반환
-		vo.setPartner_user_id(memberId); // 반환한 회원 아이디를 가맹점 회원 ID로 설정
+		request.setPartner_user_id(memberId); // 반환한 회원 아이디를 가맹점 회원 ID로 설정
 		
 		// 카카오페이로 결제 준비 요청 전송 후 응답 반환
-		KakaoPayReadyResponseVO response = kakaoPayService.ready(vo);
+		KakaoPayReadyResponseVO response = kakaoPayService.ready(request);
 		
 		// 결제 승인을 위한 값을 미리 HttpSession에 저장
 		session.setAttribute("tid", response.getTid());
-		session.setAttribute("partner_order_id", vo.getPartner_order_id());
-		session.setAttribute("partner_user_id", vo.getPartner_user_id());
+		session.setAttribute("partner_order_id", request.getPartner_order_id());
+		session.setAttribute("partner_user_id", request.getPartner_user_id());
 		
 		// 사용자를 결제 준비 응답에 포함된 PC URL로 강제 이동(redirect)
 		return "redirect:" + response.getNext_redirect_pc_url();
@@ -169,21 +170,20 @@ public class PayController {
 		int paymentNo = paymentDao.paymentSequence();
 		
 		// 결제 준비 요청을 위한 VO에 정보 설정
-		KakaoPayReadyRequestVO vo = KakaoPayReadyRequestVO
-				.builder()
-				.partner_order_id(String.valueOf(paymentNo)) // 가맹점 주문 번호(결제 번호)
-				.partner_user_id((String)session.getAttribute("loginId")) // 가맹점 회원 ID
-				.item_name(item_name) // 상품명
-				.total_amount(total_amount) // 상품 총액
-				.build();
+		KakaoPayReadyRequestVO request = KakaoPayReadyRequestVO.builder()
+									.partner_order_id(String.valueOf(paymentNo))
+									.partner_user_id((String)session.getAttribute("loginId"))
+									.item_name(item_name)
+									.total_amount(total_amount) 
+								.build();
 		
 		// 카카오페이로 결제 준비 요청 전송 후 응답 반환
-		KakaoPayReadyResponseVO response = kakaoPayService.ready(vo); // 3
+		KakaoPayReadyResponseVO response = kakaoPayService.ready(request);
 		
 		// 결제 승인을 위한 값을 미리 HttpSession에 저장
 		session.setAttribute("tid", response.getTid());
-		session.setAttribute("partner_order_id", vo.getPartner_order_id());
-		session.setAttribute("partner_user_id", vo.getPartner_user_id());
+		session.setAttribute("partner_order_id", request.getPartner_order_id());
+		session.setAttribute("partner_user_id", request.getPartner_user_id());
 		
 		// 결제 승인 후 DB 등록을 위한 값을 HttpSession에 저장
 		session.setAttribute("list", list); // 구매 상품의 List<ProductDto>
@@ -212,7 +212,7 @@ public class PayController {
 		session.removeAttribute("data");
 		
 		// 결제 승인 요청을 위한 VO에 정보 설정
-		KakaoPayApproveRequestVO vo = KakaoPayApproveRequestVO.builder()
+		KakaoPayApproveRequestVO request = KakaoPayApproveRequestVO.builder()
 																	.tid(tid)
 																	.partner_order_id(partner_order_id)
 																	.partner_user_id(partner_user_id)
@@ -220,7 +220,7 @@ public class PayController {
 																.build();
 		
 		// 카카오페이로 결제 승인 요청 전송 후 응답 반환
-		KakaoPayApproveResponseVO response = kakaoPayService.approve(vo);
+		KakaoPayApproveResponseVO response = kakaoPayService.approve(request);
 		
 		// Integer 형태의 partner_order_id 값을 int로 변환
 		int paymentNo = Integer.parseInt(partner_order_id);
@@ -261,81 +261,102 @@ public class PayController {
 	// 카카오페이 결제 승인 완료 Mapping
 	@GetMapping("/pay/result/success_view")
 	public String successView() {
+		
 		// 최종 결제 성공 페이지(succes_view.jsp)로 연결
 		return "success_view";
 	}
 	
-	//주문 조회 페이지
-	@GetMapping("/detail")
-	public String detail(@RequestParam int paymentNo, Model model) throws URISyntaxException {
-		
-		PaymentDto paymentDto = paymentDao.findPayment(paymentNo);
-		
-		KakaoPayOrderRequestVO vo = KakaoPayOrderRequestVO
-				.builder().tid(paymentDto.getTid()).build();
-		model.addAttribute("info", kakaoPayService.order(vo));
-		model.addAttribute("paymentDto", paymentDto);
-		model.addAttribute("paymentDetailList", 
-								paymentDao.findPaymentDetail(paymentNo));
-		return "detail";
-	}
-	
-	//주문 내역 목록 페이지
+	// 주문 내역 조회 Mapping
 	@GetMapping("/list")
 	public String list(HttpSession session, Model model) {
+		
+		// HttpSession에서 로그인 중인 회원 아이디 반환
 		String memberId = (String)session.getAttribute("loginId");
+		
+		// 반환한 회원 아이디로 결제 정보 단일 조회
 		List<PaymentDto> list = paymentDao.paymentHistory(memberId);
+		
+		// 조회의 결과를 model에 첨부
 		model.addAttribute("list", list);
+		
+		// 주문 내역 목록 페이지(list.jsp)로 연결
 		return "list";
 	}
 	
+	// 카카오페이 결제 조회 Mapping
+	@GetMapping("/detail")
+	public String detail(@RequestParam int paymentNo, Model model) throws URISyntaxException {
+		
+		// 주문 내역 목록 페이지에서 전달받은 결제 번호(paymentNo)를 통해 결제 정보 조회
+		PaymentDto paymentDto = paymentDao.findPayment(paymentNo);
+		
+		// 결제 조회 요청을 위한 VO에 정보 설정
+		KakaoPayOrderRequestVO request = KakaoPayOrderRequestVO.builder().tid(paymentDto.getTid()).build();
+		
+		// 카카오페이로 결제 조회 요청 전송 후 응답 반환
+		KakaoPayOrderResponseVO response = kakaoPayService.order(request);
+		
+		// 카카오페이로부터 받은 결제 조회 응답을 model에 첨부
+		model.addAttribute("info", response);
+		
+		// 결제 번호로 조회한 결제 정보를 model에 첨부
+		model.addAttribute("paymentDto", paymentDto);
+		
+		// 결제 번호로 조회한 결제 상세 정보를 model에 첨부
+		model.addAttribute("paymentDetailList", paymentDao.findPaymentDetail(paymentNo));
+		
+		// 결제 상세 페이지(detail.jsp)로 연결
+		return "detail";
+	}
+	
+	// 카카오페이 전체 취소 Mapping
 	@GetMapping("/cancel_all")
-	public String cancelAll(@RequestParam int paymentNo,
-			RedirectAttributes attr) throws URISyntaxException {
-//		금액과 거래번호를 구해야 한다
+	public String cancelAll(@RequestParam int paymentNo, RedirectAttributes attr) throws URISyntaxException {
+
+		// 결제 번호(paymentNo)로 결제 정보 조회
 		PaymentDto paymentDto = paymentDao.findPayment(paymentNo);
 
-		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO
-				.builder()
-					.tid(paymentDto.getTid())
-					.cancel_amount(paymentDto.getTotalAmount())
-				.build();
-		KakaoPayCancelResponseVO response = 
-								kakaoPayService.cancel(request);
+		// 결제 취소 요청을 위한 VO에 정보 설정
+		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO.builder().tid(paymentDto.getTid()).cancel_amount(paymentDto.getTotalAmount()).build();
+		
+		// 카카오페이로 결제 취소 요청 전송 후 응답 반환
+		KakaoPayCancelResponseVO response = kakaoPayService.cancel(request);
 
-//		payment + payment_detail 취소
+		// 결제 정보 테이블(payment)에서 해당 결제 번호 상품의 결제 상태를 '취소'로 변경
 		paymentDao.cancelPayment(paymentNo);
+		
+		// 세부 결제 정보 테이블(payment_detail)에서 해당 결제 번호의 모든 세부 결제 상품의 결제 상태를 '취소'로 변경
 		paymentDao.cancelPaymentDetail(paymentNo);
 
-//		return "redirect:detail?paymentNo="+paymentNo;
+		// 해당 결제 번호의 카카오페이 결제 조회 Mapping으로 강제 이동(redirect)
 		attr.addAttribute("paymentNo", paymentNo);
 		return "redirect:detail";
 	}
 
+	// 카카오페이 부분 취소 Mapping
 	@GetMapping("/cancel_item")
-	public String cancelItem(@RequestParam int paymentDetailNo,
-			RedirectAttributes attr) throws URISyntaxException {
-		PaymentDetailDto paymentDetailDto = 
-				paymentDao.findPaymentDetailItem(paymentDetailNo);
-		PaymentDto paymentDto = 
-				paymentDao.findPayment(paymentDetailDto.getPaymentNo());
+	public String cancelItem(@RequestParam int paymentDetailNo, RedirectAttributes attr) throws URISyntaxException {
+		
+		// 해당 세부 결제 번호(paymentDetailNo)의 세부 결제 상품의 세부 결제 정보를 조회
+		PaymentDetailDto paymentDetailDto = paymentDao.findPaymentDetailItem(paymentDetailNo);
+		
+		// 세부 결제 상품의 결제 번호(paymentNo)를 반환하여 결제 정보를 조회
+		PaymentDto paymentDto = paymentDao.findPayment(paymentDetailDto.getPaymentNo());
 
-		//카카오페이 취소
-		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO
-				.builder()
-					.tid(paymentDto.getTid())
-					.cancel_amount(paymentDetailDto.getProductPrice())
-				.build();
-		KakaoPayCancelResponseVO response = 
-								kakaoPayService.cancel(request);
+		// 결제 취소 요청을 위한 VO에 정보 설정
+		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO.builder().tid(paymentDto.getTid()).cancel_amount(paymentDetailDto.getProductPrice()).build();
+		
+		// 카카오페이로 결제 취소 요청 전송 후 응답 반환
+		KakaoPayCancelResponseVO response = kakaoPayService.cancel(request);
 
-//		payment와 payment_detail 상태를 갱신
+		// 세부 결제 번호에 해당하는 세부 결제 상품의 결제 상태를 '취소'로 변경
 		paymentDao.cancelPaymentDetailItem(paymentDetailNo);
+		
+		// 부분 취소의 갯수에 따라 전체 결제 상태 변경
 		paymentDao.refreshPayment(paymentDto.getPaymentNo());
 
-//		return "redirect:detail?paymentNo="+paymentNo;
+		// 해당 결제 번호의 카카오페이 결제 조회 Mapping으로 강제 이동(redirect)
 		attr.addAttribute("paymentNo", paymentDto.getPaymentNo());
 		return "redirect:detail";
 	}
-
 }

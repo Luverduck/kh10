@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@Data 
+@NoArgsConstructor 
+@AllArgsConstructor
+@Builder 
 public class KakaoPayOrderRequestVO {
-	private String tid;
+	private String tid; // 결제 고유 번호
 }

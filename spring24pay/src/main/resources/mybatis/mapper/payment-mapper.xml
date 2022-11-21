@@ -28,50 +28,43 @@
 							values(#{paymentDetailNo}, #{paymentNo}, #{productNo}, #{productName}, #{qty}, #{productPrice}, '승인')
 	</insert>
 	
-	<!-- 로그인한 회원의 결제내역을 조회하는 기능 -->
+	<!-- 로그인한 회원의 결제 내역 전체 조회-->
 	<select id="paymentHistory" resultType="PaymentDto" parameterType="String">
-		select * from payment 
-		where member_id = #{memberId}
-		order by payment_no desc
+		select * from payment where member_id = #{memberId} order by payment_no desc
 	</select>
 	
-	<!-- 결제 대표정보 단일 조회 -->
+	<!-- 결제 번호를 이용하여 결제 정보 조회 -->
 	<select id = "findPayment" resultType = "PaymentDto" parameterType = "int">
 		select * from payment where payment_no = #{paymentNo}
 	</select>
 	
-	<!-- 결제 상세내역 조회 -->
+	<!-- 결제 번호를 이용하여 결제 상세정보 조회 -->
 	<select id = "findPaymentDetail" resultType = "PaymentDetailDto" parameterType = "int">
 		select * from payment_detail where payment_no = #{paymentNo} order by payment_detail_no asc
 	</select>
 	
-	<!-- 결제 취소 처리 -->
-	<update id="cancelPayment" parameterType="int">
-		update payment
-			set payment_status = '취소'
-			where payment_no = #{paymentNo}
+	<!-- 결제 번호를 이용하여 해당 결제 상품의 결제 상태를 '취소'로 변경 -->
+	<update id = "cancelPayment" parameterType = "int">
+		update payment set payment_status = '취소' where payment_no = #{paymentNo}
 	</update>
-	<update id="cancelPaymentDetail" parameterType="int">
-		update payment_detail
-			set payment_detail_status = '취소'
-			where payment_no = #{paymentNo}
+	
+	<!-- 결제 번호를 이용하여 해당 번호의 세부 결제 상품의 결제 상태를 '취소'로 변경 -->
+	<update id = "cancelPaymentDetail" parameterType = "int">
+		update payment_detail set payment_detail_status = '취소' where payment_no = #{paymentNo}
 	</update>
 
-	<select id="findPaymentDetailItem" resultType="PaymentDetailDto" 
-																				parameterType="int">
-		select * from payment_detail 
-		where payment_detail_no = #{paymentDetailNo}
+	<!-- 세부 결제 번호를 이용하여 세부 결제 정보 조회  -->
+	<select id = "findPaymentDetailItem" resultType = "PaymentDetailDto" parameterType = "int">
+		select * from payment_detail where payment_detail_no = #{paymentDetailNo}
 	</select>
 
-	<!-- 개별 취소 -->
-	<update id="cancelPaymentDetailItem" parameterType="int">
-		update payment_detail
-			set payment_detail_status = '취소'
-			where payment_detail_no = #{paymentDetailNo}
+	<!-- 세부 결제 번호를 이용하여 해당 세부 결제 상품의 결제 상태를 '취소'로 변경 -->
+	<update id = "cancelPaymentDetailItem" parameterType = "int">
+		update payment_detail set payment_detail_status = '취소' where payment_detail_no = #{paymentDetailNo}
 	</update>
 
-	<!-- 개별 취소 결과에 따라 전체 결제의 상태를 '취소' 또는 '부분취소'로 변경 -->
-	<update id="refreshPayment" parameterType="int">
+	<!-- 부분 취소 결과에 따라 전체 결제의 상태를 '취소' 또는 '부분취소'로 변경 -->
+	<update id = "refreshPayment" parameterType = "int">
 		update payment set payment_status=(
 		    select 
 		        case
@@ -96,7 +89,7 @@
 		- 구조화된 데이터를 출력할 때 좋다
 		- MyBatis에게 형태를 알려줄 필요가 있다
 		
-		<RESULTmAP>
+		<resultMap>
 		- type : 자료형
 		- id : 별칭(구문에서 resultMap으로 선언할 이름)
 		
@@ -111,33 +104,34 @@
 		- column : select를 실행하기 위해 필요한 컬럼값
 	-->
 	
-	<resultMap type="PaymentVO" id="vo">
-		<association property="paymentDto">
-			<result column="payment_no" property="paymentNo"/>
-			<result column="member_id" property="memberId"/>
-			<result column="item_name" property="itemName"/>
-			<result column="total_amount" property="totalAmount"/>
-			<result column="approve_at" property="approveAt" javaType="java.sql.Date"/>
-			<result column="payment_status" property="paymentStatus"/>
-			<result column="tid" property="tid"/>
-		</association>
-		
-		<collection property="paymentDetailList"
-			javaType="java.util.List" ofType="PaymentDetailDto"
-			select="findPaymentDetail" column="payment_no">
-			<result column="payment_detail_no" property="paymentDetailNo"/>
-			<result column="payment_no" property="paymentNo"/>
-			<result column="product_no" property="productNo"/>
-			<result column="product_name" property="productName"/>
-			<result column="qty" property="qty"/>
-			<result column="product_price" property="productPrice"/>
-			<result column="payment_detail_status" property="paymentDetailStatus"/>
-		</collection>
-	</resultMap>
-	
-	
-	<select id="paymentGroupList" resultMap="vo" parameterType="String">
+	<!-- 계층형 조회 - 결제 정보와 상세 결제 정보 -->
+	<select id = "paymentGroupList" resultMap = "vo" parameterType = "String">
 		select * from payment
 	</select>
+
+	<!-- 계층형 조회를 위한 추가 설정 -->	
+	<resultMap type = "PaymentVO" id = "vo">
+		<association property = "paymentDto">
+			<result column = "payment_no" property = "paymentNo"/>
+			<result column = "member_id" property = "memberId"/>
+			<result column = "item_name" property = "itemName"/>
+			<result column = "total_amount" property = "totalAmount"/>
+			<result column = "approve_at" property = "approveAt" javaType = "java.sql.Date"/>
+			<result column = "payment_status" property = "paymentStatus"/>
+			<result column = "tid" property = "tid"/>
+		</association>
+		
+		<collection column = "payment_no" property = "paymentDetailList"
+					javaType = "java.util.List" ofType = "PaymentDetailDto"
+					select = "findPaymentDetail">
+			<result column = "payment_detail_no" property = "paymentDetailNo"/>
+			<result column = "payment_no" property = "paymentNo"/>
+			<result column = "product_no" property = "productNo"/>
+			<result column = "product_name" property = "productName"/>
+			<result column = "qty" property = "qty"/>
+			<result column = "product_price" property = "productPrice"/>
+			<result column = "payment_detail_status" property = "paymentDetailStatus"/>
+		</collection>
+	</resultMap>
 
 </mapper>
