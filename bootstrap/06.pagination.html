@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Bootstrap CDN-->
+    <!-- Bootswatch와 Bootstrap의 버전이 같아야 한다 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.0.2/superhero/bootstrap.min.css">
+
+
+    <title>페이지 네이션</title>
+</head>
+<body>
+    
+    <div class = "row mt-4">
+        <div class = "col-md-10 offset-md-1 p-4 text-light bg-dark rounded">
+            <h1 class = "text-center">Pagination</h1>
+        </div>
+    </div>
+
+    <!--
+        영역을 가운데 정렬하고 싶을 때는 외부 영역을 flex로 만들고(.d-flex)
+        가로 정렬(justify-content) 또는 세로 정렬(align-items)를 설정한다
+    -->
+
+    <div class = "row mt-4">
+        <div class = "col-md-10 offset-md-1 d-flex justify-content-center"> <!-- d-flex로 display를 flex로 만든 후 영역을 가운데 정렬 -->
+            <ul class = "pagination"> <!-- ul은 영역에 속함 -->
+                <li class = "page-item disabled"><a class = "page-link" href = "#">&lt;</a></li> <!-- class에 disabled를 추가하여 비활성화 가능 -->
+                <li class = "page-item"><a class = "page-link" href = "#">1</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">2</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">3</a></li>
+                <li class = "page-item active"><a class = "page-link" href = "#">4</a></li> <!-- 현재 있는 페이지 번호에 활성화 표시 -->
+                <li class = "page-item"><a class = "page-link" href = "#">5</a></li> 
+                <li class = "page-item"><a class = "page-link" href = "#">6</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">7</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">8</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">9</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">10</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class = "row mt-4">
+        <div class = "col-md-10 offset-md-1 d-flex justify-content-center"> <!-- d-flex로 display를 flex로 만든 후 영역을 가운데 정렬 -->
+            <ul class = "pagination pagination-sm"> <!-- 크기 : sm -->
+                <li class = "page-item disabled"><a class = "page-link" href = "#">&lt;</a></li> <!-- class에 disabled를 추가하여 비활성화 가능 -->
+                <li class = "page-item"><a class = "page-link" href = "#">1</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">2</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">3</a></li>
+                <li class = "page-item active"><a class = "page-link" href = "#">4</a></li> <!-- 현재 있는 페이지 번호에 활성화 표시 -->
+                <li class = "page-item"><a class = "page-link" href = "#">5</a></li> 
+                <li class = "page-item"><a class = "page-link" href = "#">6</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">7</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">8</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">9</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">10</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class = "row mt-4">
+        <div class = "col-md-10 offset-md-1 d-flex justify-content-center"> <!-- d-flex로 display를 flex로 만든 후 영역을 가운데 정렬 -->
+            <ul class = "pagination pagination-lg"> <!-- 크기 : lg -->
+                <li class = "page-item disabled"><a class = "page-link" href = "#">&lt;</a></li> <!-- class에 disabled를 추가하여 비활성화 가능 -->
+                <li class = "page-item"><a class = "page-link" href = "#">1</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">2</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">3</a></li>
+                <li class = "page-item active"><a class = "page-link" href = "#">4</a></li> <!-- 현재 있는 페이지 번호에 활성화 표시 -->
+                <li class = "page-item"><a class = "page-link" href = "#">5</a></li> 
+                <li class = "page-item"><a class = "page-link" href = "#">6</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">7</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">8</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">9</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">10</a></li>
+                <li class = "page-item"><a class = "page-link" href = "#">&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</body>
+</html>
