@@ -9,7 +9,6 @@ import lombok.Data;
 @Component
 @ConfigurationProperties(prefix = "custom.pay")
 public class KakaoPayProperties {
-	
-	private String key;
-	private String cid;
+	private String key; // REST 요청의 header에서 Authorization 값
+	private String cid; // REST 요청의 body에서 cid 값
 }

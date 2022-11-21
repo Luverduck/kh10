@@ -11,9 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KakaoPayReadyRequestVO {
-
-	private String partner_order_id;
-	private String partner_user_id;
-	private String item_name;
-	private int total_amount;
+	private String partner_order_id; // 가맹점 주문번호
+	private String partner_user_id; // 가맹점 회원 id
+	private String item_name; // 상품명
+	private int total_amount; // 상품 총액
 }

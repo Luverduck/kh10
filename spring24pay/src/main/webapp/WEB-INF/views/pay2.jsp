@@ -20,39 +20,54 @@
 
 <button class = "purchase-btn">구매하기</button>
 
+<!-- JQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
 <script>
 	$(function(){
-		// 목표 : 
-		// 구매하기 버튼을 누르면 가상의 form을 만들어서 
-		// 체크된 상품 번호와 수량을 채운 뒤 전송
-		
-		// 구매하기 버튼을 클릭하면
+		// 구매하기 버튼에 클릭 이벤트 설정
 		$(".purchase-btn").click(function(){
 			
+			// POST 방식의 form 태그 지정
 			var form = $("<form>").attr("method", "post");
 			
+			// 값을 배열 형태로 전송하기 위한 배열 index 카운트
 			var count = 0;
 			
-			// 체크박스 전체를 검색하여
+			// 체크박스 각각에 대해
 			$(".item-check").each(function(){
-				var checked = $(this).prop("checked"); // 체크 여부 조사
-				if(checked) { // 체크가 되어있다면
-					var no = $(this).data("no");
-					var qty = $(".item-qty[data-no="+ no +"]").val(); // 수량은 해당 번호의 입력창 조사
-					console.log(no, qty);
+				
+				// 체크 여부를 변수로 지정
+				var checked = $(this).prop("checked");
+				
+				// 체크 박스가 체크되어 있다면
+				if(checked) {
 					
+					// 체크된 상품의 상품 번호를 변수로 지정
+					var no = $(this).data("no");
+					
+					// 체크된 상품의 상품 갯수를 변수로 지정
+					var qty = $(".item-qty[data-no="+ no +"]").val();
+					
+					// 배열 형태로 값을 전달
+					// <input type = "hidden" name = "data[i].no"> 형태이며 값은 no의 값
 					var noTag = $("<input>").attr("type", "hidden").attr("name", "data[" + count + "].no").val(no);
+					// <input type = "hidden" name = "data[i].qty"> 형태이며 값은 qty의 값
 					var qtyTag = $("<input>").attr("type", "hidden").attr("name", "data[" + count + "].qty").val(qty);
 					
+					// form 태그에 해당 input 태그를 연결
 					form.append(noTag).append(qtyTag);
 					
+					// 배열 index 카운트를 증가
 					count ++;
 				}
 			});
 			
+			// 최종 완성된 form 태그를 body에 생성
 			$("body").append(form);
-			form.submit();//전송(상황에 따라 처리)
+			
+			// form 전송
+			form.submit();
 		});
 	});
 </script>

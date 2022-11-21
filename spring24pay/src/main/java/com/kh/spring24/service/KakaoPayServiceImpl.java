@@ -33,74 +33,84 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class KakaoPayServiceImpl implements KakaoPayService {
 	
+	// REST 방식의 API를 호출하기 위한 RestTemplate의 인스턴스 생성
 	private RestTemplate template = new RestTemplate();
 	
+	// 의존성 주입 - Admin Key와 cid를 반환하기 위함
 	@Autowired
 	private KakaoPayProperties kakaoPayProperties;
+	
+	// 의존성 주입 - 결제 정보 등록을 위함
+	@Autowired
+	private PaymentDao paymentDao;
 
+	// 추상 메소드 오버라이딩 - 결제 준비 요청을 보낸 후 결제 준비 응답을 반환
 	@Override
 	public KakaoPayReadyResponseVO ready(KakaoPayReadyRequestVO vo) throws URISyntaxException {
 
-		// 주소 설정
+		// 결제 준비 요청을 보낼 주소 설정
 		URI uri = new URI("https://kapi.kakao.com/v1/payment/ready");
 		
-		// 헤더 설정
+		// REST 요청의 header 설정
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK " + kakaoPayProperties.getKey());
+		headers.add("Authorization", "KakaoAK " + kakaoPayProperties.getKey()); // Admin Key
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
-		// 바디 설정
+		// REST 요청의 body 설정
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-		body.add("cid", kakaoPayProperties.getCid()); // 가맹점 번호(테스트용)
-		body.add("partner_order_id", vo.getPartner_order_id()); // 주문 번호
-		body.add("partner_user_id", vo.getPartner_user_id()); // 고객 번호
-		body.add("item_name", vo.getItem_name()); // 판매할 상품명
-		body.add("quantity", "1"); // 수량
-		body.add("total_amount", String.valueOf(vo.getTotal_amount())); // 구매 금액
-		body.add("tax_free_amount", "0"); // 비과세(0원)
-		body.add("approval_url", "http://localhost:8888/pay/result/success"); // 성공시 실행될 주소
-		body.add("cancel_url", "http://localhost:8888/pay/result/cancel"); // 취소시 실행될 주소
-		body.add("fail_url", "http://localhost:8888/pay/result/fail"); // 실패시 실행될 주소
+		body.add("cid", kakaoPayProperties.getCid()); // 가맹점 코드
+		body.add("partner_order_id", vo.getPartner_order_id()); // 가맹점 주문 번호
+		body.add("partner_user_id", vo.getPartner_user_id()); // 가맹점 회원 ID
+		body.add("item_name", vo.getItem_name()); // 상품명
+		body.add("quantity", "1"); // 상품 수량
+		body.add("total_amount", String.valueOf(vo.getTotal_amount())); // 상품 총액
+		body.add("tax_free_amount", "0"); // 상품 비과세 금액
+		body.add("approval_url", "http://localhost:8888/pay/result/success"); // 결제 성공시 Redirect 주소
+		body.add("cancel_url", "http://localhost:8888/pay/result/cancel"); // 결제 취소시 Redirect 주소
+		body.add("fail_url", "http://localhost:8888/pay/result/fail"); // 결제 실패시 Redirect 주소
 		
-		// 헤더와 바디 결합
+		// REST 요청을 위한 HttpEntity 생성 - header와 body 결합
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
 		
-		// 요청 전송
+		// 요청 전송 후 KakaoPayReadyResponseVO 형태로 응답 반환
 		KakaoPayReadyResponseVO response = template.postForObject(uri, entity, KakaoPayReadyResponseVO.class);
 		
-		// 요청 내용 반환
+		// 응답 반환
 		return response;
 	}
 
+	// 추상 메소드 오버라이딩 - 결제 승인 요청을 보낸 후 결제 승인 응답을 반환
 	@Override
 	public KakaoPayApproveResponseVO approve(KakaoPayApproveRequestVO vo) throws URISyntaxException {
-		//주소 설정
+		
+		// 결제 승인 요청을 보낼 주소 설정
 		URI uri = new URI("https://kapi.kakao.com/v1/payment/approve");
 		
-		//헤더 설정
+		// REST 요청의 header 설정
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK "+kakaoPayProperties.getKey());
+		headers.add("Authorization", "KakaoAK "+kakaoPayProperties.getKey()); // Admin Key
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
-		//바디 설정
+		// REST 요청의 body 설정
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-		body.add("cid", kakaoPayProperties.getCid());//가맹점번호(테스트용)
-		body.add("tid", vo.getTid());//거래번호
-		body.add("partner_order_id", vo.getPartner_order_id());//주문번호
-		body.add("partner_user_id", vo.getPartner_user_id());//고객번호
-		body.add("pg_token", vo.getPg_token());//인증용 토큰
+		body.add("cid", kakaoPayProperties.getCid()); // 가맹점 코드
+		body.add("tid", vo.getTid()); // 결제 고유 번호
+		body.add("partner_order_id", vo.getPartner_order_id()); // 가맹점 주문 번호
+		body.add("partner_user_id", vo.getPartner_user_id()); // 가맹점 회원 ID
+		body.add("pg_token", vo.getPg_token()); // 결제 승인을 인증하는 토큰
 		
 		log.debug("partner_order_id = {}", vo.getPartner_order_id());
 		log.debug("partner_user_id = {}", vo.getPartner_user_id());
 		log.debug("tid = {}", vo.getTid());
 		log.debug("pg_token = {}", vo.getPg_token());
 		
-		//보낼 내용 합체
+		// REST 요청을 위한 HttpEntity 생성 - header와 body 결합
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
 		
-		//요청
+		// 요청 전송 후 KakaoPayApproveResponseVO 형태로 응답 반환
 		KakaoPayApproveResponseVO response = template.postForObject(uri, entity, KakaoPayApproveResponseVO.class);
 		
+		// 응답 반환
 		return response;
 	}
 
@@ -122,15 +132,12 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		//보낼 내용 합체
 		HttpEntity<MultiValueMap<String, String>> entity = 
 											new HttpEntity<>(body, headers);
-
 		//요청
 		KakaoPayOrderResponseVO response = 
 				template.postForObject(uri, entity, KakaoPayOrderResponseVO.class);
 		return response;
 	}
 	
-	@Autowired
-	private PaymentDao paymentDao;
 
 	@Override
 	public void insertPayment(PaymentDto paymentDto, List<ProductDto> list, List<PurchaseItemVO> data) {
