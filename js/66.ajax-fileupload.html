@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>첨부 파일 예제</h1>
+
+    <!-- textarea는 내부에 글자밖에 가질 수 없다 (에디터로 만들 수 없다) -->
+    <!-- <textarea rows = "10" cols = "60">
+        <img src = "https://via.placeholder.com/200x200" class = "preview" width = "200" height = "200">
+    </textarea> -->
+
+    <!-- 에디터는 div를 개조해서 만든다 -->
+    <div contenteditable = "true">
+        <h1>Hello!</h1>
+        <img src = "https://via.placeholder.com/200x200" class = "preview" width = "200" height = "200">
+        <p>테스트 게시글 </p>
+    </div>
+
+    <input type = "file" class = "file-input" accept = ".jpg, .png, .gif">
+    <br>
+    <img src = "https://via.placeholder.com/200x200" class = "preview" width = "200" height = "200">
+
+    <!-- jQuery CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+    <!-- 자바 스크립트 코드 -->
+    <script type = "text/javascript">
+
+        $(function(){
+            // 목표 : 파일이 선택되면 해당하는 파일을 비동기로 서버에 업로드 -> 미리보기 형태로 구현하기 위함
+            $(".file-input").change(function(){
+                //console.log("변화 감지!");
+                //console.log(this.files); // 선택된 파일 리스트
+                if(this.files.length > 0){
+                    //console.log("파일 선택");
+
+                    // 프론트엔드에서 미리보기만 가능하며 향후에 관리가 안됨
+                    //var obj = URL.createObjectURL(this.files[0]);
+                    //$(".preview").attr("src", obj);  // 여기까지 하면 서버 없이 미리보기 구현 가능 (대신 DB 저장할 때 문제가 있음)
+
+                    // 서버에 비동기로 파일을 업로드 (ajax를 이용하여 multipart 전송 구현)
+                    // - 반드시 contentType, processData를 false로 설정해야 한다
+                    // - FormData 객체를 만들어 전송할 내용을 담아서 data에 설정한다
+                    var fd = new FormData();
+                    //fd.append("이름", "데이터");
+                    fd.append("attach", this.files[0]); // attach란 이름으로 파일을 첨부하겠습니다
+
+                    $.ajax({
+                        url : "",
+                        method : "post",
+                        data : ?,
+                        // JQuery에서는 multipart 요청을 위하 다음 2가지 설정을 반드시 작성해야 한다
+                        processData : false,
+                        contentType : false,
+                        success : function(resp){
+                            
+                        }
+                    });                  
+                }
+                else{
+                    //console.log("파일 선택 취소");
+                    $(".preview").attr("src", "https://via.placeholder.com/200x200")
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>
