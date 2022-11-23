@@ -119,8 +119,9 @@
 
             // (2) 전부다 실행해서 표시한 뒤 검사
             var result1 = checkId();
-            var result2 = checkPw();
-            var result3 = checkPw
+            var result2 = checkPassword();
+            var result3 = checkPasswordRe();
+            return result1 && result2 && result3;
         }
     </script>
 </head>
