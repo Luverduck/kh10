@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+</head>
+<body>
+    <!-- 제어 영역 설정 -->
+    <div id = "app"></div>
+
+    <!-- react 라이브러리 (레이지 로딩을 위해) -->
+    <!-- 개발용 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 배포용 CDN -->
+    <!-- 
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+    -->
+
+    <!-- Babel CDN(using JSX) - 최신 버전 JS 문법을 구버전에서도 적용할 수 있도록 자동 변환 -->
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+    <script type = "text/babel">
+
+        const MainComponent = () => {
+
+            // state 선언 - state 2개를 변화시키는 이벤트 생성
+            const [width, setWidth] = React.useState(200);
+            const [height, setHeight] = React.useState(200);
+
+            // function - 하나의 함수를 호출해서 크기를 바꾸는 방식
+            // const changeSize = function(w, h) {};
+            const changeSize = (w, h) => {
+                setWidth(w);
+                setHeight(h);
+            };
+
+            return (
+                <> 
+                    <h1>이미지 변경</h1>
+                    <button onClick = {()=>changeSize(100, 100)}>작게</button>
+                    <button onClick = {()=>changeSize(200, 200)}>보통</button>
+                    <button onClick = {()=>changeSize(300, 300)}>크게</button>
+                    <hr/>
+                    <img src = "./img/blackcow.jpg" width = {width} height = {height}/>
+                </>
+            );
+        }
+
+        const app = ReactDOM.createRoot(document.querySelector("#app")); // id가 app인 영역을 제어
+        app.render(<MainComponent/>); // MainComponent를 랜더링해주세요
+
+        // 컴포넌트 예시 - SideBar Componet, MenuComponent, ...
+    </script>
+
+</body>
+</html>
