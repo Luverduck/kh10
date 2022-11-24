@@ -31,7 +31,7 @@
         // - JSX는 HTML처럼 생겼지만 HTML이 아니다
         // - 반드시 하나의 태그로 묶여야 한다 - 가장 바깥에 <React.Fragment>나 <Fragment> 또는 축약형인 <> 사용
         // - 모든 태그는 종료 태그가 있어야 한다 (종료 태그가 없는 input, img, br, hr도 마찬가지) 
-        //    -> 태그를 닫기 전 '/' 입력 <input type = "text"/>
+        //    -> 종료 태그가 없는 태그는 태그를 닫기 전 '/' 입력 <input type = "text"/>
         app.render(
             <> 
                 <h1>Hello React!</h1>
