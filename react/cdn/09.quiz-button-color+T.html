@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+</head>
+<body>
+    <!-- 제어 영역 설정 -->
+    <div id = "app"></div>
+
+    <!-- react 라이브러리 (레이지 로딩을 위해) -->
+    <!-- 개발용 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 배포용 CDN -->
+    <!-- 
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+    -->
+
+    <!-- Babel CDN(using JSX) - 최신 버전 JS 문법을 구버전에서도 적용할 수 있도록 자동 변환 -->
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+    <script type = "text/babel">
+
+        const MainComponent = () => {
+
+            // state 선언
+            const [color, setColor] = React.useState("black");
+
+            // function
+            // const changeColor = function(e) {
+            //     // 전에 배웠던 이벤트 
+            //     // - e.preventDefault()
+            //     // - e.stopPropagation()
+
+            //     // jQuery였으면 주인공이라고 하면서 this를 사용했을 것
+            //     // - 이벤트 처리 함수에서는 this 대신 e.target을 사용할 수 있다
+            //     // - this든 e.target이든 모두 javascript 객체(jQuery가 아님)
+
+            //     const c = e.target.textContent; // jQuery에서 $(e.target).text() : 태그 사이의 글자를 읽어오기
+
+            //     setColor(c);
+            // }
+            const changeColor = e => setColor(e.target.textContent);
+
+            return (
+                <> 
+                    <h1>속성 변경</h1>
+
+                    <button onClick = {changeColor}>red</button>
+                    <button onClick = {changeColor}>blue</button>
+                    <button onClick = {changeColor}>black</button>
+                    <button onClick = {changeColor}>green</button>
+                    <button onClick = {changeColor}>maroon</button>
+                    <button onClick = {changeColor}>purple</button>
+                    <button onClick = {changeColor}>orange</button>
+
+                    <br/>
+
+                    <button>-</button>
+                    <span>16</span>
+                    <button>+</button>
+
+                    <hr/>
+                    
+                    <p style = {{color : color}}>Hello React!</p>
+                </>
+            );
+        }
+
+        const app = ReactDOM.createRoot(document.querySelector("#app")); // id가 app인 영역을 제어
+        app.render(<MainComponent/>); // MainComponent를 랜더링해주세요
+
+        // 컴포넌트 예시 - SideBar Componet, MenuComponent, ...
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+</head>
+<body>
+    <!-- 제어 영역 설정 -->
+    <div id = "app"></div>
+
+    <!-- react 라이브러리 (레이지 로딩을 위해) -->
+    <!-- 개발용 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 배포용 CDN -->
+    <!-- 
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+    -->
+
+    <!-- Babel CDN(using JSX) - 최신 버전 JS 문법을 구버전에서도 적용할 수 있도록 자동 변환 -->
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+    <script type = "text/babel">
+
+        const MainComponent = () => {
+
+            // state 선언
+            const [color, setColor] = React.useState("black");
+            const [size, setSize] = React.useState(16);
+
+            // function
+            const changeColor = e => setColor(e.target.textContent);
+
+            const increase = e => {
+                if(size < 30){
+                    setSize(size + 1);
+                }
+            }
+
+            const decrease = e => {
+                if(size > 8){
+                    setSize(size - 1);
+                }
+            }
+
+            return (
+                <> 
+                    <h1>속성 변경</h1>
+
+                    <button onClick = {changeColor}>red</button>
+                    <button onClick = {changeColor}>blue</button>
+                    <button onClick = {changeColor}>black</button>
+                    <button onClick = {changeColor}>green</button>
+                    <button onClick = {changeColor}>maroon</button>
+                    <button onClick = {changeColor}>purple</button>
+                    <button onClick = {changeColor}>orange</button>
+
+                    <br/>
+
+                    <button onClick = {decrease} disabled = {size <= 8}>-</button>
+                    <span>{size}</span>
+                    <button onClick = {increase} disabled = {size >= 30}>+</button>
+
+                    <hr/>
+                    
+                    {/* font-size는 fontSize 또는 'font-size'로 작성하면 된다 */}
+                    <p style = {{color : color, fontSize : size}}>Hello React!</p>
+                    <p style = {{color : color, 'font-size' : size}}>Hello React!</p>
+                </>
+            );
+        }
+
+        const app = ReactDOM.createRoot(document.querySelector("#app")); // id가 app인 영역을 제어
+        app.render(<MainComponent/>); // MainComponent를 랜더링해주세요
+
+        // 컴포넌트 예시 - SideBar Componet, MenuComponent, ...
+    </script>
+
+</body>
+</html>
