@@ -60,32 +60,50 @@
 
             //state로 하지 않는 경우(권장)
             let memberIdValidClass = '';
+            const memberIdValid = memberIdRegex.test(memberId);
             if(memberId.length > 0) {
-                const memberIdValid = memberIdRegex.test(memberId);
                 memberIdValidClass = memberIdValid ? 'is-valid' : 'is-invalid';
             }
 
             let memberPwValidClass = '';
+            const memberPwValid = memberPwRegex.test(memberPw);
             if(memberPw.length > 0) {
-                const memberPwValid = memberPwRegex.test(memberPw);
                 memberPwValidClass = memberPwValid ? 'is-valid' : 'is-invalid';
             }
 
             let memberPwReValidClass = '';
+            const memberPwReValid = memberPw == memberPwRe;
             if(memberPwRe.length > 0) {
-                const memberPwReValid = memberPw == memberPwRe;
                 memberPwReValidClass = memberPwReValid ? 'is-valid' : 'is-invalid';
             }
 
             let memberNickValidClass = '';
+            const memberNickValid = memberNickRegex.test(memberNick);
             if(memberNick.length > 0) {
-                const memberNickValid = memberNickRegex.test(memberNick);
                 memberNickValidClass = memberNickValid ? 'is-valid' : 'is-invalid';
             }
+
+            // (+ 추가) 가입버튼 비활성화 처리, 폼 전송 방지 처리
+            const allValid = memberIdValid && memberPwValid && memberPwReValid && memberNickValid;
+
+            // 폼 전송 이벤트 처리 함수
+            const sendForm = e => {
+                // 기본 이벤트 - a, form
+                //e.preventDefault(); // 기본 이벤트 차단
+                //e.target.submit(); // 강제 전송
+                //console.log(memberIdValid, memberPwValid, memberPwReValid, memberNickValid)
+                //console.log(allValid);
+                // if(allValid) {
+                //     e.target.submit();
+                // }
+                if(!allValid) {
+                    e.preventDefault();
+                }
+            };
             
             return (
                 <>
-                    <form className="join-form" method="post" autoComplete="off">
+                    <form className="join-form" method="post" autoComplete="off" onSubmit = {sendForm}>
 
                         <div className="container-fluid">
 
@@ -103,7 +121,7 @@
                             <div className="row mt-4">
                                 <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
                                     <div className="form-floating">
-                                        <input type="text" name="memberId" onChange={e=>setMemberId(e.target.value)} className={'form-control rounded '+memberIdValidClass} placeholder="?"/>
+                                        <input type="text" name="memberId" onBlur={e=>setMemberId(e.target.value)} className={'form-control rounded '+memberIdValidClass} placeholder="?"/>
                                         <label>
                                             아이디
                                             <i className="fa-solid fa-asterisk text-danger"></i>
@@ -117,7 +135,7 @@
                             <div className="row mt-4">
                                 <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
                                     <div className="form-floating">
-                                        <input type="text" name="memberPw" onChange={e=>setMemberPw(e.target.value)} className={'form-control rounded '+memberPwValidClass} placeholder="?"/>
+                                        <input type="text" name="memberPw" onBlur={e=>setMemberPw(e.target.value)} className={'form-control rounded '+memberPwValidClass} placeholder="?"/>
                                         <label>
                                             비밀번호
                                             <i className="fa-solid fa-asterisk text-danger"></i>
@@ -131,7 +149,7 @@
                             <div className="row mt-4">
                                 <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
                                     <div className="form-floating">
-                                        <input type="text" id="password-re" onChange={e=>setMemberPwRe(e.target.value)} className={'form-control rounded '+memberPwReValidClass} placeholder="?"/>
+                                        <input type="text" id="password-re" onBlur={e=>setMemberPwRe(e.target.value)} className={'form-control rounded '+memberPwReValidClass} placeholder="?"/>
                                         <label>
                                             비밀번호 확인
                                             <i className="fa-solid fa-asterisk text-danger"></i>
@@ -145,7 +163,7 @@
                             <div className="row mt-4">
                                 <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
                                     <div className="form-floating">
-                                        <input type="text" name="memberNick" onChange={e=>setMemberNick(e.target.value)} className={'form-control rounded '+memberNickValidClass} placeholder="?"/>
+                                        <input type="text" name="memberNick" onBlur={e=>setMemberNick(e.target.value)} className={'form-control rounded '+memberNickValidClass} placeholder="?"/>
                                         <label>
                                             닉네임
                                             <i className="fa-solid fa-asterisk text-danger"></i>
@@ -158,7 +176,7 @@
 
                             <div className="row mt-4">
                                 <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
-                                    <button type="submit" className="btn btn-primary w-100 btn-lg rounded">가입하기</button>
+                                    <button type="submit" className={"btn btn-primary w-100 btn-lg rounded " + (allValid ? "" : "disabled")}>가입하기</button>
                                 </div>
                             </div>
 
