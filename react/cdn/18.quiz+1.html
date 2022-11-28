@@ -50,6 +50,15 @@
             const [ck3, setCk3] = React.useState(false);
             const [ck4, setCk4] = React.useState(false);
 
+            // 배열을 적용하려고 한다면??
+            // const [ck, setCk] = React.useState([false, false, false, false]); // 잘못된 형태
+            // const [ck, setCk] = React.useState([
+            //  {no : 1, check : false},
+            //  {no : 2, check : false},
+            //  {no : 3, check : false},
+            //  {no : 4, check : false}
+            // ])
+
             // 계산
             const ckAll = ck1 && ck2 && ck3 && ck4;
             //console.log(ckAll);
