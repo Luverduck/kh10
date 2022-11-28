@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .editor {
+            min-height: 250px;
+            border:1px solid black;
+            padding:1em;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>첨부 파일 예제</h1>
+
+    <input type="file" class="file-input" accept=".jpg, .png, .gif">
+    <br>
+    <div class="editor" contenteditable="true"></div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function(){
+            //목표 : 파일이 선택되면 해당하는 파일을 서버에 업로드
+            $(".file-input").change(function(){
+                //console.log("변화 감지!");
+                //console.log(this.files);//선택된 파일 리스트
+                if(this.files.length > 0) {
+                    //console.log("파일 선택");
+
+                    // 프론트엔드에서 미리보기만 가능하며 향후에 관리가 안됨
+                    // var obj = URL.createObjectURL(this.files[0]);
+                    // $(".preview").attr("src", obj);
+
+                    // 서버에 비동기로 파일을 업로드하는 코드(ajax를 이용해서 multipart 전송 구현)
+                    // - 반드시 contentType, processData를 false로 설정해야 한다
+                    // - FormData 객체를 만들어 전송할 내용을 담아서 data에 설정한다
+                    
+                    var fd = new FormData();
+                    //fd.append("이름", 데이터);
+                    fd.append("attach", this.files[0]);//attach란 이름으로 파일을 첨부하겠습니다
+
+                    $.ajax({
+                        url:"http://localhost:8888/upload",
+                        method:"post",
+                        data:fd,
+                        //jquery에서는 multipart 요청을 위해 다음 설정 2가지를 반드시 작성해야한다
+                        processData:false,
+                        contentType:false,
+                        success:function(resp){
+                            //console.log(resp);//resp는 이미지의 주소
+                            $("<img>").attr("src", resp).attr("width", "100").attr("height", "100").appendTo(".editor");
+                        }
+                    });
+                }
+                else {
+                    //console.log("파일 선택 취소");
+                    $(".preview").attr("src", "https://via.placeholder.com/200x200");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

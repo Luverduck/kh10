@@ -51,16 +51,17 @@
                     fd.append("attach", this.files[0]); // attach란 이름으로 파일을 첨부하겠습니다
 
                     $.ajax({
-                        url : "",
-                        method : "post",
-                        data : ?,
-                        // JQuery에서는 multipart 요청을 위하 다음 2가지 설정을 반드시 작성해야 한다
-                        processData : false,
-                        contentType : false,
-                        success : function(resp){
-                            
+                        url:"http://localhost:8888/upload",
+                        method:"post",
+                        data:fd,
+                        //jquery에서는 multipart 요청을 위해 다음 설정 2가지를 반드시 작성해야한다
+                        processData:false,
+                        contentType:false,
+                        success:function(resp){
+                            //console.log(resp);//resp는 이미지의 주소
+                            $(".preview").attr("src", resp);
                         }
-                    });                  
+                    });              
                 }
                 else{
                     //console.log("파일 선택 취소");
