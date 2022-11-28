@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+
+    <style>
+        .div {
+            margin: 20px 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- 제어 영역 설정 -->
+    <div id = "app"></div>
+
+    <!-- react 라이브러리 (레이지 로딩을 위해) -->
+    <!-- 개발용 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 배포용 CDN -->
+    <!-- 
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+    -->
+
+    <!-- Babel CDN(using JSX) - 최신 버전 JS 문법을 구버전에서도 적용할 수 있도록 자동 변환 -->
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+    <script type = "text/babel">
+
+        const NextButton = (props) => {
+            if(props.ckAll) {
+                return <button>다음 단계로 이동</button>
+            }
+            else {
+                return <button disabled>모두 동의해야 다음으로 이동할 수 있습니다</button>
+            }
+        }
+
+        const MainComponent = () => {
+            // state
+            const [ck1, setCk1] = React.useState(false);
+            const [ck2, setCk2] = React.useState(false);
+            const [ck3, setCk3] = React.useState(false);
+            const [ck4, setCk4] = React.useState(false);
+
+            // 계산
+            const ckAll = ck1 && ck2 && ck3 && ck4;
+            //console.log(ckAll);
+
+            return (
+                <>  
+                    <h1>이용약관 동의 화면</h1>
+                    <div>
+                        <input type = "checkbox" checked = {ck1} onChange = {e => setCk1(e.target.checked)}/>
+                        동의합니다
+                    </div>
+                    <div>
+                        <input type = "checkbox" checked = {ck2} onChange = {e => setCk2(e.target.checked)}/>
+                        동의합니다
+                    </div>
+                    <div>
+                        <input type = "checkbox" checked = {ck3} onChange = {e => setCk3(e.target.checked)}/>
+                        동의합니다
+                    </div>
+                    <div>
+                        <input type = "checkbox" checked = {ck4} onChange = {e => setCk4(e.target.checked)}/>
+                        동의합니다
+                    </div>
+                    <NextButton ckAll = {ckAll}/>
+                </>
+            );
+        }
+
+        const app = ReactDOM.createRoot(document.querySelector("#app")); // id가 app인 영역을 제어
+        app.render(<MainComponent/>); // MainComponent를 랜더링해주세요
+    </script>
+
+</body>
+</html>
