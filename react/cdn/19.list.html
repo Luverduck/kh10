@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+</head>
+<body>
+    <!-- 제어 영역 설정 -->
+    <div id = "app"></div>
+
+    <!-- react 라이브러리 (레이지 로딩을 위해) -->
+    <!-- 개발용 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 배포용 CDN -->
+    <!-- 
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+    -->
+
+    <!-- Babel CDN(using JSX) - 최신 버전 JS 문법을 구버전에서도 적용할 수 있도록 자동 변환 -->
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+    <script type = "text/babel">
+
+        const MainComponent = () => {
+
+            // 배열 형태의 state
+            // - 일반 배열과 객체 배열이 존재
+            // - React에서는 일반 배열을 권장하지 않는다 (만약 사용하더라도 값의 중복이 생기면 안된다)
+
+            const [monsters, setMonsters] = React.useState(["피카츄", "라이츄", "파이리", "꼬부기"]);
+
+            return (
+                <> 
+                    <h1>배열로 화면 만들기</h1>
+                    <ul>
+                        <li>{monsters[0]}</li>
+                        <li>{monsters[1]}</li>
+                        <li>{monsters[2]}</li>
+                        <li>{monsters[3]}</li>
+                    </ul>
+                </>
+            );
+        }
+
+        const app = ReactDOM.createRoot(document.querySelector("#app")); // id가 app인 영역을 제어
+        app.render(<MainComponent/>); // MainComponent를 랜더링해주세요
+
+    </script>
+
+</body>
+</html>
