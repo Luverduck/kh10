@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+</head>
+<body>
+    <!-- 제어 영역 설정 -->
+    <div id = "app"></div>
+
+    <!-- react 라이브러리 (레이지 로딩을 위해) -->
+    <!-- 개발용 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 배포용 CDN -->
+    <!-- 
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+    -->
+
+    <!-- Babel CDN(using JSX) - 최신 버전 JS 문법을 구버전에서도 적용할 수 있도록 자동 변환 -->
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- AXIOS CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type = "text/babel">
+        // 함수 형태로 컴포넌트를 구현한다(functional component)
+        const PocketMonsterInput = props => {
+            //등록 시 사용자가 입력하는 정보를 저장할 state
+            const [monster, setMonster] = React.useState({
+                no : 0, name : "", type : ""
+            });
+
+            // 입력 이벤트 처리 함수
+            const monsterInputProcessor = e => {
+                const name = e.target.name;
+                const value = e.target.value;
+                setMonster({
+                    ...monster,
+                    [name] : value // name 변수에 들어있는 값을 이름으로 설정하여 초기화
+                })
+            };
+
+            // 등록 버튼 처리 함수
+            const insertData = e => {
+                // monster를 서버로 전송(+ 검사)
+                //axios({}).then(respObject => {}).catch(e => {}).finally(() => {})
+                axios({
+                    url : "http://localhost:8888/rest/pocketmon",
+                    method : "post",
+                    data : monster
+                })
+                .then(respObject => {
+                    setMonster({no : 0, name : "", type : ""}) // 입력 데이터 초기화
+                    props.loadList(); // 목록 불러오기(main component에 있으므로 빌려와서 실행)
+                })
+                .catch(e => {})
+                .finally(() => {})
+            };
+
+            return (
+                <>
+                    번호 : <input name = "no" onChange = {monsterInputProcessor} value = {monster.no}/>
+                    &nbsp;&nbsp;
+                    이름 : <input name = "name" onChange = {monsterInputProcessor} value = {monster.name}/>
+                    &nbsp;&nbsp;
+                    타입 : <input name = "type" onChange = {monsterInputProcessor} value = {monster.type}/>
+                    &nbsp;&nbsp;
+                    <button onClick = {insertData}>등록</button>
+                </>
+            );
+        };
+
+        const PocketMonster = props=>{
+            return (
+                <div>
+                    번호 : {props.monster.no},
+                    이름 : {props.monster.name},
+                    속성 : {props.monster.type}
+                </div>
+            );
+        };
+
+        const PocketMonsterList = props=>{
+            if(props.loading) {//로딩중
+                return (
+                    <>
+                        <h2>Loading...</h2>
+                    </>
+                )
+            }
+            else if(props.list == undefined || props.list.length == 0){//데이터없음
+                return (
+                    <>
+                        <h2>No result</h2>
+                    </>
+                )
+            }
+            else {//데이터 있음 -> .map()
+                const html = props.list.map(
+                    monster=><PocketMonster key={monster.no} monster={monster}/>
+                );
+                return html;
+            }
+            
+        };
+
+        const MainComponent = ()=> {
+            //state
+            const [monsterList, setMonsterList] = React.useState([]);
+            const [loading, setLoading] = React.useState(false);
+
+            // 등록시 사용자가 입력하는 정보를 저장할 state
+            const [monster, setMonster] = React.useState({
+                no : 0, name : "", type : ""
+            });
+
+            //effect
+            const loadList = ()=>{
+                setLoading(true);
+                axios({
+                    url:"http://localhost:8888/rest/pocketmon",
+                    method:"get",
+                    //responseType:"json"
+                }).then(respObject=>{
+                    setMonsterList(respObject.data);
+                })
+                .catch(e=>{})
+                .finally(()=>{
+                    setLoading(false);
+                });
+            };
+            React.useEffect(loadList, [ ]);
+            //React.useEffect(()=>loadList(), [ ]);
+
+            return (
+                <>
+                    <h1>포켓몬 도감</h1>
+
+                    <PocketMonsterInput loadList = {loadList}/>
+
+                    <hr/>
+                    <PocketMonsterList list={monsterList} loading={loading}/>
+                </>
+            );
+        };
+
+        const app = ReactDOM.createRoot(document.querySelector("#app")); // id가 app인 영역을 제어
+        app.render(<MainComponent/>); // MainComponent를 랜더링해주세요
+    </script>
+
+</body>
+</html>

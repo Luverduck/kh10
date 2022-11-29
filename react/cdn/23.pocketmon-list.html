@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReactJS</title>
+</head>
+<body>
+    <!-- 제어 영역 설정 -->
+    <div id = "app"></div>
+
+    <!-- react 라이브러리 (레이지 로딩을 위해) -->
+    <!-- 개발용 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 배포용 CDN -->
+    <!-- 
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+    -->
+
+    <!-- Babel CDN(using JSX) - 최신 버전 JS 문법을 구버전에서도 적용할 수 있도록 자동 변환 -->
+    <script src=" https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- AXIOS CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type = "text/babel">
+        // 함수 형태로 컴포넌트를 구현한다(functional component)
+
+        const PocketMonsterList = (props) => {
+            if(props.loading) { // 로딩 중
+                return (
+                    <div>
+                        <h2>로딩 중...</h2>    
+                    </div>  
+                );
+            }
+            else if(props.list == undefined || props.list.length == 0) { // 데이터가 없는 경우
+                return (
+                    <div>
+                        <h2>데이터가 존재하지 않습니다</h2>
+                    </div>
+                );
+            }
+            else { // 데이터가 있는 경우
+                const html = props.list.map(pocketmon => (
+                    <div key = {pocketmon.no}>
+                        번호 : {pocketmon.no}, 이름 : {pocketmon.name}, 타입 : {pocketmon.type}
+                    </div>
+                ));
+
+                return (
+                    <div>
+                        {html}    
+                    </div>
+                );
+            }
+        }
+
+        const MainComponent = () => {
+
+            // state ** {} 객체 표시 / [] 배열 표시
+            const [pocketmonList, setPocketmonList] = React.useState([]);
+            const [loading, setLoading] = React.useState(false);
+
+            // effect
+            const loadList = () => {
+                setLoading(true);
+
+                //axios({}).then(resp =>{}).catch(e=>{});
+                axios({
+                    url : "http://localhost:8888/rest/pocketmon",
+                    method : "get",
+                    //resultType : "json"
+                })
+                .then(respObject => {
+                    console.log(respObject);
+                    const resp = respObject.data;
+                    setPocketmonList(resp);
+
+                    setLoading(false);
+                })
+                .catch(e => {
+                    setLoading(false);
+                })
+                .finally(()=>{
+                    setLoading(false);
+                });
+            };
+
+            React.useEffect(() => loadList(), []);
+            // React.useEffect(loadList, []); // callback 함수 형태
+
+            return (
+                <> 
+                    <h1>포켓몬 도감</h1>
+                    <hr/>
+                    {/* 데이터 출력 */}
+                    <PocketMonsterList list = {pocketmonList} loading = {loading}/>
+                </>
+            );
+        }
+
+        const app = ReactDOM.createRoot(document.querySelector("#app")); // id가 app인 영역을 제어
+        app.render(<MainComponent/>); // MainComponent를 랜더링해주세요
+    </script>
+
+</body>
+</html>
