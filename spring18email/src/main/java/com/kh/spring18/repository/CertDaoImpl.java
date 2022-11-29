@@ -33,7 +33,7 @@ public class CertDaoImpl implements CertDao {
 		return result != null;
 	}
 
-	// 추상 메소드 오버라이딩
+	// 추상 메소드 오버라이딩 - 만료된 인증정보 삭제
 	@Override
 	public void clear() {
 		sqlSession.delete("cert.clear");

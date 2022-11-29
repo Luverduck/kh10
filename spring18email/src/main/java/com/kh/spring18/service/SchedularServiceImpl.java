@@ -21,7 +21,7 @@ public class SchedularServiceImpl implements SchedulerService {
 //	@Scheduled(fixedRate = 1000) // 1000ms마다 실행됨
 //	@Scheduled(cron = "* * * * * *") // cron 표현식 - 매초 매분 매시 매일 매월 매요일 (= 매 1초마다)
 	@Scheduled(cron = "0 * * * * *") // 0초 매분 매시 매일 매월 매요일 (= 매 1분마다)
-//	@Scheduled(cron = "0,30 * * * * *") //0,30초 매분 매시 매일 매월 매요일 
+//	@Scheduled(cron = "0,3	0 * * * * *") //0,30초 매분 매시 매일 매월 매요일 
 //	@Scheduled(cron = "0-10 * * * * *") // 0~10초 매분 매시 매일 매월 매요일
 //	@Scheduled(cron = "*/5 * * * * *") // 5초주기 매분 매시 매일 매월 매요일
 	
@@ -52,10 +52,11 @@ public class SchedularServiceImpl implements SchedulerService {
 	
 	// 매월 마지막 목요일
 //	@Scheduled(cron = "* * * ? * thuL")
+	
+	// 추상 메소드 오버라이딩 - 만료된 인증정보 삭제
 	@Override
 	public void clearCert() {
 		//System.out.println(LocalDateTime.now());
 		certDao.clear();
 	}
-	
 }

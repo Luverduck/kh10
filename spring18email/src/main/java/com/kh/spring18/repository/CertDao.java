@@ -13,6 +13,6 @@ public interface CertDao {
 	// 추상 메소드 - 인증번호 조회(5분 이내 발급된 인증번호인지)
 	boolean check(CertDto certDto);
 	
-	// 추상 메소드 - 
+	// 추상 메소드 - 만료된 인증정보 삭제
 	void clear();
 }
