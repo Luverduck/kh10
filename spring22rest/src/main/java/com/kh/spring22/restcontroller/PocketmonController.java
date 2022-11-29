@@ -3,6 +3,7 @@ package com.kh.spring22.restcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.spring22.entity.PocketMonsterDto;
 import com.kh.spring22.repository.PocketMonsterDao;
 
+@CrossOrigin(origins = {"http://127.0.0.1:5500"})
 @RestController
 @RequestMapping("/rest")
 public class PocketmonController {
