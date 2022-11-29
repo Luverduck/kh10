@@ -67,6 +67,7 @@
                 })
                 .then(resp => {
                     //console.log(resp.data);
+                    // axios의 resp에 포함된 많은 정보 중 data에 있는 값을 사용
                     setProductList(resp.data);
                 })
                 .catch(e => {});
