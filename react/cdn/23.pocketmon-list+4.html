@@ -75,14 +75,101 @@
             );
         };
 
+        // 수정은 단위 몬스터에 처리
+        // 1. 수정 버튼과 취소 버튼을 생성
+        // 2. 상태에 따라 입력창이 등장 
+        // 3. 완료를 누르면 비동기로 수청 요청을 발생(jQuery, axios)
         const PocketMonster = props=>{
-            return (
-                <div>
-                    번호 : {props.monster.no},
-                    이름 : {props.monster.name},
-                    속성 : {props.monster.type}
-                </div>
-            );
+
+            // 내부적으로 관리할 데이터는 props를 사용할 수 없다(props는 읽기 전용이기 때문)
+            // 포켓몬의 현재 정보를 state로 만든다
+            const [monster, setMonster] = React.useState(props.monster);
+
+            const [edit, setEdit] = React.useState(false); // 수정 여부
+
+            // 입력 처리
+            const monsterInputProcessor = e => {
+                const name = e.target.name;
+                const value = e.target.value;
+
+                setMonster({
+                    ...monster,
+                    [name] : value
+                });
+            }
+
+            // (중요) 수정을 취소할 경우(edit가 변화할 경우) state의 moster를 초기화
+            React.useEffect(()=>{
+                setMonster(props.monster);  // monster 초기화
+            }, [edit]);
+
+            // 수정 비동기 처리 - 서버의 수정 주소에 moster를 보낸다
+            const editData = e => {
+                // 검사 코드
+
+                // 전송
+                axios({
+                    url : "http://localhost:8888/rest/pocketmon",
+                    method : "put", // put은 일부분만 변경 / patch는 전체 변경
+                    data : monster, // jQuery ajax이면 JSON.stringify(monster)
+                    responseType : "text" // true/false
+                })
+                .then(respObject => {
+                    console.log(respObject.data);
+                    //setEdit(false);
+
+                    const success = respObject.data;
+                    setEdit(!success);
+                    if(success) {
+                        props.loadList(); // 목록 갱신
+                    }
+                })
+                .catch(e => {})
+                .finally(() => {});
+            };
+
+            // 삭제 비동기 처리
+            const deleteData = e => {
+                const choice = window.confirm("정말 삭제하시겠습니까?");
+                if(choice == false) return;
+
+                axios({
+                    url : "http://localhost:8888/rest/pocketmon/" + props.monster.no,
+                    method : "delete", 
+                    responseType : "text"
+                })
+                .then(respObject => {
+                    const success = respObject.data;
+                    if(success) {
+                        props.loadList(); // 목록 갱신
+                    }
+                })
+                .catch(e => {})
+                .finally(() => {});
+            };
+
+            if(edit) { // 수정 상태일 때
+                return (
+                    <div>
+                        번호 : {props.monster.no},
+                        이름 : <input name = "name" value = {monster.name} onChange = {monsterInputProcessor}/>,
+                        속성 : <input name = "type" value = {monster.type} onChange = {monsterInputProcessor}/>
+                        <button onClick = {() => setEdit(false)}>취소</button>
+                        <button onClick = {editData}>완료</button>
+                    </div>
+                );
+            }
+            else { // 일반 상태일 때
+                return (
+                    <div>
+                        번호 : {props.monster.no},
+                        이름 : {props.monster.name},
+                        속성 : {props.monster.type}
+                        <button onClick = {() => setEdit(true)}>변경</button>
+                        <button onClick = {deleteData}>삭제</button>
+                    </div>
+                );
+            }
         };
 
         const PocketMonsterList = props=>{
@@ -102,7 +189,7 @@
             }
             else {//데이터 있음 -> .map()
                 const html = props.list.map(
-                    monster=><PocketMonster key={monster.no} monster={monster}/>
+                    monster=><PocketMonster key={monster.no} monster={monster} loadList={props.loadList}/>
                 );
                 return html;
             }
@@ -144,7 +231,7 @@
                     <PocketMonsterInput loadList = {loadList}/>
 
                     <hr/>
-                    <PocketMonsterList list={monsterList} loading={loading}/>
+                    <PocketMonsterList loadList = {loadList} list={monsterList} loading={loading}/>
                 </>
             );
         };

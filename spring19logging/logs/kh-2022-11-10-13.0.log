@@ -1,14 +1,10 @@
-2022-11-30 01:59:09.695 [INFO ] [com.kh.spring19.Spring19loggingApplication] Starting Spring19loggingApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 307988 (C:\Users\hyeul\git\kh10\spring19logging\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring19logging) 
-2022-11-30 01:59:09.702 [DEBUG] [com.kh.spring19.Spring19loggingApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
-2022-11-30 01:59:09.703 [INFO ] [com.kh.spring19.Spring19loggingApplication] No active profile set, falling back to 1 default profile: "default" 
-2022-11-30 01:59:12.593 [INFO ] [com.kh.spring19.Spring19loggingApplication] Started Spring19loggingApplication in 3.376 seconds (JVM running for 4.712) 
-2022-11-30 02:00:14.731 [INFO ] [com.kh.spring19.LoggingTest3] Starting LoggingTest3 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 308500 (started by hyeul in C:\Users\hyeul\git\kh10\spring19logging) 
-2022-11-30 02:00:14.741 [DEBUG] [com.kh.spring19.LoggingTest3] Running with Spring Boot v2.7.5, Spring v5.3.23 
-2022-11-30 02:00:14.743 [INFO ] [com.kh.spring19.LoggingTest3] No active profile set, falling back to 1 default profile: "default" 
-2022-11-30 02:00:18.536 [INFO ] [com.kh.spring19.LoggingTest3] Started LoggingTest3 in 4.286 seconds (JVM running for 6.028) 
-2022-11-30 02:00:19.194 [DEBUG] [com.kh.spring19.LoggingTest3] hello logging 
-2022-11-30 02:00:19.195 [DEBUG] [com.kh.spring19.LoggingTest3] 10 + 10 = 20 
-2022-11-30 02:00:19.204 [ERROR] [com.kh.spring19.LoggingTest3] error 
+2022-11-10 13:52:00.942 [INFO ] [com.kh.spring19.LoggingTest3] Starting LoggingTest3 using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 27180 (started by hyeul in C:\Users\hyeul\git\kh10\spring19logging) 
+2022-11-10 13:52:00.944 [DEBUG] [com.kh.spring19.LoggingTest3] Running with Spring Boot v2.7.5, Spring v5.3.23 
+2022-11-10 13:52:00.945 [INFO ] [com.kh.spring19.LoggingTest3] No active profile set, falling back to 1 default profile: "default" 
+2022-11-10 13:52:04.410 [INFO ] [com.kh.spring19.LoggingTest3] Started LoggingTest3 in 3.925 seconds (JVM running for 5.267) 
+2022-11-10 13:52:04.914 [DEBUG] [com.kh.spring19.LoggingTest3] hello logging 
+2022-11-10 13:52:04.915 [DEBUG] [com.kh.spring19.LoggingTest3] 10 + 10 = 20 
+2022-11-10 13:52:04.922 [ERROR] [com.kh.spring19.LoggingTest3] error 
 java.lang.ArithmeticException: / by zero
 	at com.kh.spring19.LoggingTest3.test(LoggingTest3.java:27)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -80,11 +76,3 @@ java.lang.ArithmeticException: / by zero
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:756)
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:452)
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:210)
-2022-11-30 02:02:15.359 [INFO ] [com.kh.spring19.Spring19loggingApplication] Starting Spring19loggingApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 307988 (C:\Users\hyeul\git\kh10\spring19logging\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring19logging) 
-2022-11-30 02:02:15.359 [DEBUG] [com.kh.spring19.Spring19loggingApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
-2022-11-30 02:02:15.360 [INFO ] [com.kh.spring19.Spring19loggingApplication] No active profile set, falling back to 1 default profile: "default" 
-2022-11-30 02:02:15.942 [INFO ] [com.kh.spring19.Spring19loggingApplication] Started Spring19loggingApplication in 0.613 seconds (JVM running for 188.061) 
-2022-11-30 02:18:29.627 [INFO ] [com.kh.spring19.Spring19loggingApplication] Starting Spring19loggingApplication using Java 11.0.16 on LAPTOP-J0K0DP1F with PID 307988 (C:\Users\hyeul\git\kh10\spring19logging\target\classes started by hyeul in C:\Users\hyeul\git\kh10\spring19logging) 
-2022-11-30 02:18:29.627 [DEBUG] [com.kh.spring19.Spring19loggingApplication] Running with Spring Boot v2.7.5, Spring v5.3.23 
-2022-11-30 02:18:29.627 [INFO ] [com.kh.spring19.Spring19loggingApplication] No active profile set, falling back to 1 default profile: "default" 
-2022-11-30 02:18:30.172 [INFO ] [com.kh.spring19.Spring19loggingApplication] Started Spring19loggingApplication in 0.574 seconds (JVM running for 1162.291) 
