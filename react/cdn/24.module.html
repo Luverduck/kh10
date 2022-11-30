@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모듈 시스템</title>
+
+    <!-- 본격적으로 자바 스크립트 모듈을 사용하려면 type 선언이 필요하다 -->
+    <script type = "module">
+        // 24.module.js에서 c라는 요소를 불러와라
+        // import {c} from "./24.module.js";
+        // console.log(c);
+
+        // import {hello} from "./24.module.js";
+        // hello();
+
+        // 한번에 불러오기
+        import {c, hello as goodbye} from "./24.module.js"; // hello의 별칭을 goodbye로
+        goodbye();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
