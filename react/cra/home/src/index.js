@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import ContextStore, { ContextCustomProvider } from './utilities/ContextStore';
+
 // HashRouter 가져오기 - 주소에 #이 붙는 형태가 됨
 import {HashRouter} from 'react-router-dom';
 
@@ -15,7 +17,10 @@ root.render(
   <React.StrictMode>
     {/* browser-router 추가*/}
     <BrowserRouter>
+      {/* context api의 사용 범위를 지정 */}
+      <ContextCustomProvider>
       <App />
+      </ContextCustomProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
