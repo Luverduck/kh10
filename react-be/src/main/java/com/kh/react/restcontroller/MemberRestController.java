@@ -18,7 +18,16 @@ import com.kh.react.entity.MemberDto;
 import com.kh.react.repository.MemberDao;
 import com.kh.react.vo.MemberLoginVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+// 외부에서 ajax로 전송되는 요청의 쿠키를 수신하도록 설정 + 대상 명시
+// (주의) 이 경우에 origins에 와일드카드(*) 사용 금지
 @CrossOrigin
+(
+		origins = "http://localhost:3000",
+		allowCredentials = "true" // 인증 정보를 받는 설정
+)
 @RestController
 @RequestMapping("/member")
 public class MemberRestController {
