@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,7 @@ public class MemberRestController {
 		String token = UUID.randomUUID().toString();
 		
 		// HttpSession에 토큰 저장
+		session.setAttribute("memberId", findDto.getMemberId());
 		session.setAttribute("token", token);
 		
 		return ResponseEntity.ok(MemberLoginVO.builder()
@@ -51,4 +54,33 @@ public class MemberRestController {
 				.token(token) // 인증용 토큰
 				.build());
 	};
+	
+	// 토큰을 이용하여 판정 후 회원 정보를 반환하는 컨트롤러
+	@GetMapping("/refresh/{token}")
+	public ResponseEntity<MemberLoginVO> refresh(@PathVariable String token, HttpSession session) {
+		// 1. 세션에서 사용자에게 발급해 둔 토큰을 불러온다
+		// 2. 사용자가 경로변수로 넘긴 토큰과 비교한다
+		// 3. 토큰이 일치하면 사용자의 아이디에 해당하는 정보를 불러와서 전송
+		// 4. 토큰이 일치하지 않으면 404 error를 전송
+		
+		// 1. 
+		String serverToken = (String)session.getAttribute("token");
+		
+		// 2. 
+		if(!token.equals(serverToken)) { // 3.
+			return ResponseEntity.notFound().build(); // 404
+		}
+		
+		String memberId = (String)session.getAttribute("memberId");
+		MemberDto findDto = memberDao.get(memberId);
+		
+		String refreshToken = UUID.randomUUID().toString();
+		session.setAttribute("memberId", findDto.getMemberId());
+		session.setAttribute("token", refreshToken);
+		
+		return ResponseEntity.ok(MemberLoginVO.builder()
+				.member(findDto)//DB의 회원정보
+				.token(refreshToken)//인증용 토큰
+				.build());
+	}
 }

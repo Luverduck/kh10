@@ -13,7 +13,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// 추상 메소드 - 회원 단일 조회
+	// 추상 메소드 오버라이딩 - 회원 조회
 	@Override
 	public MemberDto login(MemberDto memberDto) {
 		
@@ -33,5 +33,11 @@ public class MemberDaoImpl implements MemberDao {
 		
 		// 그 외 null 반환
 		return null;
+	}
+	
+	// 추상 메소드 오버라이딩 - 회원 아이디로 단일 조회
+	@Override
+	public MemberDto get(String memberId) {
+		return sqlSession.selectOne("member.get",memberId);
 	}
 }

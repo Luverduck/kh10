@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>저장소 종류 확인</title>
+
+    <!-- jQuery CDN -->
+    <script src = "https://code.jquery.com/jquery-3.6.1.js"></script>
+
+    <script>
+        // session storage와 local storage의 비교
+        // - 둘 다 javascript에서 사용 가능한 저장소
+        // - 유효 기간에 대한 차이가 있음
+
+        // - sessionStorage는 현재 사용 중인 탭 내부에서만 유효한 데이터를 저장하는 저장소 (새로고침은 유지)
+        // - localStorage는 
+        
+        console.log(window.localStorage);
+        console.log(window.sessionStorage);
+
+        $(function(){
+            $("button").eq(0).click(e => {
+                sessionStorage.setItem("hello", "react1");
+            });
+            $("button").eq(1).click(e => {
+                localStorage.setItem("hello", "react2");
+            });
+        });
+    </script>
+</head>
+<body>
+    <button>sessionStorage</button>
+    <button>localStorage</button>
+</body>
+</html>
